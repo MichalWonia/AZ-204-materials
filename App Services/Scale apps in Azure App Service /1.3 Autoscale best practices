@@ -1,0 +1,33 @@
+Autoscale Concepts:
+- Horizontal Scaling: Autoscaling adjusts instances by adding (scale-out) or removing (scale-in) them, with defined minimum, maximum, and default instance counts.
+- Thresholds at Instance Level: Autoscale evaluates thresholds based on metrics (e.g., CPU usage, thread count) at the instance level.
+- Activity Log: All autoscale successes and failures are logged, with the ability to set up alerts via email, SMS, or webhooks.
+
+Best Practices for Autoscale:
+- Ensure Adequate Margin Between Max and Min Values:
+  - Avoid identical or very close minimum and maximum values (e.g., min=2, max=2) to allow for scaling actions.
+
+- Choose Appropriate Metric Statistics:
+  - For metrics like CPU or memory, the most common statistic is Average.
+
+- Careful Threshold Selection:
+  - Avoid conflicting scale-out and scale-in thresholds that could cause flapping (e.g., scaling out and in repeatedly). For example:
+    - Bad Rule: Scale out when CPU > 80%, scale in when CPU < 80%. This could create a loop.
+    - Better Rule: Scale out when CPU > 80%, scale in when CPU < 60% to prevent immediate re-scaling.
+
+- Estimate Impact Before Scaling In:
+  - Autoscaling estimates the impact of scaling in to avoid the system from scaling out immediately after scaling in (flapping). For example:
+    - Scale-Out: CPU > 80% → Add instance.
+    - Scale-In: CPU < 60% → Reduce instance only if scaling in doesn’t immediately trigger scaling out.
+
+- Consider Multiple Rules for Scaling:
+  - When configuring multiple rules, scaling actions differ:
+    - Scale-out: Triggered if any rule is met.
+    - Scale-in: Triggered only if all conditions are met.
+    Example: If CPU > 75% or Memory > 75%, scale out. If CPU < 30% and Memory < 50%, scale in.
+
+- Safe Default Instance Count:
+  - Set a safe default instance count for cases when metrics are unavailable, ensuring that autoscaling doesn’t affect workload performance negatively.
+
+- Configure Autoscale Notifications:
+  - Use Activity Log alerts to monitor scaling actions and ensure you’re notified of successes, failures, or missing metrics. You can also set up email or webhook notifications for scaling events.
