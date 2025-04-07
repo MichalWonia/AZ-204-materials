@@ -1,0 +1,45 @@
+Manually Swapping Deployment Slots
+Steps for Manual Swap:
+- Go to Deployment Slots page: Select Swap to open the swap dialog box.
+- Select Source and Target Slots: Typically, the target slot is production.
+- Review Changes: Check the Source Changes and Target Changes tabs to ensure the configurations are correct.
+- Complete Swap: After reviewing, select Swap to perform the swap immediately.
+
+Swap with Preview (Multi-phase Swap):
+- This allows you to validate the swap before completing it.
+- Phase 1: Apply the settings from the target slot to the source slot, with a pause.
+- Validation: You can test the source slot to ensure the app functions as expected with the target slot's settings.
+- Complete Swap: Once validated, select Complete Swap to finalize the swap.
+- Cancel Swap: If issues arise, you can cancel the swap, and the source slot’s settings will revert.
+
+Auto Swap
+- Purpose: Auto swap helps automate deployments with zero downtime and no cold starts by swapping the app into production automatically after a code push.
+- Configuration:
+  - Go to the Deployment Slot settings page.
+  - Enable Auto swap and select the target slot.
+  - After the code is pushed to the source slot, App Service will automatically swap the app into production.
+Note: Auto swap is not supported on Web Apps for Linux or Web App for Containers.
+
+Custom Warm-Up
+- Customization: Some applications may require custom actions during the warm-up phase before the swap. This can be specified using the applicationInitialization configuration in the web.config file.
+
+Example:
+<system.webServer>
+    <applicationInitialization>
+        <add initializationPage="/" hostName="[app hostname]" />
+        <add initializationPage="/Home/About" hostName="[app hostname]" />
+    </applicationInitialization>
+</system.webServer>
+
+Custom Warm-Up Settings:
+- WEBSITE_SWAP_WARMUP_PING_PATH: Specifies the path to ping during warm-up (e.g., /statuscheck).
+- WEBSITE_SWAP_WARMUP_PING_STATUSES: Specifies valid HTTP response codes (e.g., 200, 202).
+- WEBSITE_WARMUP_PATH: A path to ping whenever the site restarts (not just during swaps).
+
+Roll Back and Monitor a Swap
+- If errors occur after a swap (e.g., in production), you can immediately swap the slots back to restore the previous state.
+- Monitor Swap Operations:
+  - Use the Activity Log to track swap operations. Go to Activity log on the app's resource page in the portal.
+  - Search for Swap Web App Slots to see detailed information or errors during the swap process.
+
+This process ensures smooth deployments and easy rollback strategies while minimizing downtime and ensuring proper validation of changes before they impact the production environment.
