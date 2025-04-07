@@ -1,0 +1,34 @@
+⚙️ General Settings in App Service Configuration
+Found under:
+📍 App Service > Configuration > General Settings
+
+These are common configuration options for your app. Some may require higher pricing tiers.
+
+🔢 Key Settings
+🧱 Stack Settings
+- define language & version (.NET, Node.js, Python, etc.)
+- startup command/file can be set for Linux and custom container apps.
+
+🖥️ Platform Settings
+- Platform bitness: 32-bit or 64-bit (Windows only)
+- FTP state: Allow only FTPS, or disable FTP completely
+- HTTP version: Enable HTTP/2:
+    ⚠️ Modern browsers only support HTTP/2 over HTTPS
+    
+- Web sockets: enable for real-time apps like SignalR or socket.io
+- Always On:
+  - prevents app from sleeping after 20 mins idle
+  - essential for continuous WebJobs or CRON-based triggers
+  
+- ARR affinity:
+  - On = Sticky sessions (same instance)
+  - Off = Stateless (better for scaling)
+  
+- HTTPS Only: Redirect all HTTP traffic to HTTPS
+- Minimum TLS version: Enforce minimum security protocol version
+- Remote debugging:
+  - Available for ASP.NET, ASP.NET Core, Node.js
+  - Auto-disabled after 48 hours
+  
+- Incoming client certificates:
+  - Require mutual TLS for client auth
