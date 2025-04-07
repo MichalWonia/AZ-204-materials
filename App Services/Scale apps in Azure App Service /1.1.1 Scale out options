@@ -1,0 +1,30 @@
+Azure App Service supports manual scaling, and two options for scaling out your web apps automatically:
+- Autoscaling with Azure autoscale. Autoscaling makes scaling decisions based on rules that you define.
+- Azure App Service automatic scaling. Automatic scaling makes scaling decisions for you based on the parameters that you select.
+
+Autoscaling (in and out)
+- autoscaling automatically adjusts resources based on demand, adding or removing them as needed. 
+- it can be triggered by a schedule or when system resources are low, such as high CPU usage, increased memory, or a surge in requests.
+This ensures efficient resource use and system performance without manual intervention.
+
+Azure App Service autoscaling
+- autoscaling makes its decisions based on rules that you define. 
+- a rule specifies the threshold for a metric, and triggers an autoscale event when this threshold is crossed. 
+- autoscaling can also deallocate resources when the workload lessens.
+
+When to Consider Autoscaling:
+- elasticity: Autoscaling adjusts resources based on demand, useful for scenarios like holiday spikes in traffic.
+- improved Availability & Fault Tolerance: Helps prevent service unavailability by automatically adding or removing instances to handle fluctuating traffic and reduce downtime.
+- not Suitable for Resource-Intensive Requests: If your web app requires heavy processing (e.g., large dataset computations), autoscaling may not be effective. Manual scaling may be needed instead.
+- not Ideal for Long-Term Growth: Autoscaling is better for short-term spikes rather than sustained growth. For predictable, long-term increases in traffic, manual scaling can be more cost-effective.
+- fewer Instances & Autoscaling Limitations: Running few instances can lead to downtime, as autoscaling may not quickly provide enough resources to handle increasing load.
+
+
+Azure App Service Automatic Scaling:
+- Automatic Scaling Setup: You enable automatic scaling by configuring an App Service Plan with a range of instances for each web app. 
+App Service monitors the traffic load and adjusts the number of instances as needed.
+
+- Scenarios for Automatic Scaling:
+- no Autoscale Rules Based on Metrics: When you don’t want to create custom scaling rules.
+- independent Scaling for Web Apps: When you want web apps in the same App Service Plan to scale differently from each other.
+- backend Limitations: If your web app is connected to a slower backend (like a database or legacy system), automatic scaling prevents overloading the backend by limiting the number of instances.
