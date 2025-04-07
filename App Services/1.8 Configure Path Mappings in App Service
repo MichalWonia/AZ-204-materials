@@ -1,0 +1,4 @@
+Found under:
+📍 App Service > Configuration > Path mappings
+
+Used to configure handler mappings, virtual directories, and custom storage. Options differ by OS type.
