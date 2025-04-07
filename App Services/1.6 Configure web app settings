@@ -1,0 +1,90 @@
+🧪 App settings = environment variables injected into your app at startup.
+- on Linux/custom containers, they’re passed using the --env flag.
+- changing app settings = automatic app restart.
+- If you're using deployment slots, you can specify if your setting is swappable or not.
+
+⚙️ For .NET Developers:
+App settings in App Service override values in:
+- <appSettings> (Web.config) or appsettings.json
+Use this to separate dev and prod secrets (e.g., dev credentials locally, prod secrets in App Service).
+
+🔒 Security & Format:
+App settings are always encrypted at rest.
+- allowed: letters, numbers, periods (.), underscores (_).
+- special characters in values must be escaped depending on OS.
+
+🌐 Where to Access Them:
+In the Azure portal: App → Environment variables → Application settings
+
+🛠️ Bulk Editing App Settings
+- go to App → Environment variables → Application settings
+- click Advanced edit
+- edit settings in JSON format
+- click OK, then Apply
+
+JSON Example:
+[
+  {
+    "name": "<key-1>",
+    "value": "<value-1>",
+    "slotSetting": false
+  },
+  {
+    "name": "<key-2>",
+    "value": "<value-2>",
+    "slotSetting": false
+  }
+]
+
+🔄 slotSetting Flag:
+false → setting is shared across all deployment slots
+true → setting is slot-specific (e.g., different value in staging vs. production)
+
+🔗 Connection Strings in App Service
+🧱 For .NET apps:
+- connection strings in App Service = like <connectionStrings> in Web.config.
+- App Service values override local config values.
+
+🧪 For non-.NET apps:
+- use App Settings instead when possible.
+❗Exception: If you want your Azure database to be backed up with the app, define it as a connection string instead of app settings in App Service even for non-.NET apps.
+
+📄 Bulk Format (JSON):
+[
+  {
+    "name": "name-1",
+    "value": "conn-string-1",
+    "type": "SQLServer",
+    "slotSetting": false
+  },
+  {
+    "name": "name-2",
+    "value": "conn-string-2",
+    "type": "PostgreSQL",
+    "slotSetting": false
+  }
+]
+
+🛠️ Accessing at Runtime (as Environment Variables)
+Connection Type	Environment Variable Prefix:
+- SQL Server:	SQLCONNSTR_
+- MySQL: MYSQLCONNSTR_
+- SQL Azure: SQLAZURECONNSTR_
+- PostgreSQL:	POSTGRESQLCONNSTR_
+- Custom:	CUSTOMCONNSTR_
+- Notification Hub:	NOTIFICATIONHUBCONNSTR_
+- Service Bus: SERVICEBUSCONNSTR_
+- Event Hub: EVENTHUBCONNSTR_
+- Cosmos DB: DOCDBCONNSTR_
+- Redis Cache: REDISCACHECONNSTR_
+
+Example: A MySQL connection string named connectionstring1 becomes:
+MYSQLCONNSTR_connectionstring1
+
+⚠️ Note for .NET & PostgreSQL:
+Use type Custom in the connection string to avoid a known bug with EnvironmentVariablesConfigurationProvider.
+
+🔧 Configure environment variables for custom containers
+- CLI: az webapp config appsettings set --resource-group <group-name> --name <app-name> --settings key1=value1 key2=value2
+- PowerShell: Set-AzWebApp -ResourceGroupName <group-name> -Name <app-name> -AppSettings @{"DB_HOST"="myownserver.mysql.database.azure.com"}
+
