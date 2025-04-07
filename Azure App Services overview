@@ -1,0 +1,33 @@
+What is an Azure App Service?
+
+It's an HTTP-based service for hosting web applications, REST APIs and mobile back ends. 
+App Service can be developed in your favorite programming language or framework and can run on Windows and Linux-based environments.
+
+
+Scaling support in App Services
+- scale up/down: change the number of cores or the amount of RAM available
+- scale out/in: ability to increase/decrease the number of machine instances that are running your web app
+
+
+Container support
+App services can be deployed and run in containerized web apps on Windows and Linux:
+- container images can be pull from a private Container Registry or Docker Hub
+- supports multi-container apps, Windows containers, and Docker Compose for orchestrating container instances.
+
+
+Deployment slots
+Available in Standard App Service Plan tier or better. Deployment slots are live apps with their own host names. 
+They enable the option to swap the app content and confugurations between two deployment slots: staging and production.
+
+
+Limitations of App Service on Linux:
+- App Service on Linux isn't supported on Shared pricing tier.
+- the Azure portal shows only features that currently work for Linux apps. As features are enabled, they're activated on the portal.
+- when deployed to built-in images, your code and content are allocated a storage volume for web content, backed by Azure Storage.
+The disk latency of this volume is higher and more variable than the latency of the container filesystem.
+Apps that require heavy read-only access to content files might benefit from the custom container option, which places files in the container filesystem instead of on the content volume.
+
+
+App Service Environment
+Fully isloated and dedicated environment for running App Service apps provided by Azure.
+For App Services the infrastructure is shared, with App Service Environment, compute is dedicated to a single customer.
