@@ -1,0 +1,29 @@
+Slot Swapping Process:
+- No Downtime Guarantee: Swapping two slots ensures no downtime for the target slot (e.g., production) during the swap.
+- Settings Applied During Swap:
+  - Slot-specific settings (app settings, connection strings) are transferred from the target slot (e.g., production) to the source slot (e.g., staging).
+  - Continuous deployment, authentication settings are also transferred.
+  - Restarting Instances: When these settings are applied, all instances in the source slot restart.
+
+Swap Process Steps:
+Phase 1:
+- Settings from the target slot are applied to the source slot.
+- Instances in the source slot restart, and a swap with preview allows you to validate the source slot with the target slot's settings before proceeding.
+
+Wait for Restart:
+- Each instance in the source slot must restart successfully. If any instance fails to restart, the swap operation reverts all changes to the source slot and stops the operation.
+- If local cache is enabled, it triggers cache initialization through HTTP requests to the app’s root. Each instance must return a response to mark the slot as warmed up.
+
+Auto Swap (if enabled):
+- Custom warm-up triggers the Application Initialization via HTTP requests to the app’s root on each instance.
+
+Warm-up Completion:
+- Once all instances in the source slot are warmed up, the routing rules are switched, and the source slot (e.g., staging) is swapped with the target slot (e.g., production).
+
+Post-Swap:
+- The target slot (production) now has the app warmed up from the source slot.
+- The process for the previous target (now in the source slot) is repeated, applying settings and restarting instances.
+
+Key Notes:
+- Target Slot: Always use the production slot as the target to avoid impacting the production app.
+- Cloning Configurations: When cloning configurations, some settings stay slot-specific (e.g., app settings) while others (e.g., content) follow across the swap.
