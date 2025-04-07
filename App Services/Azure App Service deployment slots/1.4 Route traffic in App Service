@@ -1,0 +1,30 @@
+Route Production Traffic Automatically
+- Purpose: This feature allows you to route a portion of the traffic to a nonproduction slot (like staging), which is useful for gathering user feedback on new updates without fully deploying them to production.
+
+Steps to Automatically Route Traffic:
+- Go to the app's resource page and select Deployment slots.
+- In the Traffic % column for the slot you want to route to, specify the percentage (between 0% and 100%) of total traffic you want to direct to that slot.
+- Save the changes.
+
+Behavior:
+- Once the setting is saved, the specified percentage of client requests will be routed to the chosen nonproduction slot.
+- Requests routed to the nonproduction slot are "pinned" to that slot for the entire session. This is tracked with the x-ms-routing-name cookie.
+  - x-ms-routing-name=staging: Indicates the user is routed to the staging slot.
+  - x-ms-routing-name=self: Indicates the user is routed to the production slot.
+
+Route Production Traffic Manually
+- Purpose: This allows you to manually route traffic to a specific slot (useful for beta testing or letting users opt in/out of experimental changes).
+
+Steps to Route Traffic Manually:
+- Use the x-ms-routing-name query parameter in the URL to manually route users:
+    - For users to opt out of a beta app (go back to production), use:
+        <a href="<webappname>.azurewebsites.net/?x-ms-routing-name=self">Go back to production app</a>
+    - For users to opt in to a beta app (go to staging), use:
+        <a href="<webappname>.azurewebsites.net/?x-ms-routing-name=staging">Try the beta app</a>
+Behavior:
+- By default, new slots have a 0% routing rule, meaning no traffic is routed to them unless explicitly set.
+- If you set the routing rule to 0%, users can still manually access the slot using the x-ms-routing-name query parameter, but they won't be automatically routed there.
+
+Advanced Routing Scenarios
+- Hide Staging Slot: You can set a staging slot's routing to 0% to "hide" it from the public but still allow internal teams or testers to access it manually via the x-ms-routing-name=staging query parameter.
+This feature is particularly useful for gradual rollouts, beta testing, and staged deployments while ensuring users don't experience downtime or inconsistent behavior.
