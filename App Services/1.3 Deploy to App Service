@@ -1,0 +1,39 @@
+🚀 Deployment Methods:
+🔁 Automated (Continuous) Deployment:
+- used for frequent, low-impact updates (new features, bug fixes).
+
+Azure supports continuous deployment from:
+- Azure DevOps Services
+- GitHub
+- Bitbucket
+- typically set up to trigger deployments from commits to production (or other) branches.
+
+🛠️ Manual Deployment Options:
+- Git: Push directly to App Service's Git remote.
+- CLI: 'az webapp up' deploys app and can create the web app.
+- Zip Deploy: Use 'curl' or similar to push a ZIP of your app.
+- FTP/S: Traditional file transfer deployment method.
+
+🧪 Deployment Slots (Standard Tier or better):
+- create staging slots to test before going live.
+- swap staging with production to avoid downtime — warms up instances before switch.
+- recommended for production builds.
+
+🔄 Continuous Deployment to Slots:
+- map branches (e.g., QA, staging) to slots.
+- stakeholders can easily test different app versions.
+- ensures safe and trackable releases.
+
+🐳 Deploying Containers:
+- supports custom containers from Azure Container Registry or other registries.
+- use deployment slots to prevent downtime when updating containers.
+
+Best practices:
+- tag images with commit ID or timestamp (avoid using "latest").
+- push tagged image to registry.
+- update deployment slot with new tag (restarts site + pulls image).
+
+🧩 Sidecar Containers (Advanced):
+- up to 9 sidecar containers per app (in custom container apps).
+- useful for adding monitoring, logging, configuration, etc.
+- added via Deployment Center.
