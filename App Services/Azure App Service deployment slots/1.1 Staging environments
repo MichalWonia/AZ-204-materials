@@ -1,0 +1,14 @@
+Staging Environments in Azure App Service:
+Deployment Slots: You can deploy apps to separate slots (e.g., staging, testing) instead of directly to production. 
+This feature is available in the Standard, Premium, or Isolated App Service plan tiers.
+
+Benefits of Staging Slots:
+- Pre-deployment Validation: You can validate app changes in a staging slot before swapping it with production.
+- Zero Downtime Deployment: Swapping slots ensures that all instances are warmed up before being swapped, eliminating downtime and preventing dropped requests.
+- Rollback: After a swap, the previous production app moves to the staging slot, allowing for a quick rollback if the deployment isn’t as expected.
+
+Important Considerations:
+- Auto Swap: You can automate the deployment process by configuring auto swap when pre-swap validation is not necessary.
+- Slot Limits: Different App Service tiers support different numbers of deployment slots. Ensure that your target tier supports the number of slots you need (e.g., Standard tier supports 5 slots).
+- Empty Slots: New deployment slots start with no content, even if you clone settings from another slot. You can deploy to these slots from different repository branches.
+- Slot URLs: The URL for a slot follows the format http://sitename-slotname.azurewebsites.net. Ensure the combined site name and slot name are under 59 characters.
