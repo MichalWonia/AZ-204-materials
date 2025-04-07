@@ -1,0 +1,55 @@
+🚪 Built-in Authentication & Authorization:
+ - Azure App Service offers integrated authentication and authorization features, allowing user sign-ins with minimal or no code.
+- supports multiple identity providers:
+-- Microsoft Entra ID
+-- Facebook
+-- Google
+-- X (formerly Twitter)
+-- GitHub
+-- Any OpenID Connect provider
+
+🛠️ How It Works:
+- the authentication/authorization module operates as middleware, processing all incoming HTTP requests before they reach your application code.
+
+Responsibilities include:
+- authenticating users via the configured identity provider.
+- validating, storing, and refreshing OAuth tokens.
+- managing authenticated sessions.
+- injecting identity information into HTTP request headers.
+
+🔄 Authentication Flows:
+Without Provider SDK (Server-Directed Flow):
+- the app delegates sign-in to App Service, redirecting clients to /.auth/login/<provider>.
+- suitable for browser-based applications.
+
+With Provider SDK (Client-Directed Flow):
+- the app handles sign-in using the provider's SDK and submits the authentication token to App Service for validation.
+- commonly used in REST APIs, Azure Functions, JavaScript clients, and native mobile apps.
+
+🔐 Authorization Behavior (How App Service Handles Unauthenticated Requests):
+You can configure one of the following:
+
+Allow Unauthenticated Requests:
+- app handles authorization logic.
+- app Service forwards identity info in HTTP headers (for authenticated users).
+- great for apps with public pages or multiple sign-in providers.
+
+Require Authentication:
+- rejects unauthenticated requests.
+- redirects browsers to /.auth/login/<provider>.
+- mobile apps get HTTP 401 Unauthorized.
+- ⚠️ This applies to all app routes — not ideal for public SPAs (Single Page Apps).
+- You can configure it to return:
+  - 401 Unauthorized
+  - 403 Forbidden
+
+🪪 Token Store:
+App Service includes a built-in token store:
+- stores OAuth tokens for authenticated users.
+- available automatically once auth is enabled.
+- helps apps reuse access/refresh tokens securely without managing them manually.
+
+📜 Logging & Tracing:
+When application logging is enabled:
+- auth-related logs (authentication attempts, token issues) are collected automatically.
+- makes troubleshooting authentication much easier.
