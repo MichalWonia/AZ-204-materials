@@ -1,0 +1,41 @@
+Azure App Service Plans
+
+🔹 Core Concept:
+- every App Service must run in an App Service plan.
+- the plan defines the compute resources (VM size, number, region, OS, and pricing tier).
+- multiple apps can share a single App Service plan — and therefore share resources.
+
+📍 App Service Plan Configuration Includes:
+- OS: Windows or Linux
+- Region
+- Number & size of VMs
+- Pricing tier (Free, Shared, Basic, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2)
+
+💲 Pricing Tiers:
+Free / Shared (Shared compute):
+- runs on shared Azure VMs (with other customers).
+- no scale-out, limited CPU — ideal for development/testing only.
+
+Basic / Standard / Premium / PremiumV2 / PremiumV3 (Dedicated compute):
+- runs on dedicated VMs.
+- only apps in the same plan share compute.
+- supports scale-out (more VM instances).
+
+Isolated / IsolatedV2:
+- dedicated VMs inside your own Virtual Network (VNet).
+- network + compute isolation, highest scaling capacity.
+
+📈 Scaling Behavior:
+- App Service Plan = scaling unit.
+- if plan has 5 VM instances, all apps run across all 5.
+- autoscale settings apply to all apps in the plan.
+- diagnostic logs, WebJobs, deployment slots share compute resources too.
+
+🔄 Scaling Up/Down:
+- change pricing tier to scale up/down features and VM specs.
+- move an app to another App Service plan to isolate performance or scale independently.
+
+🧩 When to Use a Separate App Service Plan:
+- app is resource-intensive.
+- you want independent scaling from other apps.
+- app needs to be in a different region.
