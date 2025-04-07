@@ -1,0 +1,58 @@
+📦 Deployment Types
+Multitenant App Service:
+- used with Free, Shared, Basic, Standard, Premium, PremiumV2, PremiumV3 SKUs.
+- hosted on shared infrastructure, cannot directly connect to your virtual network.
+
+Single-tenant App Service Environment (ASE):
+- used with Isolated SKU.
+- runs within your Azure Virtual Network (full network control).
+
+🔁 Networking Features by Direction
+Inbound Traffic (to your app)	Outbound Traffic (from your app)
+🔹 App-assigned address	🔸 Hybrid Connections
+🔹 Access restrictions	🔸 Gateway-required VNet Integration
+🔹 Service endpoints	🔸 VNet Integration (Standard+)
+🔹 Private endpoints	
+🧠 Inbound ≠ Outbound: Features work one-way only – don't try to solve inbound scenarios using outbound features (and vice versa).
+
+🔐 Inbound Use Cases and Features
+🔹 IP-based SSL / unshared dedicated IP address → Use App-assigned address
+🔹 Restrict incoming traffic (IP whitelist) → Use Access restrictions
+
+🏗️ Default Networking Behavior
+- Free/Shared plans → Multitenant workers (shared VMs).
+- Basic and higher → Apps run on dedicated VMs per App Service Plan.
+- Standard App Service plan -> all the apps in that plan run on the same worker. Scaling out = Each instance replicates all apps in the plan.
+
+🚪 Outbound IP Addresses
+Outbound Addresses – Azure App Service
+🧱 Outbound IP Behavior Depends on the App Service Plan:
+- Free, Shared, Basic, Standard, Premium → Use the same VM type for workers.
+- PremiumV2 → Uses a different VM type.
+- PremiumV3 → Uses another distinct VM type.
+- changing the App Service plan tier (especially VM family) changes the set of outbound IP addresses.
+- these addresses are shared by all the apps running on the same worker virtual machine family in the App Service deployment
+
+📤 How Outbound IPs Work:
+- each worker VM has a pool of outbound IP addresses.
+- all apps on the same VM family in the same scale unit share these outbound IPs.
+- you need to consider this if you're calling external services (e.g., firewalls or IP whitelisting).
+
+
+
+🔍 How to View Outbound IPs:
+✅ Current outbound IPs: bash
+
+az webapp show \
+  --resource-group <group_name> \
+  --name <app_name> \
+  --query outboundIpAddresses \
+  --output tsv
+  
+✅ All possible outbound IPs: bash
+
+az webapp show \
+  --resource-group <group_name> \
+  --name <app_name> \
+  --query possibleOutboundIpAddresses \
+  --output tsv
