@@ -1,0 +1,68 @@
+📜 Stored Procedures in Azure Cosmos DB
+Azure Cosmos DB allows you to write stored procedures, triggers, and user-defined functions (UDFs) using JavaScript, enabling transactional and server-side logic within a container.
+
+🧠 Key Concepts
+- Stored procedures are JavaScript functions executed in the context of a single partition.
+- They're registered per container (formerly called collection).
+- Can create, read, update, delete, and query documents.
+- Run in bounded execution time and are transactional.
+
+🔧 Basic Example: "Hello World" Stored Procedure
+
+var helloWorldStoredProc = {
+    id: "helloWorld",
+    serverScript: function () {
+        var context = getContext();
+        var response = context.getResponse();
+        response.setBody("Hello, World");
+    }
+}
+- getContext() gives access to request/response and database operations.
+- you use setBody() to return values.
+
+✍️ Create Document Example
+
+var createDocumentStoredProc = {
+    id: "createMyDocument",
+    body: function createMyDocument(documentToCreate) {
+        var context = getContext();
+        var collection = context.getCollection();
+        
+        var accepted = collection.createDocument(
+            collection.getSelfLink(),
+            documentToCreate,
+            function (err, documentCreated) {
+                if (err) throw new Error('Error' + err.message);
+                context.getResponse().setBody(documentCreated.id);
+            });
+
+        if (!accepted) return;
+    }
+}
+✅ This stored procedure:
+- Inserts a document.
+- Returns the new document's ID.
+- Throws an error if the creation fails.
+
+📥 Passing Arrays as Parameters
+When calling stored procedures, parameters are passed as strings, even arrays.
+🔄 Workaround: Parse string to array in your script:
+
+function sample(arr) {
+    if (typeof arr === "string") arr = JSON.parse(arr);
+
+    arr.forEach(function(a) {
+        console.log(a);
+    });
+}
+
+🔁 Transactions with Continuation
+- Cosmos DB supports transaction-like behavior using stored procedures.
+- Use a continuation pattern for large batch operations.
+- You can return a custom continuation token and call the procedure again with it to resume where it left off.
+
+⏱️ Bounded Execution
+Stored procedures:
+- Must finish within a limited time.
+- Return true if the operation completed, false if it didn’t.
+
