@@ -1,0 +1,56 @@
+🌐 Explore Supported APIs in Azure Cosmos DB
+Azure Cosmos DB supports multiple APIs so you can work with the data models, tools, and ecosystems you’re already familiar with—without worrying about scaling or infrastructure. These APIs include:
+- NoSQL (native)
+- MongoDB
+- PostgreSQL
+- Cassandra
+- Gremlin
+- Table
+
+You can choose the API that fits your application’s design, existing stack, or developer skill set.
+
+📌 API Selection Considerations
+- Choose NoSQL if you're starting fresh and want full Cosmos DB feature access.
+- Choose MongoDB, PostgreSQL, Cassandra, Gremlin, or Table if:
+- You already have apps using those databases.
+- You want to reuse client drivers and tools.
+- You prefer not rewriting your entire data access layer.
+
+🚀 API Overviews
+🔹 API for NoSQL (Native)
+  🗂️ Data Format: JSON documents
+  🛠️ Features: Full support for Cosmos DB SDKs, latest features released here first.
+  🔍 Query: Uses SQL-like syntax.
+  ✅ Best end-to-end integration with Azure Cosmos DB.
+
+🔹 API for MongoDB
+  🗂️ Data Format: BSON (Binary JSON)
+  🔌 Protocol: MongoDB wire protocol compatible
+  🌍 Use if: You want to leverage MongoDB tools and skills with Cosmos DB reliability and scalability.
+
+🔹 API for PostgreSQL
+  🗂️ Data Format: Relational tables
+  ⚡ Backed by: PostgreSQL + Citus (for distributed scale-out)
+  🌍 Use if: You want a fully managed PostgreSQL with scale-out capabilities for big workloads.
+
+🔹 API for Apache Cassandra
+  🗂️ Data Format: Column-family model
+  🔌 Protocol: Cassandra wire protocol compatible
+  🌍 Use if: You’re building apps that require high throughput and horizontal scale, or migrating from Cassandra.
+
+🔹 API for Apache Gremlin
+  🗂️ Data Format: Graph model (vertices + edges)
+  🌐 Use for: Complex relationships, dynamic or highly connected data (e.g., social networks, recommendations)
+  🔌 Compatible with: Existing Gremlin tools and knowledge base
+
+🔹 API for Table
+  🗂️ Data Format: Key/Value
+  ⚡ Compared to Azure Table Storage:
+    - Faster queries
+    - Better global distribution
+    - Improved indexing & scaling
+
+✅ Use if: You’re upgrading from Azure Table Storage for OLTP (online transaction processing) workloads.
+
+🧠 Pro Tip
+There’s no “best” API overall—it depends on your use case, current tech stack, and future scaling needs.
