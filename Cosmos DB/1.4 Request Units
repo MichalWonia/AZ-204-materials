@@ -1,0 +1,38 @@
+⚙️ Discover Request Units (RUs) in Azure Cosmos DB
+In Azure Cosmos DB, performance and pricing are tied to a unique concept called Request Units (RUs)—a way to normalize the cost of all database operations.
+
+📏 What is a Request Unit (RU)?
+RUs represent a combination of system resources:
+  🧠 CPU, 💾 memory, and 📈 IOPS.
+  Every database operation consumes a certain number of RUs.
+
+🔁 Example: A point read of a 1 KB item (by ID + partition key) = 1 RU.
+🔍 Regardless of the API (SQL, MongoDB, Cassandra, etc.), costs are always measured in RUs.
+
+💰 How RUs Affect Cost
+You’re billed hourly based on:
+- The throughput you provision (in RUs/sec).
+- The storage you consume.
+
+🧮 RUs Are Charged Based on Account Mode
+Azure Cosmos DB supports 3 modes:
+
+🔹 Provisioned Throughput Mode
+  💡 You define how many RUs per second you want (in 100 RU/s increments).
+  🔄 You can scale up or down manually or programmatically.
+  📦 Throughput can be assigned to containers or databases.
+
+🔹 Serverless Mode
+  🛠️ No need to pre-provision RUs.
+  💳 You pay only for the RUs consumed.
+  ✅ Best for sporadic, low-traffic workloads.
+
+🔹 Autoscale Mode
+  📈 Throughput scales automatically from 10% to 100% of the max RU limit.
+  ⏱️ No downtime or performance loss during scaling.
+  ✅ Great for mission-critical apps with spiky or unpredictable workloads.
+
+📌 Key Takeaways
+- RUs are the currency of operations in Cosmos DB.
+- Choose the mode that matches your traffic pattern and cost goals.
+- Keep RU usage efficient by optimizing operations and partitioning well.
