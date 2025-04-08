@@ -1,0 +1,24 @@
+🔹Function App Basics
+- A function app is the execution context for Azure Functions — it's the unit of deployment, scaling, and management.
+
+- A function app can contain multiple functions, and they share the same:
+- Pricing plan
+- Deployment method
+- Runtime version
+
+🧠 In Azure Functions v2.x and later, all functions in a function app must be written in the same language.
+
+🔹 Local Development
+- You can develop and test Azure Functions locally using your preferred code editor.
+- Local functions can connect to live Azure services and be debugged using the full Functions runtime.
+- It's recommended to develop locally and then publish to Azure, due to limitations in the portal editor.
+
+📁 Function App Project Files
+A typical Functions project (regardless of language) contains:
+- host.json	-- Global configuration for all functions in the app
+- local.settings.json	-- Stores local app settings for development; not used in Azure deployment
+⚠️ Do not commit local.settings.json to version control — it may contain secrets like connection strings.
+
+🔄 Settings Synchronization
+- Any app settings used locally must also be set in Azure when publishing.
+- You can also download settings from your deployed function app to your local project to stay in sync.
