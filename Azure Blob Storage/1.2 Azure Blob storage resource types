@@ -1,0 +1,21 @@
+☁️ Azure Blob Storage Resources
+Storage Account
+- Unique namespace for all your data.
+- Example endpoint: http://mystorageaccount.blob.core.windows.net
+
+Container
+- Organizes blobs (like directories in a file system).
+- Unlimited number of containers in a storage account.
+- Container name rules:
+  - 3-63 characters long.
+  - Only lowercase letters, numbers, and dashes (-).
+  - Cannot have consecutive dashes.
+- Example container URI: https://myaccount.blob.core.windows.net/mycontainer
+
+Blob
+- Types of blobs:
+  - Block Blobs: Store text and binary data (up to 190.7 TiB).
+  - Append Blobs: Optimized for append operations (e.g., logging).
+  - Page Blobs: Store random access files (up to 8 TB), used for Azure VM disks.
+- Example blob URI: https://myaccount.blob.core.windows.net/mycontainer/myblob
+
