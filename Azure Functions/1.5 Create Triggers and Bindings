@@ -1,0 +1,61 @@
+⚡ Triggers
+- A trigger defines how a function is invoked.
+- Every function must have one trigger (only one).
+- Triggers provide input data, which is passed to the function as parameters.
+
+🔗 Bindings
+- Bindings connect your function to other services/resources without hardcoding logic.
+- Can be:
+  - Input
+  - Output
+  - Or both (inout)
+- Optional — a function can have zero, one, or multiple bindings.
+
+Think of triggers as “how a function starts” and bindings as “how it gets or sends data.”
+
+🧪 Local Development Tips
+- HTTP triggers: Test with http://localhost/.
+- Other triggers:
+  - Use live Azure services via local.settings.json connection strings (separate dev/prod services recommended).
+  - Use Azurite emulator for storage triggers.
+  - Use admin endpoints to run manually if needed.
+
+🧱 How to Define Triggers and Bindings (Language-Specific)
+Language	            How to configure
+C# class lib	        C# attributes
+Java	                Java annotations
+JS, Python, TS	      function.json schema
+C# script	            Uses function.json (not attributes)
+
+For dynamically typed languages, use dataType in function.json: e.g., binary, stream, or string.
+
+🧭 Binding Direction
+All bindings have a direction:
+- in → input
+- out → output
+- inout → read/write (used rarely)
+
+💡 Example Scenario
+Write a row to Azure Table Storage when a new message appears in Azure Queue Storage.
+{
+  "bindings": [
+    {
+      "type": "queueTrigger",
+      "direction": "in",
+      "name": "myQueueItem",
+      "queueName": "myqueue-items",
+      "connection": "MyStorageConnectionAppSetting"
+    },
+    {
+      "type": "table",
+      "direction": "out",
+      "name": "tableBinding",
+      "tableName": "Person",
+      "connection": "MyStorageConnectionAppSetting"
+    }
+  ]
+}
+
+Trigger: queueTrigger – listens to a queue.
+Output binding: table – writes a new row to a Table Storage.
+Both use the same connection string setting (MyStorageConnectionAppSetting).
