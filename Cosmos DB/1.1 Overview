@@ -1,0 +1,79 @@
+Azure Cosmos DB is a globally distributed database system that allows you to read and write data from the local replicas of your database
+and it transparently replicates the data to all the regions associated with your Cosmos account.
+
+🌍 Key Benefits of Azure Cosmos DB
+Azure Cosmos DB is a fully managed NoSQL database service optimized for:
+- Low latency
+- Elastic scalability
+- High availability
+- Strong consistency guarantees
+
+🚀 Global Distribution
+- Globally available in any Azure region.
+- Place data closer to your users to reduce latency.
+- Add or remove regions anytime without downtime or redeployment.
+
+🌐 Multi-Region Writes with Multi-Master Replication
+- Azure Cosmos DB uses a novel multi-master replication protocol, meaning:
+- Every region supports both reads and writes.
+- Applications can write and read from any region selected.
+
+⚡ Performance and Scalability
+- <10ms latency for reads and writes at the 99th percentile.
+- Unlimited elastic read/write scalability across the globe.
+- Supports near real-time performance no matter where users are located.
+
+💯 High Availability
+- 99.999% availability SLA for reads and writes when configured in multiple regions.
+- Automatic failover between regions ensures your app stays online even during outages.
+
+✅ Consistency Levels
+- Choose from five consistency models to balance performance and data guarantees.
+- Azure Cosmos DB handles replication and data consistency internally.
+
+🏗️ Azure Cosmos DB Resource Hierarchy
+Azure Cosmos DB has a structured resource hierarchy that enables global distribution, scalability, and high availability.
+
+🔝 1. Azure Cosmos DB Account
+- Top-level unit of management and global distribution.
+- Each account has a unique DNS name.
+- Manageable via Azure Portal, CLI, or SDKs.
+- You can add/remove Azure regions to distribute data globally.
+- Max 50 accounts per Azure subscription (can request more).
+
+📂 2. Databases
+- A logical namespace within a Cosmos DB account.
+- Unit of management for a group of containers.
+- You can have multiple databases under a single account.
+
+📦 3. Containers (Collections/Tables/etc. depending on API)
+- Core unit of scalability in Cosmos DB.
+- Containers store your actual data.
+- Azure Cosmos DB automatically partitions containers for scalability.
+- Requires a partition key to help distribute data efficiently.
+- Used in queries for fast and targeted retrieval.
+- Virtually unlimited throughput and storage per container.
+
+Throughput Options:
+- Dedicated throughput:
+  - Reserved for a single container.
+  - Types: Standard or Autoscale.
+
+- Shared throughput:
+  - Defined at the database level.
+  - Shared across up to 25 containers (excluding dedicated ones).
+
+🧩 4. Items (Documents, Rows, Records)
+- Actual data entries within a container.
+- Representation varies based on the API used (SQL, MongoDB, Cassandra, etc.).
+- Each item lives in a logical partition determined by its partition key.
+
+🧱 Partitioning
+- Azure Cosmos DB uses logical and physical partitions for scaling.
+  - Logical Partition: Up to 20 GB of data.
+  - Physical Partition:
+   - Up to 10,000 RU/s.
+   - Up to 50 GB of data.
+- Scales automatically with storage and throughput needs.
+
+This structure is designed to optimize performance, scalability, and global availability for your distributed applications.
