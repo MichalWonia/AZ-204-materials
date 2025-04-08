@@ -1,0 +1,58 @@
+🚀 Azure Functions Hosting Plan Comparison
+Azure Functions can be hosted in multiple ways, each with its own scaling model, cost, and capabilities.
+
+🧭 Key Hosting Plans
+Plan	                                    Highlights	                                                                                      Best When You...
+Consumption	                              Default plan. Pay only when functions run. Auto-scales.	                                          Need pay-as-you-go, simple serverless apps.
+Flex Consumption	                        Combines Consumption's cost model with more scaling control & VNet support.    	                  Want lower cold start, control over concurrency, or VNet access.
+Premium	                                  Auto-scaling with prewarmed workers (no cold start), more power, longer timeouts, VNet support.	  Need fast startup, longer executions, more power, or custom Linux containers.
+Dedicated (App Service)	                  Runs in standard App Service Plan. Manual scaling.	                                              Need predictable cost, shared resources, or Durable Functions alternatives.
+Container Apps	                          Functions run inside containers in Azure Container Apps (fully managed).	                        Need custom dependencies, integration with microservices, or legacy migration.
+
+🧱 Other Key Details
+- Scaling & Resource Use: Varies by plan. Consumption plans auto-scale dynamically. Premium & Dedicated give more control.
+- VNet Support: Available in Flex, Premium, and Dedicated plans.
+- Cold Starts: Reduced in Flex with always-ready instances, and eliminated in Premium.
+- Timeout Limit: Controlled via functionTimeout in host.json. Premium and Dedicated allow longer durations.
+
+🛠️ When to Use Each Plan
+Scenario	                                          Recommended Plan
+Simple event-driven app with low traffic	          Consumption
+High traffic app, needs low latency + VNet	        Flex Consumption
+Critical app, long executions, high memory	        Premium
+Need manual scaling + predictable costs	            Dedicated
+Complex app with containers + microservices	        Container Apps
+
+
+🕒 Azure Functions Time-Outs: What You Need to Know
+⚠️ HTTP Trigger Hard Limit
+230 seconds is the absolute max time an HTTP-triggered function can take to return a response.
+
+🔍 This is due to Azure Load Balancer's idle timeout.
+
+✅ For longer processing:
+- Use Durable Functions (async pattern).
+- Or defer work and return immediately (e.g., push to a queue).
+
+⏱️ Execution Time Grace Periods
+Plan	                              Grace Period (During Scale-in or Updates)
+Flex Consumption	                  60 minutes
+Premium Plan	                      60 minutes
+App Service (Dedicated)	            10 minutes (Platform updates)
+🛑 After the grace period, function executions may be aborted.
+
+⚙️ Other Time-Out Behavior
+App Service Plan:
+- Must have Always On enabled for functions to run reliably.
+
+v1.x Runtime:
+- Has no execution time-out limit by default.
+
+When Min Replicas = 0 (in Container Apps / Premium):
+- Time-out varies by trigger type (e.g., Timer, HTTP, Queue).
+
+📝 TL;DR
+🕒 HTTP trigger hard limit = 230s
+💡 Durable Functions recommended for anything longer
+🔁 Grace periods protect in-progress executions during scale or updates
+🔧 Always On = important for App Service Plan
