@@ -1,0 +1,28 @@
+🔐 Secure Connections Using App Settings
+- Azure Functions uses App Settings to securely store connection strings, secrets, tokens, etc.
+- These are stored encrypted and accessed at runtime as environment variables.
+- You cannot directly use a raw connection string in bindings—only setting names.
+
+⚙️ Environment Contexts
+- In Azure  → App Settings.
+- Locally   → local.settings.json.
+
+🪪 Identity-Based Connections
+- Some Azure services support connecting via a managed identity instead of secrets.
+- Identity-based access works best with Azure-hosted functions (Consumption / Elastic Premium).
+- Default: Uses system-assigned managed identity.
+- Optional: Specify user-assigned identity via credential and clientID.
+- Resource IDs for user-assigned identities not supported.
+
+💻 Local Development
+- Uses your developer identity for identity-based connections (can be customized).
+
+🧑‍🔧 Permissions & Access
+- Grant the identity permissions via:
+  - Azure RBAC roles, or
+  - Access policies (depends on target service).
+- Follow the principle of least privilege — only grant what's necessary.
+
+⚠️ Note:
+- Azure Files does not support managed identity for file share access.
+- You must use WEBSITE_AZUREFILESCONNECTIONSTRING and WEBSITE_CONTENTSHARE for access.
