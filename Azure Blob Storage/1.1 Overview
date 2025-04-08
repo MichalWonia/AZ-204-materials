@@ -1,0 +1,35 @@
+☁️ What is Azure Blob Storage?
+- Blob = Binary Large Object.
+- Object storage optimized for massive amounts of unstructured data like text, images, logs, videos.
+- Accessible globally via HTTP/HTTPS through:
+  - REST API
+  - Azure CLI
+  - Azure PowerShell
+  - SDKs
+
+🔧 Common Use Cases
+- Serving files (images, docs)
+- Streaming media
+- Backups & disaster recovery
+- Log storage
+- Data for analytics
+- Cloud-native app file storage
+
+🏢 Storage Account Types
+- Standard: This is the standard general-purpose v2 account and is recommended for most scenarios using Azure Storage.
+- Premium: Premium accounts offer higher performance by using solid-state drives. If you create a premium account you can choose between three account types, block blobs, page blobs, or file shares.
+
+Type	                            Supports	                        Redundancy Options	                      Use Case
+Standard General-Purpose v2	      Blobs, Queues, Tables, Files	    LRS, GRS, RA-GRS, ZRS, GZRS, RA-GZRS	    Default and recommended for most
+Premium Block Blobs	              Blobs	                            LRS, ZRS	                                High performance, low latency
+Premium File Shares	              Azure Files	                      LRS, ZRS	                                Enterprise-level file share needs
+Premium Page Blobs	              Page Blobs	                      LRS, ZRS	                                Optimized for random read/write I/O
+
+🧊 Blob Storage Access Tiers
+Tier	                When to Use	                Storage Cost	                Access Cost	                Minimum Storage Duration
+Hot	                  Frequent access	            💰 High	                      ✅ Low	                    —
+Cool	                Infrequent access	          💲 Lower	                    🚫 Higher	                  30 days
+Cold	                Rare access	                💲 Even lower	              ❌ Higher	                  90 days
+Archive	              Rare, long-term storage	    🪙 Cheapest	                  🔓 Highest	                180 days, slow retrieval
+
+🔄 You can change tiers anytime as your access patterns shift.
