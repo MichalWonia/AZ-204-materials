@@ -1,0 +1,17 @@
+Azure Storage Encryption 🛡️
+- Service-Side Encryption (SSE)
+- Encryption at rest: Automatically encrypts data when stored in Azure Storage.
+- 256-bit AES: Uses one of the strongest encryption standards (AES-256) to protect data.
+- Transparent encryption: No code changes required for encryption.
+- Supports all Azure Storage services: Blob, Table, Queue, File Storage, etc.
+- No extra cost for encryption.
+
+Key Management 🔑
+- Microsoft-managed keys: Default option, with Microsoft handling encryption/decryption.
+- Customer-managed keys: You can manage encryption keys via Azure Key Vault (for Blob Storage and Azure Files).
+- Customer-provided keys: Allow granular control over encryption/decryption with an encryption key supplied by the client.
+- Key storage: Keys are stored either by Microsoft, in Azure Key Vault, or your own key store.
+
+Client-Side Encryption 💻
+- Encrypt data before upload: Supported in .NET, Java, and Python client libraries for Blob and Queue Storage.
+- AES encryption: Both AES in CBC mode (version 1) and GCM mode (version 2) are supported for encryption.
