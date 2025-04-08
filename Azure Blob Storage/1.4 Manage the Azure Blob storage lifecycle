@@ -1,0 +1,19 @@
+Azure Blob Storage Lifecycle 🔄
+Access Tiers 📊
+- Hot: Optimized for frequent access.
+- Cool: For infrequently accessed data stored for 30+ days.
+- Cold: For rarely accessed data stored for 90+ days, with higher access costs.
+- Archive: For rarely accessed data, stored for 180+ days with high latency but lowest storage cost.
+
+Managing Data Lifecycle ⏳
+Lifecycle management allows you to:
+- Transition blobs to more cost-effective tiers (e.g., Hot to Cool/Cold).
+- Expire and delete blobs that are no longer needed.
+- Apply policies based on conditions like access frequency or blob age.
+
+Scenario Example 🔄
+- Frequent access initially → Use Hot tier.
+- Infrequent access after two weeks → Move to Cool tier.
+- Rarely accessed beyond a month → Move to Archive tier.
+
+Using these tiers and lifecycle management rules can optimize cost while ensuring your data stays accessible based on its age and usage frequency.
