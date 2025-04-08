@@ -1,0 +1,36 @@
+Rehydrate Blob Data from the Archive Tier 🔄
+Blobs in the Archive access tier are considered offline and cannot be read or modified directly. 
+To access or modify data from an archived blob, it must first be rehydrated to an online tier (either Hot or Cool). 
+There are two main options for rehydrating a blob:
+
+1. Copy an Archived Blob to an Online Tier 🔄
+You can rehydrate an archived blob by copying it to a new blob in the Hot or Cool tier. This is the recommended approach for most scenarios.
+- Operations: Use the Copy Blob or Copy Blob from URL operation.
+- Important Note: When you copy an archived blob, the source blob remains in the Archive tier. You must copy the archived blob to a new blob with a different name or in a different container. Overwriting the source blob is not possible.
+
+2. Change a Blob's Access Tier to an Online Tier 🔄
+You can also rehydrate a blob by directly changing its access tier to Hot or Cool using the Set Blob Tier operation.
+
+- Important Considerations:
+  - Once a Set Blob Tier request is initiated, it cannot be canceled.
+  - During the rehydration process, the blob will still show as archived until the rehydration is complete.
+  - Changing the access tier doesn't affect the last modified time of the blob.
+
+Rehydration Priority 🔥
+You can set the priority for the rehydration process using the x-ms-rehydrate-priority header:
+- Standard Priority: Rehydration is processed in the order it was received and may take up to 15 hours.
+- High Priority: The rehydration process is prioritized, and it might complete in under 1 hour for blobs under 10 GB in size.
+
+To check the rehydration priority during the process, use Get Blob Properties to retrieve the x-ms-rehydrate-priority header value (either Standard or High).
+
+Copy an Archived Blob to an Online Tier
+- Rehydrating an archived blob by copying it to a new online destination blob is supported only within the same storage account (for service versions before 2021-02-12).
+- For service versions 2021-02-12 and later, you can also copy archived blobs to a different storage account as long as both accounts are in the same region.
+
+Change a Blob's Access Tier
+- If you change the tier using the Set Blob Tier operation, the blob will transition from the Archive tier to the Hot or Cool tier.
+- Be cautious: if a lifecycle management policy is in place, the blob could be moved back to the Archive tier after rehydration if its last modified time is beyond the threshold set in the policy.
+
+Key Takeaways:
+- Copy Blob is the safest option for rehydration, especially if you need the archived data in a new storage account.
+- Set Blob Tier is a faster but irreversible method for moving data back to an online tier, with lifecycle policies to consider.
