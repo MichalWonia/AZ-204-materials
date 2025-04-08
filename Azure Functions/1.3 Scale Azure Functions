@@ -1,0 +1,20 @@
+Plan	                                            Scaling Behavior	                                                                        Maximum Instances
+Consumption Plan	                                Event-driven; automatically scales out based on incoming trigger events.	                Windows: 200
+                                                                                                                                            Linux: 100
+  
+Flex Consumption Plan	                            Per-function scaling; scales based on individual function demands.	                      Limited by total memory usage across instances in a region.
+
+Premium Plan	                                    Event-driven; scales out automatically based on event triggers.	                          Windows: 100
+                                                                                                                                            Linux: 20–100
+
+Dedicated Plan	                                  Manual or autoscale; scaling depends on the App Service plan configuration.	              10–30
+                                                                                                                                            100 in an App Service Environment (ASE)
+
+Container Apps	                                  Event-driven; scales out by adding more Function host instances based on event triggers.	10–300
+
+Notes:
+Linux Consumption plan apps have a scale-out limit of 500 instances per subscription per hour.​
+In certain regions, Linux apps on a Premium plan can scale up to 100 instances.​
+In Container Apps, the maximum number of replicas can be set, subject to available core quotas.​
+
+For a detailed comparison and more information, refer to https://learn.microsoft.com/en-us/training/modules/explore-azure-functions/4-scale-azure-functions
