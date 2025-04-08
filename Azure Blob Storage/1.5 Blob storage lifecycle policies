@@ -1,0 +1,68 @@
+Azure Blob Storage Lifecycle Policies 📜
+Lifecycle management in Azure Blob Storage involves creating rules that automatically move blobs to different access tiers or delete them based on certain conditions. 
+Each rule consists of a filter set (which defines which blobs the rule applies to) and an action set (which defines what happens to the selected blobs).
+
+Policy Structure 📑
+A policy is a collection of rules, written in JSON format. Each rule has:
+- Name: A unique identifier for the rule.
+- Enabled: A boolean to activate or deactivate the rule.
+- Type: Currently, only "Lifecycle" is valid.
+- Definition: Specifies the filter and action sets.
+
+Sample Rule (JSON Format):
+{
+  "rules": [
+    {
+      "enabled": true,
+      "name": "sample-rule",
+      "type": "Lifecycle",
+      "definition": {
+        "actions": {
+          "baseBlob": {
+            "tierToCool": { "daysAfterModificationGreaterThan": 30 },
+            "tierToArchive": { "daysAfterModificationGreaterThan": 90, "daysAfterLastTierChangeGreaterThan": 7 },
+            "delete": { "daysAfterModificationGreaterThan": 2555 }
+          }
+        },
+        "filters": {
+          "blobTypes": ["blockBlob"],
+          "prefixMatch": ["sample-container/blob1"]
+        }
+      }
+    }
+  ]
+}
+
+
+Rule Filters 🔍
+Filters define which blobs are targeted for actions. The filters work as an AND condition when combined. Available filters include:
+- blobTypes: Defines the blob types (e.g., blockBlob, appendBlob).
+- prefixMatch: Matches blob names based on prefixes (e.g., "sample-container/blob1").
+- blobIndexMatch: Allows filtering by index tags attached to blobs.
+
+Actions 💥
+Actions are what happen to the blobs that match the filters. For example:
+- Tiering:
+ - tierToCool: Moves to Cool tier after 30 days of no modification.
+ - tierToArchive: Moves to Archive tier after 90 days of no modification (and 7+ days in Cool/Cold).
+ - tierToCold: Moves to Cold tier after 90 days.
+
+- Deletion:
+ - delete: Deletes blobs after 2,555 days (~7 years).
+
+- Snapshots:
+ - delete (for snapshots) after 90 days.
+
+Action Conditions ⏳
+The conditions that trigger actions are:
+- daysAfterModificationGreaterThan: Time in days since the last modification for base blobs.
+- daysAfterCreationGreaterThan: Time in days since the creation of blob snapshots.
+- daysAfterLastAccessTimeGreaterThan: Time since the last access (if access tracking is enabled).
+- daysAfterLastTierChangeGreaterThan: Time since the last tier change before moving blobs back to Archive.
+
+Cost-Effective Action Application 💸
+Lifecycle management applies the least expensive action when multiple actions are available. For example:
+- Delete is cheaper than tierToArchive, and tierToArchive is cheaper than tierToCool.
+
+This lifecycle management system ensures that blobs are stored in the most cost-effective tier according to their access frequency and lifecycle stage. 
+You can automate data transitions based on age, helping to optimize storage costs.
