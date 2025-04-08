@@ -1,0 +1,72 @@
+🔄 What is the Change Feed?
+The Change Feed in Azure Cosmos DB is a persistent, ordered log of changes (inserts and updates) to items in a container.
+  ✅ Sorted by modification time
+  ✅ Asynchronous and incremental processing
+  ✅ Changes can be processed by multiple consumers in parallel
+  ❌ Deletes are not tracked (you can implement soft deletes with a "deleted": true flag and TTL)
+
+🛠️ Models for Accessing the Change Feed
+There are two models for working with the change feed:
+  1. Push Model (recommended)
+  - You get automatic scaling, partition management, and state tracking
+  - Easier to implement and maintain
+  Uses:
+    - Azure Functions (event-driven)
+    - Change Feed Processor Library
+
+  2. Pull Model
+  - You write custom logic to poll and track state
+  - Gives fine-grained control, useful for:
+    - One-time data migrations
+    - Reading from specific partition keys
+    - Controlling processing pace
+
+⚡ Push Model Options
+🧩 Azure Functions with Cosmos DB Trigger
+- Auto-triggered on changes
+- Serverless; no infrastructure needed
+- Scales automatically
+- Based on change feed processor behind the scenes
+
+🧩 Change Feed Processor Library
+Works with .NET SDK V3+ and Java SDK V4+. Involves four components:
+
+Component	                  Description
+Monitored container	        Source of the change feed
+Lease container	            Tracks state of each processor's progress
+Compute instance	          Host where processor runs
+Delegate	                  Code that processes changes
+
+📌 Sample Setup Code (C#):
+ChangeFeedProcessor changeFeedProcessor = cosmosClient
+    .GetContainer("dbName", "sourceContainer")
+    .GetChangeFeedProcessorBuilder<ToDoItem>(
+        processorName: "changeFeedSample",
+        onChangesDelegate: HandleChangesAsync)
+    .WithInstanceName("consoleHost")
+    .WithLeaseContainer(cosmosClient.GetContainer("dbName", "leaseContainer"))
+    .Build();
+
+await changeFeedProcessor.StartAsync();
+
+📌 Delegate (Processor Logic):
+
+static async Task HandleChangesAsync(
+    ChangeFeedProcessorContext context,
+    IReadOnlyCollection<ToDoItem> changes,
+    CancellationToken cancellationToken)
+{
+    Console.WriteLine($"Changes for lease {context.LeaseToken}");
+
+    foreach (ToDoItem item in changes)
+    {
+        Console.WriteLine($"Detected item ID {item.id}, created at {item.creationTime}");
+        await Task.Delay(10); // simulate processing
+    }
+}
+
+🔁 Change Feed Lifecycle
+- Check for new changes
+- If none → sleep (poll interval)
+- If changes → send batch to delegate
+- If processing successful → update lease and go back to step 1
