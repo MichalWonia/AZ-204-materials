@@ -1,0 +1,58 @@
+Adding, Editing, or Removing a Lifecycle Management Policy ⚙️
+You can manage Azure Blob Storage lifecycle policies using multiple methods, including the Azure portal, Azure PowerShell, Azure CLI, or REST APIs. 
+Here’s how to work with these policies using the Azure portal and Azure CLI.
+
+Azure Portal: Adding a Policy (Code View) 🖥️
+To add a policy using the Azure portal:
+- Navigate to your Storage account in the Azure portal.
+- Under Data management, select Lifecycle Management.
+- Select the Code View tab, where you can define a lifecycle management policy in JSON format.
+
+Example Policy in Code View:
+The following JSON defines a policy that moves a block blob with a name starting with "log" to the Cool tier if it hasn't been modified in the last 30 days:
+
+{
+  "rules": [
+    {
+      "enabled": true,
+      "name": "move-to-cool",
+      "type": "Lifecycle",
+      "definition": {
+        "actions": {
+          "baseBlob": {
+            "tierToCool": {
+              "daysAfterModificationGreaterThan": 30
+            }
+          }
+        },
+        "filters": {
+          "blobTypes": [
+            "blockBlob"
+          ],
+          "prefixMatch": [
+            "sample-container/log"
+          ]
+        }
+      }
+    }
+  ]
+}
+
+
+Azure CLI: Adding a Policy 📝
+To add a lifecycle management policy using the Azure CLI:
+- Write the lifecycle policy in a JSON file (for example, policy.json).
+- Use the following CLI command to apply the policy:
+
+az storage account management-policy create \
+    --account-name <storage-account> \
+    --policy @policy.json \
+    --resource-group <resource-group>
+    
+Replace <storage-account> with your storage account name.
+Replace <resource-group> with the resource group name.
+
+Important Notes:
+A lifecycle management policy must be provided in full when adding or updating it. Partial updates are not supported.
+
+These methods give you flexibility in managing lifecycle policies to automate tiering and data expiration based on your specific requirements.
