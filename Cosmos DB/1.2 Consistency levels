@@ -1,0 +1,86 @@
+⚖️ Azure Cosmos DB Consistency Levels
+Instead of offering just "Strong" vs. "Eventual" consistency, Azure Cosmos DB gives developers a spectrum of five consistency levels, 
+allowing fine-grained control over the balance between performance, availability, and data accuracy.
+
+🧪 The 5 Consistency Levels (from strongest ➡ weakest)
+🔒 Strong
+- Reads always return the most recent committed write.
+- Total global order of operations.
+- Highest consistency, lowest availability.
+- Similar to reading from a single-master system.
+
+⏳ Bounded Staleness
+- Guarantees reads are behind writes by at most:
+  - A certain number of operations (K),
+  - OR a specific time interval (T seconds).
+- Great for scenarios that require predictable lag.
+
+📱 Session (Default)
+- Guarantees read-your-own-writes within a session.
+- Best option for single-user scoped apps (e.g., mobile apps, user dashboards).
+- Strong consistency per session, eventual across sessions.
+
+📜 Consistent Prefix
+- Reads never see out-of-order writes.
+- If a write sequence is A → B → C, clients will never see B or C without first seeing A.
+- No gaps, but some lag is possible.
+
+🌐 Eventual
+- No ordering guarantees.
+- Reads might return older data temporarily.
+- Lowest latency, highest availability.
+
+🌍 Region-Agnostic Guarantees
+Consistency is maintained regardless of:
+🌐 Number or location of regions (single or multi-region).
+📝 Whether reads/writes are local or cross-region.
+✍️ Whether your account uses single or multiple write regions.
+💡 Read consistency applies per logical partition or partition-key range.
+
+Azure Cosmos DB's flexible consistency model helps you tune performance without sacrificing the right amount of data correctness your app needs.
+
+
+
+🛠️ Configuring Consistency
+- Set at the account level, affects all containers and databases under that account.
+- You can change it at any time.
+
+Applies to reads scoped within a logical partition, regardless of whether the read comes from a client or stored procedure.
+
+📐 Consistency Level Use Cases & Guarantees
+1. 🔒 Strong Consistency
+✅ Guarantees: Always returns the most recent committed write.
+📌 Use when: Your app needs absolute correctness (e.g., banking systems).
+⚠️ Tradeoff: Lower availability across regions, higher latency.
+
+2. ⏱️ Bounded Staleness
+✅ Guarantees: Reads lag behind writes by K versions or T seconds, whichever comes first.
+📌 Use when: You want predictable lag but don’t need real-time.
+🌍 Ideal for: Multi-region read scenarios (with single write region).
+⚠️ Tradeoff: Slight delay in replication, writes may get throttled if lag exceeds limits.
+
+3. 📱 Session Consistency (Default)
+✅ Guarantees: "Read your own writes" and "write follows read" within a session.
+📌 Use when: Users expect their actions (e.g., posting, updating) to reflect immediately in their own view.
+🤝 Ideal for: User-centric apps like dashboards, chats, social media feeds.
+⚠️ Tradeoff: Eventual consistency between sessions.
+
+4. 📜 Consistent Prefix
+✅ Guarantees: No out-of-order reads; reads reflect a consistent sequence of writes.
+📌 Use when: Order of operations is important but absolute freshness isn’t.
+🧾 Example: Logs, inventory updates, sequential transactions.
+⚠️ Tradeoff: May lag, but always in-order.
+
+5. 🌐 Eventual Consistency
+✅ Guarantees: Replicas eventually converge—no ordering or freshness guarantee.
+📌 Use when: Reads can be stale or unordered without affecting user experience.
+💬 Examples: Likes, view counters, social metrics.
+⚠️ Tradeoff: Highest availability and performance, but least strict consistency.
+
+✅ Summary Tips
+- Use Strong when correctness > performance.
+- Use Session for most user-driven apps.
+- Use Eventual when speed and scale outweigh consistency (e.g., analytics).
+- Use Bounded Staleness if you need a good balance across geo-distributed regions.
+- Use Consistent Prefix when order matters more than freshness.
+
