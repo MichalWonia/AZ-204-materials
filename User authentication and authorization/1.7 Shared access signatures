@@ -1,0 +1,56 @@
+Shared Access Signature (SAS) Overview
+A Shared Access Signature (SAS) is a URI that grants access to specific Azure Storage resources, such as Blob storage, Queue storage, Table storage, or Azure Files. 
+The SAS token, which is appended to the resource's URI, specifies the permissions, expiration, and other conditions under which the resource can be accessed.
+
+Types of Shared Access Signatures
+Azure Storage supports three types of SAS:
+
+1. User Delegation SAS
+  - Security: Secured by Microsoft Entra (formerly Azure Active Directory) credentials.
+  - Scope: Applies only to Blob Storage.
+  - Usage: Recommended for scenarios where you want to authenticate using Microsoft Entra credentials rather than account keys. It provides a higher level of security and better access management.
+
+2. Service SAS
+  - Security: Secured by the storage account key.
+  - Scope: Allows delegated access to one specific resource within one of the following services: Blob storage, Queue storage, Table storage, or Azure Files.
+  - Usage: Useful when you want to grant access to a single resource in a specific Azure Storage service.
+
+3. Account SAS
+  - Security: Secured by the storage account key.
+  - Scope: Allows delegated access to one or more resources across all storage services (Blob, Queue, Table, Azure Files).
+  - Usage: Provides the most extensive set of operations, but should be used cautiously due to the broad permissions it grants.
+
+How Shared Access Signatures Work
+A SAS is composed of two main components:
+1. Resource URI: The address of the resource you wish to access (e.g., a blob in Azure Storage).
+2. SAS Token: A token that includes specific query parameters to control the access rights and conditions.
+
+An example SAS URI looks like this:
+
+https://medicalrecords.blob.core.windows.net/patient-images/patient-116139-nq8z7f.jpg?
+sp=r&st=2020-01-20T11:42:32Z&se=2020-01-20T19:42:32Z&spr=https&sv=2019-02-02&sr=b&sig=SrW1HZ5Nb6MbRzTbXCaPm%2BJiSEn15tC91Y4umMPwVZs%3D
+
+The components of the SAS token include:
+
+Component	                                                          Description
+sp=r	                                                              Permissions: Specifies the operations allowed (e.g., r for read-only, w for write, d for delete, etc.).
+st=2020-01-20T11:42:32Z	                                            Start time: When access starts.
+se=2020-01-20T19:42:32Z	                                            Expiry time: When access expires.
+sv=2019-02-02	                                                      API version: The storage service API version being used.
+sr=b	                                                              Resource type: Specifies what type of storage resource is being accessed (e.g., b for Blob storage).
+sig=SrW1HZ5Nb6MbRzTbXCaPm%2BJiSEn15tC91Y4umMPwVZs%3D	              Signature: A cryptographic signature that validates the SAS token.
+
+Best Practices for Using SAS
+To reduce the risk of misuse, Microsoft recommends the following best practices:
+1. Use HTTPS: Always use HTTPS to securely distribute SAS tokens, preventing man-in-the-middle attacks.
+2. Prefer User Delegation SAS: If possible, use a user delegation SAS. It offers stronger security because it uses Microsoft Entra credentials instead of account keys, and it removes the need to store the account key in your code.
+3. Minimize Expiration Time: Set the expiration (se) of the SAS token to the shortest useful duration. This limits the window of opportunity if the SAS is compromised.
+4. Limit Permissions: Follow the principle of least privilege by granting only the minimum required permissions. For example, if only read access is necessary, set the sp to r (read).
+5. Avoid Using Account SAS When Possible: Since an account SAS can grant access to multiple resources and services, it should only be used when absolutely necessary. In cases where using a SAS introduces too much risk, consider creating a middle-tier service to manage access to storage resources.
+
+When Not to Use SAS
+There are some cases where using a SAS is not recommended:
+- High Risk: If there is a risk of SAS tokens being leaked or misused, avoid using them. Instead, consider using an intermediate service that manages access more securely.
+- Long-Term Access: If access needs to be granted for an extended period, it's often better to use a more secure and manageable approach, such as managed identities, than relying on SAS tokens.
+
+By following these practices, you can securely leverage shared access signatures for accessing Azure Storage resources without exposing your storage account keys directly in your code.
