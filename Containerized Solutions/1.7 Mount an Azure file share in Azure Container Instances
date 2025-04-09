@@ -1,0 +1,92 @@
+📁 Why Mount an Azure File Share?
+ACI is stateless by default. Once a container stops or crashes, its data is gone.
+
+✅ Solution: Mount an Azure Files share, which is:
+- Fully managed
+- SMB-compliant
+- Great for logs, config files, shared resources
+- Only supported for Linux containers
+- Requires container to run as root
+
+🚀 Mount Azure File Share via Azure CLI
+Here’s a command to mount an Azure File Share when creating a container:
+
+az container create \
+  --resource-group $ACI_PERS_RESOURCE_GROUP \
+  --name hellofiles \
+  --image mcr.microsoft.com/azuredocs/aci-hellofiles \
+  --dns-name-label aci-demo \
+  --ports 80 \
+  --azure-file-volume-account-name $ACI_PERS_STORAGE_ACCOUNT_NAME \
+  --azure-file-volume-account-key $STORAGE_KEY \
+  --azure-file-volume-share-name $ACI_PERS_SHARE_NAME \
+  --azure-file-volume-mount-path /aci/logs/
+  
+🔹 Note: Update the DNS name label if it's already taken.
+
+📄 YAML Example: Mount One Azure File Share
+
+apiVersion: '2019-12-01'
+location: eastus
+name: file-share-demo
+properties:
+  containers:
+    - name: hellofiles
+      properties:
+        image: mcr.microsoft.com/azuredocs/aci-hellofiles
+        ports:
+          - port: 80
+        resources:
+          requests:
+            cpu: 1.0
+            memoryInGB: 1.5
+        volumeMounts:
+          - mountPath: /aci/logs/
+            name: filesharevolume
+  osType: Linux
+  restartPolicy: Always
+  ipAddress:
+    type: Public
+    dnsNameLabel: aci-demo
+    ports:
+      - port: 80
+  volumes:
+    - name: filesharevolume
+      azureFile:
+        sharename: acishare
+        storageAccountName: <Storage account name>
+        storageAccountKey: <Storage account key>
+type: Microsoft.ContainerInstance/containerGroups
+
+📂 Mounting Multiple Volumes in YAML/ARM Template
+🔧 Define volumes:
+"volumes": [
+  {
+    "name": "myvolume1",
+    "azureFile": {
+      "shareName": "share1",
+      "storageAccountName": "myStorageAccount",
+      "storageAccountKey": "<storage-account-key>"
+    }
+  },
+  {
+    "name": "myvolume2",
+    "azureFile": {
+      "shareName": "share2",
+      "storageAccountName": "myStorageAccount",
+      "storageAccountKey": "<storage-account-key>"
+    }
+  }
+]
+
+🧱 Mount them in container:
+"volumeMounts": [
+  {
+    "name": "myvolume1",
+    "mountPath": "/mnt/share1/"
+  },
+  {
+    "name": "myvolume2",
+    "mountPath": "/mnt/share2/"
+  }
+]
