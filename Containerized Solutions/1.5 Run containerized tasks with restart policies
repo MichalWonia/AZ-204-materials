@@ -1,0 +1,33 @@
+🧪 ACI for Run-Once Tasks
+🔄 Why use ACI?
+- Super fast to spin up → no VM overhead
+- Pay only for what you use (billed per second)
+- Great for short-lived jobs:
+  - Builds & tests
+  - Image rendering
+  - Scripted data processing
+  - Cron-like scheduled tasks
+
+🔁 Restart Policies in ACI
+When launching a container group, you choose how containers should behave after they stop:
+
+Policy	                      Behavior
+Always (default)	            Restarts the container no matter what.
+Never	                        Runs the container once only. Perfect for run-once tasks.
+OnFailure	                    Restarts only if the container exits with an error (non-zero exit code).
+
+📦 How to Set Restart Policy (CLI)
+Use the --restart-policy flag when creating a container:
+az container create \
+  --resource-group myResourceGroup \
+  --name mycontainer \
+  --image mycontainerimage \
+  --restart-policy OnFailure
+
+✅ Run-to-Completion Behavior
+- ACI will start the container.
+- Once the task/script finishes, the container:
+  - Stops automatically
+  - Gets a status of Terminated (if Never or OnFailure)
+- You're only billed while the container is running.
+
