@@ -1,0 +1,66 @@
+Azure Container Apps offers built-in authentication and authorization features to secure your application easily.
+These features integrate directly with federated identity providers, allowing you to authenticate users without needing to write custom code or manage security infrastructure.
+
+Key Features of Authentication in Azure Container Apps:
+- No code needed: Azure Container Apps handles authentication and authorization for you, saving time.
+- Federated Identity: Supports various third-party identity providers like Microsoft Identity, Facebook, Google, GitHub, Twitter, and more.
+- Secure Ingress: Authentication works only with HTTPS traffic. Ensure allowInsecure is disabled in the ingress settings.
+- Customizable Access:
+  - Require Authentication: Restrict access to authenticated users only.
+  - Allow Unauthenticated Access: Permit access even if users aren't authenticated.
+
+Supported Identity Providers:
+- Microsoft Identity Platform: /auth/login/aad
+- Facebook: /auth/login/facebook
+- GitHub: /auth/login/github
+- Google: /auth/login/google
+- Twitter: /auth/login/twitter
+- OpenID Connect providers: /auth/login/<providerName>
+
+This flexibility allows you to choose one or more authentication providers, letting your users authenticate via their preferred platform.
+
+How Authentication Works (Middleware and Flow):
+Authentication and Authorization Middleware:
+Azure Container Apps employs a sidecar container that runs alongside your application in each replica. 
+This container intercepts incoming requests and manages the authentication process before passing requests to your app.
+
+How it works:
+1. The sidecar container intercepts all incoming HTTP requests.
+2. It validates the authentication token with the chosen identity provider (e.g., Microsoft Identity, Google).
+3. Once authenticated, the middleware injects identity information into the HTTP request headers.
+4. If the user is authenticated, the request is allowed to continue to your app container.
+
+Authentication Flow Options:
+- Server-Directed Flow (without SDK):
+  - Common for browser-based applications.
+  - The app delegates the sign-in process to the identity provider (e.g., Microsoft Identity or Facebook) through the Container Apps middleware.
+  - After authentication, the token is passed to your application.
+
+- Client-Directed Flow (with SDK):
+  - Common for browser-less or mobile apps.
+  - The app directly handles the user authentication (e.g., via an SDK like Microsoft Authentication Library or Google Sign-In).
+  - Once the user is authenticated, the app sends the token to Container Apps for validation.
+
+Example Authentication Flow without SDK (Server-Directed Flow):
+1. User visits your app: The user accesses the web app via the HTTPS endpoint.
+2. Redirect to Identity Provider: If the app is configured to require authentication, the user is redirected to the chosen identity provider’s login page (e.g., Microsoft, Google).
+3. Authentication: The user logs in via the provider’s login page.
+4. Return to App: The identity provider redirects the user back to your app with an authentication token.
+5. Validation: The Container Apps middleware validates the token and injects the identity information into the request headers.
+6. Request Handling: The app can use the identity information (e.g., user email, roles) in the request headers to serve the user’s request accordingly.
+
+Example Authentication Flow with SDK (Client-Directed Flow):
+1. App Signs User In: The mobile or browser app uses an SDK (e.g., MSAL for Microsoft or Firebase for Google) to authenticate the user directly.
+2. Obtain Token: The app obtains an authentication token (e.g., OAuth token) after successful sign-in.
+3. Send Token to Container Apps: The app sends the token to Azure Container Apps via the HTTP request headers.
+4. Token Validation: Container Apps middleware validates the token and provides the necessary identity details to your app.
+
+Additional Configuration Options:
+- Restrict Access to Authenticated Users: Enable this setting if you want to ensure that only authenticated users can access your app.
+- Allow Unauthenticated Access: You can allow unauthenticated access while still using the authentication feature. 
+This may be useful if you want to collect user data but don’t require authentication for all app users.
+
+Conclusion:
+Azure Container Apps' built-in authentication and authorization allow you to implement secure access with minimal effort. 
+The platform’s integration with popular identity providers, sidecar containers for handling security, and flexible access control 
+policies make it easy to secure your applications while focusing on building functionality.
