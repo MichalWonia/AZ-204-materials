@@ -1,0 +1,70 @@
+The Microsoft Graph API is a RESTful web API that provides access to Microsoft Cloud services such as Microsoft 365, Windows 10, and Enterprise Mobility + Security. 
+By registering your app and acquiring authentication tokens, you can make HTTP requests to the Microsoft Graph API to interact with resources like users, emails, calendars, and more.
+
+Structure of a Microsoft Graph REST Request
+To interact with the Graph API, you construct HTTP requests with the following general format:
+
+{HTTP method} https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+
+Components of the Request:
+- HTTP method: Specifies the type of action you want to perform (e.g., GET, POST, PATCH, PUT, DELETE).
+- version: The version of the Microsoft Graph API being used. Common versions are v1.0 (for stable, production-ready APIs) and beta (for preview features).
+- resource: The specific Microsoft Graph resource you're interacting with (e.g., users, messages, groups).
+- query-parameters: Optional parameters that refine the query, such as filters, sorting, and pagination.
+
+HTTP Methods in Microsoft Graph
+The following HTTP methods are supported by the Microsoft Graph API:
+
+Method	        Description
+GET	            Read data from a resource.
+POST	          Create a new resource or perform an action.
+PATCH	          Update an existing resource with new values.
+PUT	            Replace an existing resource with a new one.
+DELETE	        Remove a resource.
+
+Example: Making a GET Request to Retrieve Data
+For example, to retrieve information about the signed-in user's profile, you can use the GET method:
+
+GET https://graph.microsoft.com/v1.0/me
+This will return the profile of the authenticated user.
+
+Example: Querying Messages with Filters
+To filter data and retrieve specific items (e.g., only messages from a particular email address), you can use the $filter OData query option:
+
+GET https://graph.microsoft.com/v1.0/me/messages?filter=from/emailAddress/address eq 'jon@contoso.com'
+This will retrieve messages where the sender’s email address is jon@contoso.com.
+
+Query Parameters
+You can customize the responses from Microsoft Graph by using OData query options such as:
+- $filter: To filter the results based on a condition.
+- $select: To specify which properties to return.
+- $orderby: To sort the results based on a property.
+- $top: To limit the number of items returned (useful for paging).
+- $skip: To skip a number of items (useful for paging).
+
+Example: Retrieve Specific Properties
+If you only need the subject and sender of messages, you can use the $select query parameter:
+
+GET https://graph.microsoft.com/v1.0/me/messages?$select=subject,sender
+This will return only the subject and sender fields for each message.
+
+Authentication and Permissions
+To use Microsoft Graph, your application needs to authenticate and acquire tokens for either a user or a service.
+The required permissions vary depending on the type of resource you're accessing and the HTTP method you're using. For example:
+- GET requests may require fewer permissions than POST or DELETE requests.
+- You may need delegated permissions (acting on behalf of a user) or application permissions (for app-only access) depending on your scenario.
+
+To ensure that your app has the right permissions, refer to the Microsoft Graph API permission reference.
+
+Microsoft Graph Tools
+To help you work with the Microsoft Graph API, several tools are available:
+- Graph Explorer: An interactive tool that allows you to make requests to Microsoft Graph directly from the browser and see the responses.
+  - Graph Explorer
+
+- Postman: A popular tool for testing APIs. You can use Postman to test Microsoft Graph requests by setting up the right authentication and sending HTTP requests.
+
+Conclusion
+The Microsoft Graph REST API is a powerful tool for accessing and managing data in Microsoft 365 and other Microsoft services. 
+By constructing well-formed HTTP requests, you can query, modify, and manage a wide range of resources. 
+Whether you're building apps that integrate with Microsoft services or automating administrative tasks,
+Microsoft Graph provides the necessary endpoints and flexibility to interact with the cloud.
