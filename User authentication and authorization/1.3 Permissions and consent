@@ -1,0 +1,71 @@
+Overview of Authorization and Permissions
+The Microsoft identity platform uses the OAuth 2.0 authorization protocol, which allows third-party applications to access web-hosted resources on behalf of a user. 
+Resources in the Microsoft ecosystem (e.g., Microsoft Graph, Outlook API) have specific resource identifiers or application ID URIs, 
+which allow third-party apps to request specific permissions (also called scopes) to access data.
+
+OAuth 2.0 and Permissions (Scopes)
+- A scope is a string that specifies a permission an application needs to access a resource.
+- For example:
+  - https://graph.microsoft.com/Calendars.Read – Permission to read calendars in Microsoft Graph.
+- Permissions are granted via scopes during the authorization process, and high-privilege permissions may require admin consent.
+
+Permission Types
+The Microsoft identity platform supports two types of permissions:
+
+1. Delegated Access:
+  - Used by apps that have a signed-in user. The user or an administrator consents to the permissions.
+  - The app acts on behalf of the signed-in user when accessing resources.
+
+2. App-only Access:
+  - Used by apps that run without a signed-in user, e.g., background services.
+  - Only an administrator can consent to these permissions.
+
+Consent Types
+In Microsoft identity platform, consent refers to the process of granting permission for an application to access resources or APIs. There are three types of consent:
+
+1. Static User Consent:
+  - All required permissions must be defined at the time of app registration in the Azure portal.
+  - The user or administrator must consent to all requested permissions when the app is used.
+  - Administrators can consent on behalf of all users in an organization.
+
+Challenges:
+  - The app must request all permissions at once, which may overwhelm users.
+  - It's difficult to predict all resources an app may need access to over time.
+
+2. Incremental and Dynamic User Consent:
+  - Permissions are requested incrementally as the user interacts with the app and needs additional features.
+  - You can request new permissions over time without predefining them at the initial registration.
+  - If the user hasn't consented to the newly requested permissions, they will be prompted to do so.
+
+Important Note:
+  - Dynamic consent applies only to delegated permissions and not app-only access permissions.
+  - Admin consent is required for high-privilege permissions, and all permissions must be registered in the Azure portal to ensure that admins can consent on behalf of the entire organization.
+
+3. Admin Consent:
+  - Admin consent is required when an app needs access to high-privilege permissions.
+  - Admins can grant consent for applications on behalf of all users in the organization.
+  - This ensures that only authorized administrators can approve access to sensitive or critical resources.
+
+Requesting Consent
+  - An app requests permission through the authorization endpoint of the Microsoft identity platform, specifying the necessary scopes in the request.
+
+Example request:
+
+GET https://login.microsoftonline.com/common/oauth2/v2.0/authorize?
+client_id=00001111-aaaa-2222-bbbb-3333cccc4444
+&response_type=code
+&redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
+&response_mode=query
+&scope=https%3A%2F%2Fgraph.microsoft.com%2Fcalendars.read%20https%3A%2F%2Fgraph.microsoft.com%2Fmail.send
+&state=12345
+
+- Scope parameter: The list of permissions requested by the app (e.g., reading calendars, sending mail).
+
+If the user hasn't previously consented, the platform prompts the user to grant permission.
+
+Important Considerations for the AZ-204 Exam
+  - Understand the two types of permissions: delegated (user present) vs app-only (no user present).
+  - Know the three types of consent: static user consent, incremental and dynamic user consent, and admin consent.
+  - Be aware of the importance of predefining permissions for admin consent and how dynamic consent can simplify user requests.
+  - Understand the OAuth 2.0 authorization flow, including how applications request scopes (permissions) during sign-in and the role of admin consent for high-privilege access.
+  - This knowledge is key for managing authentication and authorization in applications that interact with Microsoft resources such as Microsoft Graph and Azure services.
