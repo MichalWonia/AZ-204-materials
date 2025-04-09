@@ -1,0 +1,78 @@
+🛠 Azure Container Apps Configuration Overview
+Azure Container Apps abstracts away Kubernetes and orchestration complexity, letting you focus purely on your containers.
+
+You can use any Linux-based x86-64 (linux/amd64) container image — no specific base image required.
+
+⚙️ Key Configuration Options (via ARM Template)
+Each container app supports rich configuration through ARM templates. Here's a breakdown of what you can define in the containers array:
+
+"containers": [
+  {
+    "name": "main",
+    "image": "[parameters('container_image')]",
+    "env": [
+      { "name": "HTTP_PORT", "value": "80" },
+      { "name": "SECRET_VAL", "secretRef": "mysecret" }
+    ],
+    "resources": {
+      "cpu": 0.5,
+      "memory": "1Gi"
+    },
+    "volumeMounts": [
+      {
+        "mountPath": "/myfiles",
+        "volumeName": "azure-files-volume"
+      }
+    ],
+    "probes": [
+      {
+        "type": "liveness",
+        "httpGet": {
+          "path": "/health",
+          "port": 8080,
+          "httpHeaders": [
+            { "name": "Custom-Header", "value": "liveness probe" }
+          ]
+        },
+        "initialDelaySeconds": 7,
+        "periodSeconds": 3
+      }
+    ]
+  }
+]
+
+✅ Features you can configure:
+- Environment variables (value or secretRef)
+- CPU and memory requests
+- Volume mounts (e.g., Azure File shares)
+- Health probes (liveness/readiness checks)
+- Container image from a public or private registry
+
+🧳 Running Multiple Containers (Sidecar Pattern)
+Azure Container Apps supports multiple containers in a single app, enabling the sidecar pattern:
+
+🛠 Examples:
+- A logging agent container forwarding logs from a shared volume
+- A caching sidecar that periodically updates files or memory in a shared path
+
+🧠 Note: This is an advanced use case. For most microservices, you’ll want each service as its own container app for independent scaling and deployment.
+
+🔐 Using Private Container Registries
+To deploy from private registries like Docker Hub or Azure Container Registry:
+1. Define credentials in the secrets section.
+2. Reference the credentials in the registries section:
+
+"registries": [
+  {
+    "server": "docker.io",
+    "username": "my-registry-user-name",
+    "passwordSecretRef": "my-password-secret-name"
+  }
+]
+👉 Your app will use this to pull private container images at deploy time.
+
+⚠️ Current Limitations
+- 🔒 Privileged containers not supported
+(No root-level access or host-level operations)
+- 🐧 Only Linux (x86-64) containers are supported
+
