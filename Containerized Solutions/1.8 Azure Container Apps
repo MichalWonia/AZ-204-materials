@@ -1,0 +1,64 @@
+🧱 What is Azure Container Apps?
+Azure Container Apps is a serverless platform for running containerized applications and microservices on top of Azure Kubernetes Service (AKS)—without having to manage the underlying Kubernetes infrastructure.
+
+🚀 What You Can Do with Azure Container Apps
+✅ Deploy microservices and APIs
+✅ Run background tasks & event-driven apps
+✅ Host scalable HTTP apps
+✅ Support long-running or CPU-intensive workloads
+
+⚙️ Key Features
+- Serverless scaling via KEDA
+  - Scale to zero on HTTP, events (e.g. queues, topics, timers)
+  - Scale out based on CPU/memory (but these won’t scale to zero)
+- HTTPS ingress automatically enabled
+- Traffic splitting for:
+  - Blue/Green deployments
+-   A/B testing
+- Internal-only endpoints using built-in DNS service discovery
+- Native Dapr integration for:
+  - Pub/sub
+  - Service-to-service calls
+  - Observability
+  - Secrets and configuration
+- Secrets management
+- Run containers from any registry
+- Monitor logs via Azure Log Analytics
+
+🧩 Container Apps Environment
+Think of an environment as a secure networked boundary where your container apps live.
+
+📦 Apps in the same environment:
+- Share a virtual network
+- Use the same Log Analytics workspace
+- Support internal communication (via DNS)
+- Can share Dapr configuration
+
+🛡️ Reasons to use different environments:
+- To isolate apps that shouldn't share compute or network
+- To block inter-app Dapr communication
+
+🧬 Container Apps + Microservices
+Container Apps is tailor-made for microservices:
+- Scale individual services independently
+- Use multiple versions of services at once
+- Employ Dapr for service invocation, pub/sub, observability
+- Ideal for event-driven systems or systems with decoupled components
+
+💡 With Dapr, you get:
+- Retry policies
+- Timeouts
+- TLS encryption between services
+- Observability (tracing, logging, metrics)
+- State management
+- Secret management
+
+🛠 Ways to Deploy/Manage
+You can use:
+- Azure CLI (az containerapp)
+- Azure Portal
+- ARM templates
+- Bicep
+- Terraform
+- GitHub Actions / DevOps pipelines
+
