@@ -1,0 +1,48 @@
+🌿 Environment Variables in ACI
+📦 Basic usage (with az container create)
+You can pass environment variables using the --environment-variables flag, just like Docker:
+
+Example (Bash):
+
+az container create \
+  --resource-group myResourceGroup \
+  --name mycontainer2 \
+  --image mcr.microsoft.com/azuredocs/aci-wordcount:latest \
+  --restart-policy OnFailure \
+  --environment-variables 'NumWords=5' 'MinLength=8'
+  
+⚠️ If you're using Windows CMD, use double quotes:
+--environment-variables "NumWords=5" "MinLength=8"
+
+🔐 Secure Environment Variables (Secrets)
+For sensitive info (e.g., passwords, API keys), ACI supports secure values that:
+- Don’t show up in logs, CLI output, or portal
+- Are only accessible inside the container
+
+🧾 Example YAML with both exposed and secure env vars:
+
+apiVersion: 2018-10-01
+location: eastus
+name: securetest
+properties:
+  containers:
+    - name: mycontainer
+      properties:
+        image: nginx
+        environmentVariables:
+          - name: 'NOTSECRET'
+            value: 'my-exposed-value'
+          - name: 'SECRET'
+            secureValue: 'my-secret-value'
+        resources:
+          requests:
+            cpu: 1.0
+            memoryInGB: 1.5
+  osType: Linux
+  restartPolicy: Always
+type: Microsoft.ContainerInstance/containerGroups
+
+🚀 Deploy with YAML:
+az container create \
+  --resource-group myResourceGroup \
+  --file secure-env.yaml
