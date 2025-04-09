@@ -1,0 +1,37 @@
+What is Dapr?
+- Distributed Application Runtime (Dapr) is an open-source framework for building microservice-based applications.
+It simplifies communication between services and provides features for managing state, messaging, and service calls.
+- Dapr is part of the Cloud Native Computing Foundation (CNCF), which is overseen by the Linux Foundation.
+
+Managed Dapr Integration in Azure Container Apps
+- Azure Container Apps provides a managed Dapr integration, eliminating the need to self-manage the Dapr project.
+  - Seamless version upgrades are handled by Azure.
+  - Simplified interaction model increases developer productivity by abstracting complex tasks.
+
+Core Dapr APIs
+1. Service-to-Service Invocation: Enables reliable service communication with mTLS authentication and encryption.
+2. State Management: Provides state capabilities for transactional and CRUD operations.
+3. Pub/Sub: Facilitates messaging between publisher and subscriber apps via a message broker.
+4. Bindings: Triggers applications based on events from external sources.
+5. Actors: Lightweight, message-driven entities that scale efficiently, ideal for burst workloads.
+6. Observability: Sends tracing information to tools like Application Insights.
+7. Secrets: Access and reference secure values and secrets in your app.
+8. Configuration: Retrieves and subscribes to configuration items from supported configuration stores.
+
+Dapr Core Concepts in Azure Container Apps
+- Dapr Sidecar: Runs alongside your container app, providing APIs via HTTP (port 3500) or gRPC (port 50001).
+- Dapr Component Configuration: Modular design where functionality is delivered as components. Components can be shared or scoped to specific container apps.
+- Enablement in Azure Container Apps:
+  - Configured via CLI, Infrastructure-as-Code (IaC) templates (Bicep/ARM), or the Azure portal.
+  - Dapr settings are applied at the container app level and affect all revisions when running in multi-revision mode.
+
+Dapr Components and Scopes
+- Dapr Components: Modular building blocks for connecting to external services, which can be shared or scoped to specific container apps.
+- Scoped Components: Ensure components are loaded only by appropriate apps, based on defined scopes.
+- Dapr Secrets: Securely retrieve configuration metadata, including secrets for use across components.
+
+Key Points for the AZ-204 Exam:
+- Understand Dapr's role in simplifying microservices development with its modular, cloud-native design.
+- Be familiar with Dapr’s core APIs and their usage in Azure Container Apps (e.g., Pub/Sub, Service-to-Service, State Management).
+- Know how to configure Dapr in Azure Container Apps using CLI, IaC templates, and the Azure portal.
+- Recognize the concept of Dapr components, scopes, and how they integrate with other services in a containerized environment.
