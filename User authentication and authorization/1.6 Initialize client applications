@@ -1,0 +1,102 @@
+In MSAL.NET 3.x, the preferred approach for initializing both public and confidential client applications is to use application builders: PublicClientApplicationBuilder and ConfidentialClientApplicationBuilder. 
+These builders provide a flexible way to configure your application, whether directly in the code, through configuration files, or even a combination of both approaches.
+
+Before initializing an application, you'll need to register the application with the Microsoft identity platform through the Azure portal. After registration, you will typically need the following details:
+- Application (client) ID: A GUID identifying your application.
+- Directory (tenant) ID: Specifies the Azure Active Directory (AAD) tenant. It’s important for specifying whether the app is single-tenant or multi-tenant.
+- Identity provider URL (Authority): Defines where the authentication happens and specifies the audience and tenant.
+- Client credentials: For confidential apps, this could be either a client secret or an X509 certificate.
+- Redirect URI: Required for web apps and sometimes public apps (especially if using a broker for authentication).
+
+Code Examples for Initializing Applications
+Public Client Application
+Public client apps typically don’t have a client secret, and they authenticate users interactively. Here’s how to instantiate a public client application using PublicClientApplicationBuilder:
+
+IPublicClientApplication app = PublicClientApplicationBuilder.Create(clientId)
+    .Build();
+    
+Confidential Client Application
+For confidential client applications (e.g., web apps), you need to provide a client secret or certificate. 
+Below is an example of initializing a confidential client application, such as a web app located at https://myapp.azurewebsites.net:
+
+string redirectUri = "https://myapp.azurewebsites.net";
+IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(clientId)
+    .WithClientSecret(clientSecret)  // Or use .WithCertificate(certificate)
+    .WithRedirectUri(redirectUri)
+    .Build();
+
+    
+Modifiers in the Application Builders
+Both public and confidential client applications have several useful modifiers that can be applied to configure the app further. Below are some common and specific modifiers.
+
+Common Modifiers for Both Client Types
+- .WithAuthority(): Defines the authority (tenant, audience, or the full URI). You can use it to specify whether the application targets Azure Public Cloud, Azure China, Azure Government, etc.
+
+app = PublicClientApplicationBuilder.Create(clientId)
+    .WithAuthority(AzureCloudInstance.AzurePublic, tenantId)
+    .Build();
+    
+- .WithTenantId(): Specifies or overrides the tenant ID.
+
+app = PublicClientApplicationBuilder.Create(clientId)
+    .WithTenantId(tenantId)
+    .Build();
+    
+- .WithClientId(): Overrides the default client ID (if needed).
+
+app = PublicClientApplicationBuilder.Create(clientId)
+    .WithClientId(newClientId)
+    .Build();
+    
+- .WithRedirectUri(): Used to override the default redirect URI. Useful for scenarios involving brokers.
+
+app = PublicClientApplicationBuilder.Create(clientId)
+    .WithRedirectUri("http://localhost")
+    .Build();
+    
+- .WithComponent(): Sets the name of the library using MSAL.NET for telemetry reasons.
+
+app = PublicClientApplicationBuilder.Create(clientId)
+    .WithComponent("MyApp")
+    .Build();
+    
+- .WithDebugLoggingCallback(): Enables debug-level logging, useful for debugging and tracing.
+
+app = PublicClientApplicationBuilder.Create(clientId)
+    .WithDebugLoggingCallback()
+    .Build();
+
+- .WithLogging(): Allows you to configure a callback to handle logging and debug traces.
+- .WithTelemetry(): Sets up telemetry by providing a delegate that handles telemetry events.
+
+
+Modifiers Specific to Confidential Client Applications
+Confidential client applications require additional configuration, particularly in terms of how they authenticate and maintain secure credentials. Some common modifiers for confidential clients:
+- .WithClientSecret(string clientSecret): Specifies the client secret used to authenticate the application with the identity provider.
+
+app = ConfidentialClientApplicationBuilder.Create(clientId)
+    .WithClientSecret(clientSecret)
+    .Build();
+    
+- .WithCertificate(X509Certificate2 certificate): Use an X509 certificate as the client credential instead of a client secret.
+
+app = ConfidentialClientApplicationBuilder.Create(clientId)
+    .WithCertificate(certificate)
+    .Build();
+    
+Important:
+- Mutually Exclusive: The .WithClientSecret() and .WithCertificate() methods are mutually exclusive. You cannot provide both in a single instance. If both are provided, MSAL.NET will throw an exception.
+
+Example of Full Confidential Client Initialization:
+
+IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(clientId)
+    .WithClientSecret(clientSecret)
+    .WithRedirectUri("https://myapp.azurewebsites.net")
+    .WithAuthority(AzureCloudInstance.AzurePublic, tenantId)
+    .Build();
+    
+Summary
+- Application Builders in MSAL.NET (3.x) help initialize and configure both public and confidential client applications in a flexible, code-first approach.
+- Public clients are for scenarios where user interaction is required for authentication (e.g., mobile apps, single-page apps).
+- Confidential clients are used for server-side applications where credentials (like client secrets or certificates) can be securely stored.
+- Application builders support various modifiers to customize the behavior of the application, such as authority, redirect URI, logging, and telemetry configuration.
