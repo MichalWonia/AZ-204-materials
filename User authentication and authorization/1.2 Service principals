@@ -1,0 +1,67 @@
+Application Registration in Microsoft Entra ID
+- To delegate Identity and Access Management (IAM) functions, an application must be registered with Microsoft Entra ID.
+- Registration creates an identity configuration that allows your application to integrate with Microsoft Entra ID.
+
+Types of Applications:
+1. Single Tenant: Only accessible within the home tenant.
+2. Multi-Tenant: Accessible across other tenants as well.
+
+- When registering an app in the Azure portal, two objects are automatically created:
+  1. Application Object: Represents the app globally.
+  2. Service Principal Object: Represents the app within the specific tenant where it's used.
+
+Additional Configuration:
+- In the portal, you can:
+  - Add secrets or certificates.
+  - Define scopes.
+  - Customize branding (e.g., for sign-in dialogs).
+- Service principal objects can also be created using Azure PowerShell, Azure CLI, Microsoft Graph, or other tools.
+
+Application Object
+- Application Object: Defines the global, template-like configuration of the application and is scoped to the home tenant.
+  - It is used to create one or more service principal objects in various tenants where the app is used.
+  - The application object includes:
+    1. Token Issuance: Defines how tokens can be issued to access the application.
+    2. Resources Access: Specifies resources the app needs to access.
+    3. Actions: Lists the actions the app can take.
+- Microsoft Graph Application Entity: Defines the schema for the application object properties.
+
+Service Principal Object
+- Service Principal: Represents the app in each tenant where the application is used.
+  - It's a security principal that enforces access policies and permissions for the application in that tenant.
+  - A service principal is essential for authenticating and authorizing applications during resource access.
+
+Types of Service Principals:
+1. Application:
+  - Represents the local instance of the global application object in a specific tenant.
+  - Created when the app is used in a tenant and defines:
+    - What the app can do in the tenant.
+    - Who can access the app.
+    - Which resources the app can access.
+
+2. Managed Identity:
+  - Represents the identity for applications connecting to resources that support Microsoft Entra authentication.
+  - Automatically created when managed identity is enabled.
+  - Service principals representing managed identities are not editable directly but can have permissions granted.
+
+3. Legacy:
+  - Represents legacy apps created before app registrations or through legacy experiences.
+  - May include credentials, service principal names, and reply URLs, but does not have an associated app registration.
+
+Relationship Between Application Objects and Service Principals
+- Application Object:
+  - A global representation of the app.
+  - One-to-one relationship with the app itself.
+  - One-to-many relationship with service principal objects (each tenant where the app is used gets its own service principal).
+
+- Service Principal:
+  - Must be created in each tenant where the app is used.
+  - In a single-tenant application, only one service principal is created (in the home tenant).
+  - In a multi-tenant application, a service principal is created in each tenant where users from that tenant consent to use the app.
+
+Key Points for the AZ-204 Exam:
+- Understand the process of registering applications with Microsoft Entra ID, including the creation of application and service principal objects.
+- Know the differences between single-tenant and multi-tenant applications and how they impact service principal creation.
+- Be able to describe the role and properties of application objects and service principal objects in terms of authentication and authorization.
+- Understand the types of service principals: Application, Managed Identity, and Legacy.
+- Be familiar with the relationship between application objects (global) and service principal objects (local) in various tenants.
