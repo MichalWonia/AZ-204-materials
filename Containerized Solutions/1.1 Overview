@@ -1,0 +1,84 @@
+🐳 What is Azure Container Registry (ACR)?
+Azure Container Registry is a managed Docker registry service based on Docker Registry 2.0, allowing you to:
+- Store and manage container images and artifacts (e.g., Docker images, Helm charts)
+- Integrate with CI/CD pipelines
+- Automate builds and updates via ACR Tasks
+
+🚀 Use Cases
+You can push to and pull from ACR in your workflows, such as:
+- Deploying containers to:
+  - Kubernetes (AKS)
+  - Azure App Service
+  - Azure Batch
+  - Service Fabric
+- Automating CI/CD with:
+  - Azure Pipelines
+  - Jenkins
+- ACR Tasks for:
+  - Rebuilding images on code commits or base image updates
+  - Multi-step builds (build → test → patch) in the cloud
+
+📦 Service Tiers
+Tier	                      Best For	                            Key Features
+Basic	                      Learning / Low usage	                Full features but lower storage & throughput
+Standard	                  Most production workloads	            More throughput & storage
+Premium	                    High-volume enterprise scenarios	    Adds: Geo-replication, Content Trust, Private Link (VNET integration)
+
+📁 Supported Images & Artifacts
+- Docker-compatible images (Linux and Windows)
+- Helm charts
+- OCI Image Format support
+
+Each image is a read-only snapshot stored in a repository within ACR.
+
+🔄 Automated Builds with ACR Tasks
+Use ACR Tasks to:
+- Automate image builds when code is pushed to Git
+- Automatically rebuild images when base images are updated
+- Create multi-step build pipelines for:
+  - Building
+  - Testing
+  - Deploying containers in parallel
+
+
+
+
+🔐 Data Security & Redundancy
+🔒 Encryption-at-Rest
+- All data is encrypted before being stored (encryption-at-rest).
+- Decryption happens automatically when images are pulled.
+- Supports customer-managed keys (CMK) for added control.
+
+🌍 Regional Storage
+- Your data stays within the region where the registry is created.
+- Paired-region redundancy (except in Brazil South and Southeast Asia where data is confined to meet strict residency laws).
+
+🌐 Geo-replication (Premium Tier)
+- Enables replication to multiple Azure regions.
+- Benefits:
+  - High availability during regional outages
+  - Performance boost with region-local pulls/pushes for global teams
+
+🌀 Zone Redundancy (Premium Tier)
+- Uses Azure Availability Zones to replicate the registry within a region.
+- Ensures resilience even if an entire zone fails.
+
+🧱 Scalability
+📦 Flexible Storage Limits
+- No hard limits on:
+  - Number of repositories
+  - Number of images
+  - Number of tags or layers
+
+Bound only by the total storage quota of your registry tier.
+Note: Large numbers of repositories and tags can affect performance. A regular cleanup routine is recommended.
+
+🗑️ Registry Maintenance Tip
+Periodically delete:
+- Unused images
+- Old tags
+- Obsolete repositories
+
+🔁 Remember: Once deleted, they cannot be recovered.
+
+  
