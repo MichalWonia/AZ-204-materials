@@ -1,0 +1,69 @@
+🚀 What Are ACR Tasks?
+ACR Tasks are cloud-based features in Azure that help you:
+- Build container images for Linux, Windows, and ARM platforms.
+- Shift early stages of container builds to the cloud.
+- Automate image builds via triggers like:
+  - Code commits
+  - Base image updates
+  - Scheduled timers
+
+🔧 Task Types & Scenarios
+⚡️ Quick Tasks
+- Think of it as docker build + docker push, but in the cloud.
+- Useful for on-demand builds without a local Docker installation.
+- Perfect for inner-loop development to validate image builds before pushing code.
+
+✅ Command:
+
+az acr build --registry <RegistryName> --image <ImageName>
+
+🔁 Automatically Triggered Tasks
+Enable builds when:
+- Source Code Updates
+   - Triggered on commit or PR updates in GitHub or Azure DevOps.
+   - Set up via:
+      az acr task create --source <repo-url> ...
+
+- Base Image Updates
+  - Automatically rebuild dependent images when base images change.
+  - Tracks updates from your own registry or public ones (like Docker Hub).
+
+- Scheduled Builds (Timer Trigger)
+  - Run tasks on a schedule.
+  - Great for maintenance, nightly builds, or image validation routines.
+
+🧩 Multi-step Tasks
+Define a sequence of build, test, and deployment steps in YAML.
+
+Example scenario:
+1. Build app image
+2. Run the app container
+3. Build test image
+4. Run test container (validates app)
+5. If successful:
+  - Build Helm chart
+  - Deploy with helm upgrade
+
+This lets you implement CI/CD workflows fully in the cloud using containers.
+
+🖥️ Supported Platforms
+By default, builds target Linux/amd64.
+
+You can specify the platform using:
+  --platform OS/architecture[/variant]
+  
+OS	                      Architectures Supported
+Linux	                    amd64, arm, arm64, 386
+Windows	                  amd64
+
+
+Examples:
+--platform Linux/arm64/v8
+--platform Windows/amd64
+
+✅ Use Cases for ACR Tasks
+- CI/CD container pipelines without local Docker
+- Auto-rebuild on base image patches (for better security posture)
+- Cloud-native test pipelines using containers
+- Build automation across multiple OS/architectures
+
