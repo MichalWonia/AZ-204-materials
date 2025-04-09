@@ -1,0 +1,53 @@
+🚀 Azure Container Instances (ACI) – Key Benefits
+Feature	Description
+⚡ Fast Startup	Launch containers in seconds—no VM setup or management needed.
+🌐 Public Access	Expose containers directly to the internet with an IP address + FQDN.
+🔐 Isolation	Hypervisor-level isolation (like VMs) for secure workloads.
+⚙️ Custom Resources	Choose exact CPU/memory specs for cost-effective use.
+💾 Persistent Storage	Mount Azure Files to store/retrieve data within containers.
+🖥️ OS Flexibility	Supports both Linux and Windows containers (multi-container groups only for Linux).
+
+🧱 Container Groups
+- A container group = one or more containers scheduled on the same host.
+- Containers share:
+  - Lifecycle (start/stop together)
+  - CPU & memory resources
+  - Local network and storage volumes
+- Think of it like a Kubernetes pod.
+
+🖼️ Example: Multi-container group
+- Two containers in one group:
+  - One listens on port 80
+  - One listens on port 5000
+- Shared public IP
+- Mount Azure File Shares per container
+
+⚠️ Multi-container groups are Linux-only. Windows containers = single container only.
+
+⚙️ Deployment Options
+Method	                    Use Case
+ARM Template	              If you're provisioning additional Azure resources.
+YAML File	                  For simpler deployments with just container instances.
+
+🧮 Resource Allocation
+Resource requests are summed across the group.
+E.g., 2 containers each request 1 CPU → ACI reserves 2 CPUs total.
+
+🌐 Networking
+- Container group gets 1 public IP.
+- Containers share the same port namespace → no port mapping like in Docker.
+- Internal communication via localhost:<port> between containers.
+
+🗃️ Storage Options
+Mount the following volumes into your containers:
+- Azure File Share
+- Secrets
+- Empty Dir (temp storage)
+- Git Repos (cloned on start)
+
+💡 Common Scenarios
+Scenario	                                            Description
+App + Content Puller	                                One container serves an app, another syncs content from Git.
+App + Logger	                                        A logging container collects app logs and ships them off to storage.
+App + Monitor	                                        A monitor container periodically pings the app to ensure it's healthy.
+Frontend + Backend	                                  Frontend container serves UI, backend fetches data from APIs or DBs.
