@@ -1,0 +1,55 @@
+🛠️ What Is a Dockerfile?
+A Dockerfile is a script with instructions that tell Docker how to build an image. It’s like a recipe for your container.
+
+It typically includes:
+- A base image
+- OS or framework updates
+- App binaries or code
+- Ports to expose
+- The default command to run at container startup
+
+📦 Example: Dockerfile for a .NET 6 App
+
+# 1. Use the .NET 6 runtime as base
+FROM mcr.microsoft.com/dotnet/runtime:6.0
+
+# 2. Set the working directory in the container
+WORKDIR /app
+
+# 3. Copy published .NET app from local machine into container
+COPY bin/Release/net6.0/publish/ .
+
+# 4. Expose port 80 to allow outside traffic
+EXPOSE 80
+
+# 5. Define the app start command
+CMD ["dotnet", "MyApp.dll"]
+
+
+🔍 Line-by-Line Explanation
+Line	                                              What It Does
+FROM mcr.microsoft.com/dotnet/runtime:6.0	          Sets the base image to the .NET 6 runtime (from Microsoft Container Registry).
+
+WORKDIR /app	                                      Defines the working directory inside the container. All commands after this run from here.
+
+COPY bin/Release/net6.0/publish/ .	                Copies your built app (from host) to /app in the container. Make sure the app is published using dotnet publish.
+
+EXPOSE 80	                                          Exposes port 80, typically used by web apps. Can change depending on your app.
+
+CMD ["dotnet", "MyApp.dll"]	                        Tells Docker to run the app by executing dotnet MyApp.dll when the container starts. Replace "MyApp.dll" with your actual app file.
+
+📦 Building & Running the Docker Image
+Assuming you're in the folder where your Dockerfile is:
+
+1. Build the Docker Image
+  docker build -t mydotnetapp .
+2. Run the Container
+  docker run -d -p 8080:80 mydotnetapp
+  
+This maps your local port 8080 to the container’s exposed 80.
+
+📝 Notes
+- Each line in the Dockerfile creates a layer, allowing Docker to cache builds.
+- Use dotnet publish -c Release before building the image to ensure the publish directory is populated.
+- You can learn more about the Dockerfile spec here.
+
