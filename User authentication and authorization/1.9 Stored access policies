@@ -1,0 +1,86 @@
+Stored Access Policies in Azure Storage
+A stored access policy provides enhanced control over Shared Access Signatures (SAS) on the server side. 
+It allows you to manage and modify the parameters of SAS tokens after they are issued. 
+Using stored access policies, you can adjust settings like start time, expiry time, and permissions, or even revoke the SAS access after it has been granted.
+
+Key Benefits of Stored Access Policies
+- Centralized Management: By grouping SAS tokens under a stored access policy, you can apply changes to the policy without needing to regenerate or reissue individual SAS tokens.
+- Modify SAS Parameters: You can change the expiration date, permissions, and other parameters of SAS tokens that are bound to a specific policy.
+- Revoking Access: You can revoke SAS access by modifying or deleting the stored access policy, which automatically revokes access for all SAS tokens tied to that policy.
+
+Supported Storage Resources
+Stored access policies can be applied to the following Azure Storage resources:
+- Blob containers
+- File shares
+- Queues
+- Tables
+
+Creating a Stored Access Policy
+When creating a stored access policy, the parameters you define in the stored access policy will be used to modify the SAS token behavior. Here's how you can create or modify a stored access policy:
+1. Set the Access Policy: You use the Set ACL operation to define the access policy parameters (start time, expiry time, and permissions).
+2. Combination of SAS Parameters: You can specify parameters either in the SAS token URI itself or within the stored access policy. However, you can't specify the same parameter in both places.
+
+Example Code for Creating a Stored Access Policy
+C# Example:
+In this example, the policy grants "read" and "write" permissions with an expiry of 1 hour:
+
+BlobSignedIdentifier identifier = new BlobSignedIdentifier
+{
+    Id = "stored access policy identifier",
+    AccessPolicy = new BlobAccessPolicy
+    {
+        ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+        Permissions = "rw"
+    }
+};
+
+blobContainer.SetAccessPolicy(permissions: new BlobSignedIdentifier[] { identifier });
+
+
+Azure CLI Example:
+To create a stored access policy using Azure CLI, you can use the following command:
+
+az storage container policy create \
+    --name <stored access policy identifier> \
+    --container-name <container name> \
+    --start <start time UTC datetime> \
+    --expiry <expiry time UTC datetime> \
+    --permissions <(a)dd, (c)reate, (d)elete, (l)ist, (r)ead, or (w)rite> \
+    --account-key <storage account key> \
+    --account-name <storage account name>
+
+    
+Modifying or Revoking a Stored Access Policy
+- Modify: You can modify an existing policy by using the Set ACL operation and replacing the existing policy with new parameters.
+  - Example: Change a policy granting both read and write permissions to only read permissions.
+
+- Revoke: To revoke a stored access policy, you have several options:
+  - Delete the policy: This will immediately revoke access for all SAS tokens tied to this policy.
+  - Rename the policy: Changing the signed identifier disconnects any existing SAS tokens from the policy.
+  - Change the expiry time: Setting the expiry time to a past date will invalidate all associated SAS tokens.
+
+Example: Removing a Stored Access Policy
+To remove a single access policy, you can pass the updated list of signed identifiers while calling the Set ACL operation, excluding the one you wish to remove. For example:
+
+az storage container policy set \
+    --container-name <container name> \
+    --name <stored access policy identifier to keep> \
+    --account-key <storage account key> \
+    --account-name <storage account name>
+    
+To remove all access policies:
+
+az storage container policy set \
+    --container-name <container name> \
+    --name "" \
+    --account-key <storage account key> \
+    --account-name <storage account name>
+    
+Important Notes
+- Delay in Policy Propagation: It may take up to 30 seconds for a stored access policy to take effect. During this time, SAS requests associated with the policy may fail with a 403 Forbidden error.
+- Entity Range Restrictions: For Table storage, you cannot define entity range restrictions (e.g., startpk, endpk) within a stored access policy.
+
+Conclusion
+Stored access policies provide a centralized, server-side mechanism to manage and modify SAS tokens for your storage resources. 
+By grouping SAS tokens under a policy, you can easily update access parameters, revoke permissions, or manage expiry times without needing to regenerate SAS tokens individually. 
+This helps enhance security and simplifies management, especially when you need to handle access for multiple users or services over time.
