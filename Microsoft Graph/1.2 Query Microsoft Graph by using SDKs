@@ -1,0 +1,108 @@
+Overview of Microsoft Graph SDKs
+The Microsoft Graph SDKs simplify building applications that interact with Microsoft Graph by providing a structured way to access Microsoft 365 data. The SDKs consist of two main components:
+
+1. Service Library: Includes models and request builders that are generated from Microsoft Graph metadata. 
+This helps developers with a rich and discoverable experience when working with Microsoft Graph APIs.
+
+2. Core Library: Provides features that enhance interaction with Microsoft Graph services. Key functionalities include:
+  - Retry Handling: Automatically retries failed requests based on predefined policies.
+  - Secure Redirects: Ensures secure redirects during authentication.
+  - Authentication Support: Integrates with different authentication providers to acquire access tokens seamlessly.
+  - Paging and Batch Requests: Makes it easier to handle pagination for large sets of data and to create batch requests that reduce the number of individual API calls.
+
+Installing the Microsoft Graph .NET SDK
+To start using Microsoft Graph in your .NET application, you need to install the following NuGet packages:
+1. Microsoft.Graph: Contains models and request builders for accessing the v1.0 endpoint using the fluent API. This is the stable version of the API.
+2. Microsoft.Graph.Beta: Includes models and request builders for accessing the beta endpoint using the fluent API, which contains preview features.
+3. Microsoft.Graph.Core: The core library for making calls to Microsoft Graph.
+
+You can install these packages via NuGet in Visual Studio or by running the following command in the package manager console:
+
+Install-Package Microsoft.Graph
+Install-Package Microsoft.Graph.Core
+
+
+Creating a Microsoft Graph Client
+To interact with Microsoft Graph, you need to create a GraphServiceClient instance. This client handles all requests to Microsoft Graph. 
+Below is an example of how to set up a client for authentication and make requests.
+
+C# Code Example: Creating a Microsoft Graph Client
+
+var scopes = new[] { "User.Read" };
+
+// Tenant ID (for multi-tenant apps, use "common")
+var tenantId = "common";
+
+// Client ID from app registration in Azure portal
+var clientId = "YOUR_CLIENT_ID";
+
+// Authentication provider setup (using Azure.Identity)
+var options = new TokenCredentialOptions
+{
+    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
+};
+
+// Callback for device code authentication
+Func<DeviceCodeInfo, CancellationToken, Task> callback = (code, cancellation) => {
+    Console.WriteLine(code.Message);
+    return Task.FromResult(0);
+};
+
+// Using DeviceCodeCredential for interactive login
+var deviceCodeCredential = new DeviceCodeCredential(
+    callback, tenantId, clientId, options);
+
+// Create Graph client
+var graphClient = new GraphServiceClient(deviceCodeCredential, scopes);
+
+
+Common Operations with Microsoft Graph SDK
+1. Reading Information from Microsoft Graph
+To read data from Microsoft Graph, you create a request object and use the GetAsync method.
+
+// GET https://graph.microsoft.com/v1.0/me
+var user = await graphClient.Me
+    .GetAsync();
+This retrieves the current user's profile.
+
+2. Retrieving a List of Entities
+When retrieving a list of entities (e.g., messages), you can use query parameters like $select, $filter, and $orderby to control the result.
+
+// GET https://graph.microsoft.com/v1.0/me/messages?$select=subject,sender&$filter=subject eq 'Hello world'
+var messages = await graphClient.Me.Messages
+    .GetAsync(requestConfig =>
+    {
+        requestConfig.QueryParameters.Select = new[] { "subject", "sender" };
+        requestConfig.QueryParameters.Filter = "subject eq 'Hello world'";
+    });
+This example retrieves messages where the subject equals "Hello world" and selects only the subject and sender fields.
+
+3. Deleting an Entity
+To delete an entity (e.g., an email message), you make a DELETE request:
+
+// DELETE https://graph.microsoft.com/v1.0/me/messages/{message-id}
+await graphClient.Me.Messages[messageId]
+    .DeleteAsync();
+This deletes a specific message by ID.
+
+4. Creating a New Entity
+You can create a new entity, such as adding a calendar event, using the PostAsync method:
+
+// POST https://graph.microsoft.com/v1.0/me/calendars
+var calendar = new Calendar
+{
+    Name = "Volunteer",
+};
+
+var newCalendar = await graphClient.Me.Calendars
+    .PostAsync(calendar);
+This creates a new calendar named "Volunteer" for the authenticated user.
+
+Additional Resources
+- Microsoft Graph REST API v1.0 Reference: The official documentation provides a comprehensive list of available endpoints, query parameters, and methods for all Microsoft 365 services. 
+You can refer to the Microsoft Graph REST API v1.0 reference for more details on available operations.
+
+Conclusion
+The Microsoft Graph SDKs simplify building and scaling applications that interact with Microsoft 365 data. 
+By leveraging the GraphServiceClient, you can easily make requests to access, manage, and update data across Microsoft services like Outlook, OneDrive, Teams, and more. 
+With built-in authentication, retry policies, and secure redirection, the SDKs provide a resilient and streamlined way to work with the Microsoft 365 ecosystem.
