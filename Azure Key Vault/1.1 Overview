@@ -1,0 +1,49 @@
+✅ Azure Key Vault Overview
+Azure Key Vault is a cloud service that helps safeguard cryptographic keys, secrets, and certificates used by cloud applications and services.
+
+🔐 Key Vault Container Types
+- Vaults: Support software and HSM-backed keys, secrets, and certificates.
+- Managed HSM Pools: Only support HSM-backed keys using FIPS 140-2 Level 3 validated hardware.
+
+💡 What Azure Key Vault Helps With
+1. Secrets Management
+Securely store and control access to:
+- Tokens
+- Passwords
+- API Keys
+- Certificates
+
+2. Key Management
+- Create, import, and control encryption keys.
+- Keys can be software-protected (Standard tier) or HSM-protected (Premium tier).
+
+3. Certificate Management
+- Provision, manage, and deploy SSL/TLS certificates.
+- Automate tasks like enrollment and renewal from public certificate authorities.
+
+⭐ Key Benefits
+🔑 Centralized Secrets Management
+- Store sensitive data in Key Vault rather than in your application code.
+- Access secrets via secure URIs, with version control.
+
+🔐 Secure Access Controls
+- Authentication: via Microsoft Entra ID (formerly Azure AD).
+- Authorization:
+  - Azure RBAC: For managing vaults and data access.
+  - Key Vault access policies: For fine-grained data access control.
+
+📊 Monitoring and Logging
+- Track access and usage:
+  - Archive logs to Azure Storage.
+  - Stream logs to Event Hubs.
+  - Send logs to Azure Monitor Logs.
+
+⚙️ Simplified Administration
+- No need for in-house HSM expertise.
+- High availability: Through regional and cross-regional replication.
+- Scalability: Automatically scales based on demand.
+- Manage via: Azure Portal, CLI, PowerShell.
+
+📌 Tiers
+- Standard Tier: Software-based protection.
+- Premium Tier: HSM-backed protection with higher compliance needs.
