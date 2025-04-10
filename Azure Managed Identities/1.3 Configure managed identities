@@ -1,0 +1,54 @@
+⚙️ Configure Managed Identities for Azure VMs
+You can enable system-assigned or user-assigned managed identities either during or after VM creation using the Azure CLI.
+
+🆔 System-Assigned Managed Identity
+✅ Enable During VM Creation
+
+az vm create \
+  --resource-group myResourceGroup \
+  --name myVM \
+  --image win2016datacenter \
+  --generate-ssh-keys \
+  --assign-identity \
+  --role contributor \
+  --scope mySubscription \
+  --admin-username azureuser \
+  --admin-password myPassword12
+🔐 Role Required: Virtual Machine Contributor
+
+✅ Enable on Existing VM
+
+az vm identity assign -g myResourceGroup -n myVM
+🆔 User-Assigned Managed Identity
+✅ Step 1: Create the Identity
+
+az identity create -g myResourceGroup -n myUserAssignedIdentity
+✅ Step 2: Assign During VM Creation
+
+az vm create \
+  --resource-group <RESOURCE GROUP> \
+  --name <VM NAME> \
+  --image Ubuntu2204 \
+  --admin-username <USERNAME> \
+  --admin-password <PASSWORD> \
+  --assign-identity <USER ASSIGNED IDENTITY NAME> \
+  --role <ROLE> \
+  --scope <SUBSCRIPTION>
+  
+✅ Assign to an Existing VM
+
+az vm identity assign \
+  -g <RESOURCE GROUP> \
+  -n <VM NAME> \
+  --identities <USER ASSIGNED IDENTITY>
+🔐 Roles Required: Virtual Machine Contributor + Managed Identity Operator
+
+👩‍💻 SDK Support for Managed Identity
+Azure SDKs that support managed identity:
+- .NET
+- Java
+- Node.js
+- Python
+- Ruby
+
+They include samples demonstrating how to authenticate and access resources using managed identities.
