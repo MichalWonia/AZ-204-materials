@@ -1,0 +1,49 @@
+Key Components of Azure API Management
+1. API Gateway:
+- Handles API calls and routes them to appropriate backend services.
+- Validates API keys and other credentials.
+- Enforces policies like rate limits, caching, and transformations.
+- Provides logs and metrics for monitoring API performance.
+
+2. Management Plane:
+- The administrative interface for configuring and managing the API Management service.
+- Define and import API schemas.
+- Package APIs into products.
+- Set up policies like quotas or transformations.
+- Access analytics to gain insights into API usage.
+- Manage users and permissions.
+
+3. Developer Portal:
+- Automatically generated and customizable website for developers.
+- Developers can read API documentation, test APIs, and subscribe to APIs.
+- Provides a console for testing APIs and managing API keys.
+- Developers can view usage analytics and download API definitions.
+
+Important Concepts
+1. Products:
+- APIs are grouped into products, which are presented to developers.
+- Products can be either Open (no subscription required) or Protected (requires subscription approval).
+- Subscription approval can either be automatic or manual by the administrator.
+
+2. Groups:
+- System groups help manage access and visibility:
+  - Administrators: Manage the service.
+  - Developers: Build apps using APIs.
+  - Guests: View APIs without calling them.
+- Custom groups can be created or integrated with external systems like Microsoft Entra.
+
+3. Developers:
+- Developers can be invited by admins or sign up via the Developer Portal.
+- Developers subscribe to products that allow them to access specific APIs.
+
+4. Policies:
+- Policies are rules applied to incoming requests or outgoing responses, such as rate limiting or format transformations (e.g., XML to JSON).
+- Policies are executed sequentially.
+- Policies can be applied globally, or at more granular levels like on a specific API or operation.
+
+Key Benefits of API Management
+- Security: Enforces API security using keys, policies, and rate limiting.
+- Engagement: Developer portal helps with API documentation and engagement.
+- Analytics: Provides insights into API usage and performance.
+- Scalability: Allows you to manage multiple APIs and products efficiently.
+- Customization: Policies can be tailored for specific needs at various levels.
