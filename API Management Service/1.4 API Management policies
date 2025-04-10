@@ -1,0 +1,109 @@
+What Are API Management Policies?
+In Azure API Management, policies allow you to control and modify the behavior of an API. These policies are applied sequentially on the request and response of an API. You can use policies to enforce security, modify request or response data, handle errors, and perform many other tasks.
+
+The policies are configured in an XML format that is divided into four key sections:
+1. Inbound: Modifications to the incoming request.
+2. Backend: Actions taken before forwarding the request to the backend service.
+3. Outbound: Modifications to the response from the backend.
+4. On-error: Actions taken if an error occurs during processing.
+
+Understanding the Policy Structure
+Here's how a policy configuration looks:
+
+<policies>
+  <inbound>
+    <!-- statements to be applied to the request go here -->
+  </inbound>
+  <backend>
+    <!-- statements to be applied before the request is forwarded to the backend service go here -->
+  </backend>
+  <outbound>
+    <!-- statements to be applied to the response go here -->
+  </outbound>
+  <on-error>
+    <!-- statements to be applied if there is an error condition go here -->
+  </on-error>
+</policies>
+
+Execution order: The policies in the inbound, backend, and outbound sections are executed in sequence. If an error occurs, the flow moves to the on-error section.
+
+Policy Expressions
+Policy expressions allow you to dynamically modify the API request and response. You can use expressions in attributes or values inside policies. These expressions use C# code and can reference the context of the request or response.
+
+Here’s an example of how policy expressions can be used to add user data to the request header:
+
+<policies>
+  <inbound>
+    <base />
+    <set-header name="x-request-context-data" exists-action="override">
+      <value>@(context.User.Id)</value>
+      <value>@(context.Deployment.Region)</value>
+    </set-header>
+  </inbound>
+</policies>
+- @(context.User.Id) retrieves the user ID associated with the subscription key.
+- @(context.Deployment.Region) returns the region where the request is being processed.
+
+Apply Policies at Different Scopes
+Policies can be applied at various levels in API Management:
+- Global level: Applied to all APIs.
+- API level: Applied specifically to a given API.
+- Operation level: Applied to specific operations within an API.
+
+Policies at narrower scopes override those at broader scopes. The base element is used to manage the order of policy execution.
+
+For example:
+
+<policies>
+  <inbound>
+    <cross-domain />
+    <base />
+    <find-and-replace from="xyz" to="abc" />
+  </inbound>
+</policies>
+Here, the cross-domain policy runs first, and the find-and-replace policy runs last in the inbound section.
+
+Filtering Response Content
+You can also filter the response content based on conditions. For example, you can filter the response payload to remove specific data elements for a certain product:
+
+<policies>
+  <inbound>
+    <base />
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+    <choose>
+      <when condition="@(context.Response.StatusCode == 200 && context.Product.Name.Equals("Starter"))">
+        <set-body>
+          @{
+            var response = context.Response.Body.As<JObject>();
+            foreach (var key in new [] {"minutely", "hourly", "daily", "flags"}) {
+              response.Property(key).Remove();
+            }
+            return response.ToString();
+          }
+        </set-body>
+      </when>
+    </choose>    
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>
+This example removes certain properties (minutely, hourly, daily, flags) from the response body for a specific product (e.g., "Starter").
+
+Key Takeaways:
+1. Policies control the behavior of your API during requests and responses.
+
+2. Policies are defined in an XML format and can be used to manipulate requests, responses, and handle errors.
+
+3. Policy expressions use C# code to dynamically modify requests or responses based on context.
+
+4. Policies can be applied globally, at the API level, or the operation level. The scope dictates their execution order.
+
+5. Error handling and response filtering can be easily customized using policies.
+
+These tools allow you to enforce security, manage traffic, and transform data dynamically, making API Management a powerful tool for managing APIs.
