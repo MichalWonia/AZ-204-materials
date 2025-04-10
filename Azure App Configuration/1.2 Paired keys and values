@@ -1,0 +1,51 @@
+🧠 Core Concepts: Key-Value Pairs
+🔑 Keys
+- Keys act as names or identifiers for settings.
+- Use hierarchical naming (e.g., AppName:Service1:Setting) to organize logically.
+- Keys are:
+  - Case-sensitive
+  - Unicode-based
+  - Cannot include: *, ,, \
+
+Escape reserved characters using \{character}.
+
+✅ Example:
+
+AppName:Service1:ApiEndpoint = https://api.service1.com
+AppName:Service2:ApiEndpoint = https://api.service2.com
+
+🏷️ Labels
+- Optional metadata used to create multiple variants of the same key.
+- Helpful for environment configs or versioning.
+
+✅ Example (Same key, different labels):
+
+Key = AppName:DbEndpoint, Label = Test       => db-test.internal
+Key = AppName:DbEndpoint, Label = Staging    => db-stage.internal
+Key = AppName:DbEndpoint, Label = Production => db-prod.internal
+- The default label is empty, referenced using \0 (or %00 URL encoded).
+
+🔁 Versioning Strategy
+- App Configuration doesn't auto-version keys.
+- Use labels to simulate versions (e.g., v1.0.0, commit-sha).
+
+🔎 Querying
+You can fetch key-values using filters on:
+- Key name patterns (e.g., AppName:*)
+- Specific labels (or default: \0)
+
+📦 Values
+- Unicode strings, may include any characters.
+- Optional content type to describe encoding or structure (application/json, text/plain, etc.).
+
+🔐 Security Notes
+- All data is encrypted at rest and in transit.
+- Do not store secrets (like passwords or connection strings) in App Configuration — use Azure Key Vault for that.
+
+✅ Quick Tips for Real-World Use
+- Use hierarchical keys + labels to support multi-environment or multi-version configs.
+- Use : or / consistently in key names (e.g., MyApp:Service:Setting).
+- Organize settings by service/module to improve maintainability.
+- Set meaningful content types for structured values like JSON.
+- Use pattern-matching queries to load subsets of settings efficiently.
+
