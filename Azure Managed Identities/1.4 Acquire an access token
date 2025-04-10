@@ -1,0 +1,50 @@
+🔐 Acquire an Access Token with Managed Identity
+✅ Use DefaultAzureCredential (Recommended)
+DefaultAzureCredential from the Azure Identity SDK tries multiple authentication methods in order, and automatically works in both local development and production environments.
+
+🔄 Authentication Order (tries in sequence):
+- Environment variables
+- Managed Identity (if running in Azure)
+- Visual Studio login
+- Azure CLI login (az login)
+- Azure PowerShell login
+- Interactive browser (disabled by default)
+
+🛠️ Setup
+Install Azure Identity SDK:
+
+dotnet add package Azure.Identity
+🔑 Example: Authenticate to Azure Key Vault
+
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
+// Authenticate using DefaultAzureCredential
+var client = new SecretClient(
+    new Uri("https://myvault.vault.azure.net/"),
+    new DefaultAzureCredential());
+👤 Example: Use a User-Assigned Managed Identity
+
+string userAssignedClientId = "<your-managed-identity-client-id>";
+
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
+🧩 Advanced: Custom Auth Flow with ChainedTokenCredential
+Use if you want fallback logic (e.g., try managed identity, then Azure CLI):
+
+var credential = new ChainedTokenCredential(
+    new ManagedIdentityCredential(),
+    new AzureCliCredential());
+
+var eventHubClient = new EventHubProducerClient(
+    "myeventhub.eventhubs.windows.net",
+    "myhubpath",
+    credential);
+    
+🧠 Key Takeaway:
+Use DefaultAzureCredential to simplify token acquisition without changing code across environments. Use ChainedTokenCredential if you need more control or custom fallback logic.
+
