@@ -1,0 +1,47 @@
+1. Types of Filters:
+- You can filter events in three ways when creating an event subscription:
+  1. Event Types
+  2. Subject Filtering (begins with or ends with)
+  3. Advanced Fields and Operators
+
+2. Event Type Filtering:
+- By default, all event types for a source are sent to the endpoint. You can filter events to receive only specific event types.
+- Example: Filter to only receive notifications for "ResourceWriteSuccess" but not "ResourceWriteFailure."
+- JSON syntax example for event type filtering:
+
+"filter": {
+  "includedEventTypes": [
+    "Microsoft.Resources.ResourceWriteFailure",
+    "Microsoft.Resources.ResourceWriteSuccess"
+  ]
+}
+
+3. Subject Filtering:
+- You can filter events based on the subject, specifying whether it begins or ends with a certain value.
+- Example: Filter events related to uploading .txt files or events for a specific container.
+- JSON syntax example for subject filtering:
+
+"filter": {
+  "subjectBeginsWith": "/blobServices/default/containers/mycontainer/log",
+  "subjectEndsWith": ".jpg"
+}
+
+4. Advanced Filtering:
+- This allows filtering based on values in event data fields, using comparison operators (e.g., greater than, contains).
+- You specify the operator, key (field), and value to filter.
+- JSON syntax example for advanced filtering:
+
+"filter": {
+  "advancedFilters": [
+    {
+      "operatorType": "NumberGreaterThanOrEquals",
+      "key": "Data.Key1",
+      "value": 5
+    },
+    {
+      "operatorType": "StringContains",
+      "key": "Subject",
+      "values": ["container1", "container2"]
+    }
+  ]
+}
