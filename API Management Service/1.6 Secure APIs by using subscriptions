@@ -1,0 +1,46 @@
+Securing APIs with Subscriptions and Subscription Keys
+When publishing APIs through API Management, it is essential to secure access using subscription keys. These keys help ensure that only authorized users can access your API. Here's a breakdown of how subscriptions and keys function:
+
+1. What is a Subscription?
+A subscription is a container for a pair of subscription keys (primary and secondary) used to access one or more APIs. The subscription key ensures that only authorized developers can call your API.
+- Subscription Key: A unique key automatically generated for each subscription.
+- Primary and Secondary Keys: Each subscription has two keys to provide redundancy. For example, you can regenerate the primary key without causing downtime by using the secondary key.
+
+2. Subscription Scopes
+Subscriptions in Azure API Management can be scoped in three main ways:
+- All APIs: The subscription applies to all APIs in the API Management instance.
+- Single API: The subscription is scoped to a single API and all its endpoints.
+- Product: A product is a collection of one or more APIs. You can assign APIs to different products, and each product can have its own access rules, usage quotas, and terms of use.
+
+This granular control allows API publishers to limit access based on the scope of the subscription (e.g., to a specific API or product).
+
+3. How to Use Subscription Keys
+- To call an API, the client application must include a valid subscription key in every request.
+- The subscription key can be included either in the HTTP request header or as a query string.
+
+Header Example:
+
+curl --header "Ocp-Apim-Subscription-Key: <key string>" https://<apim gateway>.azure-api.net/api/path
+Query String Example:
+
+curl https://<apim gateway>.azure-api.net/api/path?subscription-key=<key string>
+If the key is not provided in the correct format (header or query string), the request will return a 401 Access Denied response from the API gateway.
+
+4. Regenerating Subscription Keys
+- You can regenerate subscription keys at any time, for example, if you suspect a key has been compromised.
+- Having two keys (primary and secondary) ensures that you can rotate keys without downtime by using the secondary key in your applications when regenerating the primary key.
+
+5. Additional Security Mechanisms
+While subscription keys are a common way to secure access, Azure API Management also supports other security mechanisms, such as:
+- OAuth 2.0: For token-based authentication and authorization.
+- Client Certificates: For securing API access using certificates.
+- IP Allow Listing: To restrict access to APIs based on specific IP addresses.
+
+Key Takeaways:
+- Subscription keys are used to secure APIs, ensuring that only authorized developers can access your APIs.
+- Keys can be included in either the request header (Ocp-Apim-Subscription-Key) or as a query string (subscription-key).
+- Subscriptions can be scoped at three levels: All APIs, Single API, or Product.
+- You can regenerate subscription keys without downtime by using primary and secondary keys.
+- Other security methods like OAuth, client certificates, and IP allow listing can be used in conjunction with subscription keys.
+
+This subscription-based security model helps ensure that your API is protected and accessible only to authorized users.
