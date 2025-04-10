@@ -1,0 +1,56 @@
+🔑 Securing App Configuration Data
+1. Customer-Managed Keys
+By default, Azure App Configuration uses Microsoft-managed encryption keys to encrypt sensitive data (key-value pairs) at rest using AES 256-bit encryption. But if you want more control over the encryption process, you can use customer-managed keys (CMK).
+
+🛠 How It Works:
+- Enable CMK to have Azure App Configuration use your Azure Key Vault for encryption.
+- Managed Identity: The App Configuration instance uses a managed identity to authenticate with Microsoft Entra ID.
+- Key Vault Integration: The managed identity accesses the Key Vault to wrap the encryption key. The wrapped key is stored in App Configuration, and the unwrapped version is cached for one hour.
+
+🌟 Required Setup:
+1. App Configuration Standard Tier
+2. Azure Key Vault with soft-delete and purge-protection enabled.
+3. RSA Key in the Key Vault with wrap/unwrap permissions.
+4. Assign Managed Identity to your App Configuration store.
+
+2. Private Endpoints
+Use private endpoints to ensure secure communication between your App Configuration store and your clients on a virtual network.
+
+✅ Benefits:
+- No exposure to the public internet—only accessible through private IPs.
+- Increased security for your app’s configuration data.
+- Ideal for securely connecting on-premises networks to App Configuration over a VPN or ExpressRoute.
+
+🔒 Private Link: Your data stays within Microsoft’s backbone network, adding an additional layer of security to your configuration management.
+3. Managed Identities
+A managed identity simplifies secure access to Azure services like Azure Key Vault without needing to handle credentials. There are two types:
+
+1. System-Assigned Identity:
+- Tied to the App Configuration store and deleted if the store is deleted.
+- Only one system-assigned identity per configuration store.
+
+2. User-Assigned Identity:
+- Standalone Azure resource that can be assigned to multiple stores.
+- Greater flexibility in identity management.
+
+🛠 Setup with Azure CLI:
+Assign a System-Assigned Identity:
+
+az appconfig identity assign --name myTestAppConfigStore --resource-group myResourceGroup
+
+Create and Assign a User-Assigned Identity:
+1. Create a user-assigned identity:
+
+az identity create --resource-group myResourceGroup --name myUserAssignedIdentity
+
+2. Assign the identity to App Configuration store:
+
+az appconfig identity assign --name myTestAppConfigStore --resource-group myResourceGroup --identities /subscriptions/[subscription id]/resourcegroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity
+
+🛡 Summary of Securing Your Configuration Data
+- Customer-managed keys for complete control over encryption.
+- Private endpoints to ensure secure, private connections.
+- Managed identities to avoid handling secrets while accessing Azure resources.
+
+With these security measures, your configuration data is well-protected from unauthorized access, ensuring data confidentiality, integrity, and availability.
+
