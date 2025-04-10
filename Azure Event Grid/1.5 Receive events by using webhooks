@@ -1,0 +1,21 @@
+1. Webhook Basics:
+- Webhooks are used to receive events from Azure Event Grid by posting HTTP requests to an endpoint.
+- When an event occurs, Event Grid sends a POST request with the event data.
+
+2. Ownership Validation:
+- To prevent abuse, Event Grid requires you to prove ownership of the webhook endpoint.
+- Azure services like Logic Apps, Automation, and Functions handle this validation automatically.
+
+3. Manual Validation for Custom Endpoints:
+- If you're using a custom HTTP endpoint (e.g., an HTTP-triggered Azure Function), you must manually validate the subscription.
+- Two types of validation are supported:
+  - Synchronous Handshake: Event Grid sends a validation event, and your endpoint responds with a validation code to confirm ownership.
+  - Asynchronous Handshake: If the endpoint can't respond synchronously (e.g., when using third-party services like Zapier), a manual validation URL is provided in the event. You must visit this URL within 5 minutes to complete the validation.
+
+4. Event Grid Validation Process:
+- Synchronous: Return the validation code in the response to confirm the subscription.
+- Asynchronous (Manual): Visit the provided URL to complete validation within 5 minutes. If not completed, the subscription fails, and you must recreate it.
+
+5. Important Notes:
+- Use a signed certificate from a commercial Certificate Authority (CA), as self-signed certificates are not supported for validation.
+- Ensure your webhook endpoint returns an HTTP status code 200 to acknowledge receipt of the validation event.
