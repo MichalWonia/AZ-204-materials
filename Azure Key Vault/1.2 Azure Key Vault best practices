@@ -1,0 +1,39 @@
+🔐 Azure Key Vault Best Practices
+Azure Key Vault is essential for securely managing secrets, like API keys, passwords, and certificates. A vault is a logical container for these secrets.
+
+✅ Authentication Best Practices
+Use Managed Identities (Recommended):
+- Ideal for apps running in Azure (VMs, Azure Functions, App Services, etc.).
+- No need to manage secret rotation — Azure handles it for you.
+- Best practice for most Azure-hosted applications.
+
+Avoid:
+- Service principal + certificate – Requires manual certificate rotation.
+- Service principal + client secret – Hard to rotate and manage securely.
+
+🔐 Encryption of Data in Transit
+- TLS enforced for all traffic between clients and Azure Key Vault.
+- Uses RSA 2048-bit encryption and Perfect Forward Secrecy (PFS).
+- Protects data from tampering, interception, and forgery.
+
+🛡️ Operational Best Practices
+1. Use Separate Key Vaults
+- One vault per application per environment (Dev, Test, Prod).
+- Reduces cross-environment exposure and limits blast radius if compromised.
+
+2. Access Control
+- Secure access using Azure RBAC or Key Vault access policies.
+- Principle of least privilege: Only give required permissions to users/apps.
+
+3. Backups
+- Back up your vault routinely, especially on changes (create/update/delete).
+- Use automated scripts or tools to perform backups regularly.
+
+4. Enable Logging
+- Turn on Azure Monitor logs, Activity logs, and Alerts.
+- Helps track access patterns, detect misuse, and respond to incidents.
+
+5. Soft Delete & Purge Protection
+- Soft Delete allows recovery of deleted secrets.
+- Purge Protection prevents immediate, permanent deletion.
+- Both are crucial for protecting against accidental or malicious deletions.
