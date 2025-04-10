@@ -1,0 +1,41 @@
+🔐 Authenticating to Azure Key Vault
+Azure Key Vault authentication is handled by Microsoft Entra ID (formerly Azure Active Directory), which verifies the identity of the security principal (user, app, or service).
+
+✅ Preferred Authentication Method: Managed Identity
+✔ System-Assigned Managed Identity (Recommended):
+- Automatically managed by Azure.
+- Tied to the Azure resource (e.g., VM, Function App, Web App).
+- Simplifies identity and credential management.
+- Best choice when your app is deployed in Azure.
+
+❌ If Managed Identity is not possible:
+- Register the application manually in Microsoft Entra ID.
+- This creates:
+  - Application object: Shared across tenants.
+  - Service principal: Identity within a specific tenant.
+
+🔄 Authenticate in Code: Azure Identity SDK
+Use the Azure Identity client library for seamless, environment-agnostic auth across languages:
+
+Language	                  Library
+.NET                      	Azure Identity SDK (.NET)
+Python                    	Azure Identity SDK (Python)
+Java	                      Azure Identity SDK (Java)
+JavaScript	                Azure Identity SDK (JS)
+These libraries handle token acquisition and work across environments (local, Azure, etc.).
+
+🌐 Authenticating with REST API
+You can authenticate by including a Bearer token in the Authorization header:
+
+PUT /keys/MYKEY?api-version=<api_version> HTTP/1.1  
+Authorization: Bearer <access_token>
+If authentication fails, you’ll get a 401 Unauthorized response with a WWW-Authenticate header like:
+
+401 Not Authorized  
+WWW-Authenticate: Bearer authorization="...", resource="https://vault.azure.net"
+- authorization: URL of the OAuth2 auth service to get the token.
+- resource: The resource name — always https://vault.azure.net for Key Vault.
+
+📚 Helpful Resources
+https://learn.microsoft.com/en-us/azure/key-vault/Key Vault Availability & Redundancy
+https://learn.microsoft.com/en-us/azure/key-vault/general/overview
