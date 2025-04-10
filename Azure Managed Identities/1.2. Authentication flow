@@ -1,0 +1,53 @@
+🔄 Managed Identity Authentication Flow (with Azure VMs)
+This unit explains how Azure VMs authenticate to other Azure services using managed identities, either system-assigned or user-assigned.
+
+✅ System-Assigned Managed Identity Flow
+1. Enable Identity on VM
+- Azure Resource Manager (ARM) receives a request to enable the identity on the VM.
+
+2. Create Service Principal
+- ARM creates a service principal in Microsoft Entra ID (Azure AD) for the VM.
+
+3. Configure Metadata
+- ARM updates the Azure Instance Metadata Service (IMDS) on the VM with the identity’s client ID and certificate.
+
+4. Assign Permissions
+- Use RBAC to give the VM’s identity access to Azure resources (e.g., Key Vault, Azure Storage).
+
+5. Request Token (from inside VM)
+- The code running on the VM makes a call to the IMDS token endpoint:
+http://169.254.169.254/metadata/identity/oauth2/token
+
+6. Entra ID Issues Token
+- Microsoft Entra ID returns a JWT access token.
+
+7. Access Azure Services
+- Your app uses the access token to call Azure services that support Entra ID authentication.
+
+✅ User-Assigned Managed Identity Flow
+1. Create Identity
+- ARM receives a request to create a user-assigned managed identity.
+
+2. Create Service Principal
+- ARM creates a service principal in Entra ID for that identity.
+
+3. Assign Identity to VM
+- ARM updates the VM’s IMDS endpoint with the user-assigned identity’s client ID and certificate.
+
+4. Assign Permissions
+- Use RBAC to assign roles to the user-assigned identity (can be done before or after step 3).
+
+5. Request Token
+- Code on the VM requests a token from IMDS.
+
+6. Entra ID Issues Token
+- JWT access token is returned.
+
+7. Access Azure Services
+- App uses the token to securely call Azure services.
+
+🧠 Key Points to Remember
+- IMDS Endpoint: Only accessible from within the VM.
+- No credentials to manage: Azure handles secret rotation and lifecycle.
+- Same endpoint for both identity types: Your app code can remain unchanged.
+
