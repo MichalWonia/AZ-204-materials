@@ -1,0 +1,87 @@
+Event Schemas in Azure Event Grid
+Azure Event Grid supports two types of event schemas: the Event Grid event schema and the CloudEvents schema. 
+Both schemas structure the event data but offer different formats for ease of use, especially for interoperability across cloud platforms.
+
+Event Grid Event Schema
+Events in Event Grid follow a consistent structure. 
+Every event contains a set of required properties that are common across all event publishers. 
+These properties include metadata that is critical for identifying and processing the event.
+
+Common Event Properties:
+Every event published to Event Grid contains these top-level properties:
+
+Property	                    Type	        Required	          Description
+topic	                        string	      No	                The full resource path of the event source. Event Grid automatically stamps this if it's not provided.
+subject	                      string	      Yes	                The publisher-defined path to the event subject.
+eventType	                    string	      Yes	                The event type, registered for this event source.
+eventTime	                    string	      Yes	                The time the event was generated, in UTC.
+id	                          string	      Yes	                A unique identifier for the event.
+data	                        object	      No	                The event data specific to the resource provider (varies by publisher).
+dataVersion	                  string	      No	                The schema version of the event data (if provided by the publisher).
+metadataVersion	              string	      No	                The schema version of the event metadata (if included, must match Event Grid's current version).
+
+Custom Topics
+When publishing events to custom topics, the subject and data fields are especially important for defining what the event represents. 
+The subject is critical for filtering events, and its structure helps subscribers decide which events they are interested in.
+- The subject field can be organized in a hierarchical format (e.g., /A/B/C), enabling subscribers to filter events at different levels of granularity.
+- For example, in Azure Storage, a blob created event might use a subject like /blobServices/default/containers/{container-name}/blobs/{file-name}, 
+which allows subscribers to filter events by container or file type.
+
+CloudEvents Schema
+Azure Event Grid also supports the CloudEvents v1.0 specification, which standardizes the format for cloud event data. 
+CloudEvents simplifies interoperability across different systems by providing a consistent structure for event data, enabling easier integration across multiple platforms.
+
+CloudEvents Event Example (Azure Blob Storage Event):
+Here’s an example of an event in CloudEvents format, describing a Blob Created event in Azure Storage:
+
+{
+    "specversion": "1.0",
+    "type": "Microsoft.Storage.BlobCreated",  
+    "source": "/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.Storage/storageAccounts/{storage-account}",
+    "id": "9aeb0fdf-c01e-0131-0922-9eb54906e209",
+    "time": "2019-11-18T15:13:39.4589254Z",
+    "subject": "blobServices/default/containers/{storage-container}/blobs/{new-file}",
+    "dataschema": "#",
+    "data": {
+        "api": "PutBlockList",
+        "clientRequestId": "4c5dd7fb-2c48-4a27-bb30-5361b5de920a",
+        "requestId": "9aeb0fdf-c01e-0131-0922-9eb549000000",
+        "eTag": "0x8D76C39E4407333",
+        "contentType": "image/png",
+        "contentLength": 30699,
+        "blobType": "BlockBlob",
+        "url": "https://gridtesting.blob.core.windows.net/testcontainer/{new-file}",
+        "sequencer": "000000000000000000000000000099240000000000c41c18",
+        "storageDiagnostics": {
+            "batchId": "681fe319-3006-00a8-0022-9e7cde000000"
+        }
+    }
+}
+
+Key Fields in CloudEvents Schema:
+- specversion: Version of the CloudEvents specification (e.g., "1.0").
+- type: Type of the event (e.g., "Microsoft.Storage.BlobCreated").
+- source: The resource path where the event originated.
+- id: Unique identifier for the event.
+- time: The timestamp of the event.
+- subject: The subject or resource path that the event relates to.
+- dataschema: A reference to the schema of the event data.
+- data: The actual event data, specific to the event type (e.g., details about the blob created in Azure Storage).
+
+CloudEvents vs Event Grid Schema:
+- Headers: Both schemas share the same header values except for the content-type:
+  - CloudEvents: "content-type": "application/cloudevents+json; charset=utf-8"
+  - Event Grid: "content-type": "application/json; charset=utf-8"
+
+- Use Case:
+  - CloudEvents is often used for system events (e.g., Blob Storage events, IoT Hub events) and custom events that need a common format for broader integration.
+  - Event Grid's schema is typically used for native Azure events and custom events, especially within the Azure ecosystem.
+
+Event Size and Charging
+- Event Size Limit: Events are limited to 1 MB in size. If an event exceeds this limit, a 413 Payload Too Large error is returned.
+- Charging: Events larger than 64 KB incur charges as if they were multiple smaller events. For example, an event of 130 KB would be billed as 3 separate events (64 KB + 64 KB + 2 KB).
+
+Conclusion
+Both Event Grid event schema and CloudEvents schema provide structured formats for events, but the CloudEvents format simplifies interoperability across 
+different cloud providers and platforms, while Event Grid's native schema is tightly integrated with Azure services. By supporting both formats, 
+Azure Event Grid ensures flexibility in integrating with a wide variety of systems and handling events efficiently.
