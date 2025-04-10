@@ -1,0 +1,118 @@
+1. Control Flow
+The control flow policy allows you to conditionally apply policies based on the evaluation of boolean expressions. It works similarly to a switch or if-else structure in programming.
+
+Example:
+
+<choose>
+  <when condition="Boolean expression | Boolean constant">
+    <!-- One or more policy statements to be applied if condition is true -->
+  </when>
+  <when condition="Boolean expression | Boolean constant">
+    <!-- One or more policy statements to be applied if condition is true -->
+  </when>
+  <otherwise>
+    <!-- One or more policy statements to be applied if all conditions are false -->
+  </otherwise>
+</choose>
+
+- <when>: Defines conditions to apply policies if the condition evaluates as true.
+- <otherwise>: Optional. Defines actions if none of the conditions are met.
+
+2. Forward Request
+The forward-request policy forwards the incoming request to the backend service specified in the request context.
+
+Example:
+
+<forward-request timeout="time in seconds" follow-redirects="true | false"/>
+
+- timeout: Defines the maximum time allowed for the request to be forwarded to the backend.
+- follow-redirects: Specifies whether the request should follow any redirects from the backend.
+
+3. Limit Concurrency
+The limit-concurrency policy limits the number of concurrent requests that can execute at the same time. If more requests are received, they will be immediately rejected with a 429 Too Many Requests status.
+
+Example:
+
+<limit-concurrency key="expression" max-count="number">
+  <!-- Nested policy statements -->
+</limit-concurrency>
+
+- key: The key used to group requests.
+- max-count: The maximum number of requests allowed to execute concurrently.
+
+4. Log to Event Hub
+The log-to-eventhub policy sends logs in the specified format to an Event Hub defined by a logger entity.
+
+Example:
+
+<log-to-eventhub logger-id="id of the logger entity" partition-id="index of the partition where messages are sent" partition-key="value used for partition assignment">
+  Expression returning a string to be logged
+</log-to-eventhub>
+
+- logger-id: ID of the logger entity.
+- partition-id: Index of the partition in the Event Hub.
+- partition-key: Value for partition assignment.
+
+5. Mock Response
+The mock-response policy is used to return a mocked response directly to the caller. This policy is useful for simulating API behavior when actual backend services aren’t available.
+
+Example:
+
+<mock-response status-code="code" content-type="media type"/>
+
+- status-code: The HTTP status code to return.
+- content-type: The media type for the mock response (e.g., application/json).
+
+6. Retry
+The retry policy retries execution of enclosed policies until a specific condition becomes false, or a maximum retry count is reached.
+
+Example:
+
+<retry condition="boolean expression or literal"
+       count="number of retry attempts"
+       interval="retry interval in seconds"
+       max-interval="maximum retry interval in seconds"
+       delta="retry interval delta in seconds"
+       first-fast-retry="boolean expression or literal">
+  <!-- One or more child policies -->
+</retry>
+
+- condition: The condition that determines when to retry.
+- count: The number of retry attempts.
+- interval: The retry interval in seconds.
+- max-interval: The maximum time between retries.
+- delta: The interval change between retries.
+- first-fast-retry: A boolean expression that decides if the first retry should be fast.
+
+7. Return Response
+The return-response policy immediately aborts pipeline execution and returns a custom response to the caller. You can either return a default response or a response based on a context variable or policy statement.
+
+Example:
+
+<return-response response-variable-name="existing context variable">
+  <set-header/>
+  <set-body/>
+  <set-status/>
+</return-response>
+
+- response-variable-name: The name of the context variable that holds the response to return.
+- set-header, set-body, set-status: Modify the returned response.
+
+Key Takeaways:
+- Control flow: Allows conditional application of policies (like if/else).
+- Forward request: Forwards requests to backend services.
+- Limit concurrency: Prevents more than a certain number of requests from executing at once.
+- Log to Event Hub: Logs data to an Event Hub for later analysis.
+- Mock response: Simulates responses without hitting the backend.
+- Retry: Retries policy execution if certain conditions aren't met.
+- Return response: Immediately returns a custom response, aborting the pipeline.
+
+These policies help you manage your API’s behavior under different scenarios, allowing you to ensure better control, testing, and error handling in your API ecosystem. 
+
+
+
+
+
+
+
+
