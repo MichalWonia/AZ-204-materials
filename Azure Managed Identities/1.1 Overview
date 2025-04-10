@@ -1,0 +1,38 @@
+🔐 Managed Identities in Azure
+Managed identities help securely access Azure resources like Key Vault, Storage Accounts, and databases—without hardcoding secrets or credentials in your application.
+
+🚫 The Problem:
+Developers often struggle with:
+- Secret/credential management
+- Secure service-to-service communication
+
+✅ The Solution: Managed Identities
+Managed identities are identities in Microsoft Entra ID (Azure AD) automatically managed by Azure. They allow your app to authenticate to Azure services securely—no credentials needed.
+
+🔄 Two Types of Managed Identities
+Feature	                        System-Assigned	                                        User-Assigned
+Created with	                  An Azure resource (e.g., VM, App Service)	              Manually as a standalone Azure resource
+Lifecycle tied to	              The parent resource	                                    Independent from any specific resource
+Sharing between resources	      ❌ Cannot be shared	                                  ✅ Can be used across multiple resources
+Best for	                      Single-resource workloads	                              Shared identity across multiple services
+
+🔄 Internals
+- Managed identities are special service principals.
+- Automatically cleaned up when deleted.
+- Azure handles credential rotation behind the scenes.
+
+🧠 When to Use What
+System-Assigned:
+- Single-resource workloads (e.g., app on one VM)
+- Simpler setup and teardown
+
+User-Assigned:
+- Multi-resource workloads
+- Pre-authorized access scenarios
+- When resources are recycled often (e.g., autoscaling VMs)
+
+✅ Supported Scenarios
+You can use managed identities with any Azure service that supports Microsoft Entra authentication (like Azure Key Vault, Azure SQL, Azure Storage, etc.).
+
+📎 See full list of supported services here
+https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities
