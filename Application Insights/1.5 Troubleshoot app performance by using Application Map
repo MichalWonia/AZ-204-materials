@@ -1,0 +1,54 @@
+🧭 What is Application Map?
+The Application Map is a visual, interactive topology of your distributed/microservices application that shows:
+- 🧩 Each component (service/app role)
+- 🛠 External dependencies (like SQL, Event Hubs)
+- 💡 Key health KPIs (like response time, failure rate)
+- ⚠️ Active alerts
+
+Think of it as your app's live blueprint, showing what talks to what—and how healthy those connections are.
+
+🔎 Why Use It?
+- ✅ Quickly find performance bottlenecks
+- 🔥 Spot failure hotspots
+- 🧵 Trace call paths across services
+- 📈 Drill into metrics, failures, exceptions, and logs from any component
+
+You can even link through to:
+- Application Insights telemetry
+- Azure SQL Advisor recommendations
+- Azure Diagnostics for specific services
+
+🧱 What Shows on the Map?
+Components
+- These are parts of your app you own (like microservices or app roles).
+- Identified using cloud role name.
+- May be split across subscriptions or App Insights keys.
+- Appear as nodes you can click into for details.
+
+Observed Dependencies
+- External services your app calls (e.g., databases, APIs).
+- Shown differently (usually as leaves or lighter nodes).
+- You can't drill into their internal telemetry.
+
+⚙️ How It Works
+- App Map uses Application Insights SDK to trace HTTP dependencies.
+- When you open the map, it runs discovery queries to find related components.
+- You can press "Update map components" to refresh the map as more are found.
+- If your app is fully contained in one Application Insights resource, all roles are shown immediately.
+
+🛠 Troubleshooting with the Map
+- Click on a component to:
+  - View performance metrics
+  - See failure rates
+  - Drill into specific requests or exceptions
+- Use it during incidents to:
+  - Pinpoint where slowness or failures originate
+  - Validate if downstream services are healthy
+
+💡 Pro Tip
+Manually set cloud_RoleName if:
+- You want clear labels for each service in the map
+- You’re using a single Application Insights resource for multiple roles
+
+TelemetryInitializer initializer = new TelemetryInitializer();
+telemetry.Context.Cloud.RoleName = "MyServiceName";
