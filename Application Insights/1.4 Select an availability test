@@ -1,0 +1,34 @@
+🔍 Types of Availability Tests
+✅ 1. Standard Test (💡 Recommended)
+- Replaces the classic URL ping test.
+- Supports:
+  - HTTP verbs: GET, POST, HEAD
+  - Custom headers & payload
+  - SSL cert checks
+  - Proactive expiration alerts
+- Fully managed via Azure Portal and REST API.
+- Supports advanced validation criteria.
+
+🟢 Best for most users — use this for checking public endpoints, web apps, APIs, and sites with headers or tokens.
+
+🛠️ 2. Custom TrackAvailability Test
+- Use this when:
+  - You need complex, app-specific checks
+  - You’re testing internal services not publicly exposed
+  - You want to run the check from within your app and report the result manually
+- You call TrackAvailability() from code and send custom telemetry to Application Insights.
+
+🔧 Best for internal apps or complex logic (e.g., database checks, conditional flows).
+
+⚠️ 3. URL Ping Test (Classic) (Deprecated)
+- Legacy test type; only supports simple pings
+- No support for headers, POST, or SSL checks
+- Retires September 30, 2026
+
+❌ Avoid creating new ones. If you're still using them, start migrating to Standard tests soon.
+
+✨ Pro Tips:
+- You can run tests from multiple regions worldwide to check for global availability.
+- You can set alert rules to get notified if a test fails or response time degrades.
+- Up to 100 tests per Application Insights resource — that’s plenty for most apps.
+
