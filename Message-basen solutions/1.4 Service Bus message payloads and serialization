@@ -1,0 +1,29 @@
+📩 Service Bus Message Structure
+A Service Bus message has:
+1. Binary Payload – The actual message content (opaque to Service Bus).
+2. System (Broker) Properties – Metadata used by Service Bus for routing, sessions, etc.
+3. User Properties – Custom key-value pairs defined by the app.
+
+🧭 Message Routing & Correlation Patterns
+Pattern	                                                  Description
+Simple Request/Reply	                                    Use ReplyTo (for response queue address) and CorrelationId (matches MessageId of request).
+Multicast Request/Reply	                                  Publish to a topic, multiple subscribers respond (reply goes to topic or queue in ReplyTo).
+Multiplexing	                                            Route related message sessions using the same SessionId. Each session is locked to one consumer.
+Multiplexed                                               Request/Reply	Use ReplyToSessionId to group replies. Works even if original message didn't use sessions.
+
+🔁 Payload Serialization
+- Payload is always binary on Service Bus.
+- Use ContentType (e.g., application/json) to tell the receiver how to interpret it.
+- AMQP protocol allows advanced object serialization (e.g., using ArrayList, IDictionary).
+- .NET Framework (legacy):
+  - You can pass in objects directly → serialized using default binary serializer or custom one.
+- Best Practice: Explicitly serialize your objects before sending (e.g., to JSON) and deserialize on the receiver.
+
+🛡️ Note on Routing
+- Avoid relying on the To property for routing—it's reserved.
+- Use user-defined properties or session IDs for custom routing logic.
+
+✅ Exam Tips:
+- Know that metadata (properties) can be enough for routing—even without payload.
+- Remember the difference between SessionId and ReplyToSessionId.
+- Be familiar with AMQP serialization and ContentType usage.
