@@ -1,0 +1,44 @@
+🚀 What is Azure Service Bus?
+- A fully managed enterprise message broker.
+- Supports message queues (point-to-point) and topics/subscriptions (publish/subscribe).
+- Used to decouple applications, improving scalability and reliability.
+- Messages contain data (JSON, XML, Avro, plain text) and metadata.
+
+🧩 Common Use Cases:
+- Messaging: Transfer business data (orders, logs, etc.).
+- Decoupling services: Sender and receiver don’t need to be online at the same time.
+- Topics/Subscribers: 1-to-many message distribution.
+- Message Sessions: Maintain FIFO or implement workflows requiring ordering.
+
+🏷️ Tiers Comparison:
+Feature	                    Premium	                          Standard
+Throughput	                High & predictable	              Variable
+Performance	                Predictable	                      Variable latency
+Pricing	                    Fixed	                            Pay-as-you-go
+Scaling	                    Manual, flexible	                Not supported
+Max message size	          Up to 100 MB	                    Up to 256 KB
+Use Premium for mission-critical and production workloads.
+
+🔧 Advanced Features:
+Feature	                          Description
+Message Sessions	                FIFO, ordered sequences
+Autoforwarding	                  Chain queues/topics in same namespace
+Dead-letter Queue	                Store undeliverable messages
+Scheduled Delivery	              Delay message processing
+Message Deferral	                Temporarily skip a message
+Transactions	                    Group multiple operations atomically
+Filtering & Actions	              Subscribers receive specific messages
+Autodelete on Idle	              Auto-delete queues after inactivity
+Duplicate Detection              	Discard repeat messages
+Geo-disaster Recovery	            Continuity in regional failures
+Security	                        SAS, RBAC, Managed Identities, AMQP 1.0, HTTP/REST
+📦 Client Libraries:
+.NET, Java, Java JMS 2.0, JavaScript/TypeScript, Python.
+
+Fully supported through Azure SDKs.
+
+🧠 Exam Tips:
+- Know the difference between Service Bus and Storage Queues.
+- Understand topics vs queues.
+- Be familiar with advanced features, especially sessions, DLQ, transactions, and filtering.
+- Know when to use Premium vs Standard.
