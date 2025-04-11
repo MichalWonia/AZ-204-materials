@@ -1,0 +1,54 @@
+🛠️ Instrumentation Methods
+✅ 1. Autoinstrumentation (Codeless)
+- What it is: Adds telemetry without modifying code
+- How it works: Set up through environment variables, configuration files, or hosting environment (like Azure App Service or Azure Functions)
+- Pros: Super easy, no coding required
+- Cons: Limited customization, not available for all platforms/languages
+
+Use it when: You just want to turn it on and go, especially in supported environments like .NET on App Service or Java on Azure Kubernetes.
+
+🧑‍💻 2. Manual Instrumentation
+You modify the app’s code to capture custom telemetry or enhance control. Two main options:
+
+Option A: Application Insights SDKs
+- Install a language-specific SDK (Microsoft.ApplicationInsights.*)
+- Instrument:
+  - Web apps
+  - Background services
+  - Client-side JavaScript
+- Use TelemetryClient to log:
+  - TrackEvent()
+  - TrackMetric()
+  - TrackException()
+  - TrackDependency()
+
+Use it when:
+- You need custom telemetry
+- You want fine control
+- Autoinstrumentation is unavailable
+
+Option B: Azure Monitor OpenTelemetry Distros
+- OpenTelemetry = vendor-neutral instrumentation standard
+- Use Microsoft’s OpenTelemetry Distro to export data to Application Insights
+- Supports spans, metrics, logs, etc.
+
+Use it when:
+- You're in a polyglot or cloud-native environment
+- You want a vendor-neutral setup
+- You're already using OpenTelemetry elsewhere
+
+🔁 Comparing Terms (App Insights vs. OpenTelemetry)
+App Insights Term	                                  OpenTelemetry Term
+Autocollectors	                                    Instrumentation libraries
+Channel	                                            Exporter
+Codeless / Agent-based	                            Autoinstrumentation
+Requests	                                          Server spans
+Dependencies	                                      Client/Internal spans
+Operation ID	                                      Trace ID
+Operation Parent ID	                                Span ID
+
+🎯 Getting Started
+Pick the path based on your scenario:
+- Autoinstrumentation → Easiest path, especially for cloud-hosted apps
+- Manual (SDK) → Great for full customization or legacy apps
+- OpenTelemetry → Ideal for scalable, cloud-native microservices
