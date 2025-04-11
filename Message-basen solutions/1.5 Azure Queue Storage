@@ -1,0 +1,28 @@
+📦 What is Azure Queue Storage?
+Azure Queue Storage provides a simple message queuing system for large-scale, asynchronous communication between application components. It’s great for building backlogs of work to be processed in the background.
+
+🧱 Key Components:
+Component	                          Description
+Storage Account	                    The top-level container that holds all your Azure storage resources (queues, blobs, etc.).
+Queue	                              A named container for messages (must be lowercase).
+Message	                            A string (or other serialized format) of up to 64 KB. Stored in the queue.
+
+🌐 Access Format
+Queues are accessible via:
+
+https://<storage-account-name>.queue.core.windows.net/<queue-name>
+Example:
+
+https://myaccount.queue.core.windows.net/images-to-download
+
+⏳ Message Time-to-Live (TTL)
+- Default TTL: 7 days
+- For API version 2017-07-29+, TTL can be:
+  - Any positive number (in seconds)
+  - -1 to never expire
+- Before 2017-07-29: Max TTL = 7 days
+
+✅ Use Cases
+- Backlog of jobs to process asynchronously
+- Decoupling front-end and back-end systems
+- Retry mechanisms for failed operations
