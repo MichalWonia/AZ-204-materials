@@ -1,0 +1,19 @@
+✅ Use Service Bus Queues when:
+- Low latency message delivery without polling is needed (via long-polling on TCP).
+- FIFO (First-In, First-Out) message order is required.
+- Duplicate message detection is necessary.
+- You need to process messages as sessions or streams (using SessionId to group related messages).
+- Transactional operations (send/receive multiple messages atomically) are required.
+- You need to support larger message sizes (over 64 KB, up to 100 MB depending on tier).
+- Role-based access control (RBAC) and fine-grained permissions are needed.
+
+✅ Use Storage Queues when:
+- You need to store more than 80 GB of messages.
+- Your application needs to track processing progress (useful if a worker crashes mid-processing).
+- You require server-side logging for all transactions on the queue.
+
+🧠 Key AZ-204 Exam Tips:
+- Service Bus = rich features, more control, better for complex workflows or enterprise apps.
+- Storage Queue = simple, scalable, cost-effective, better for large storage and basic queuing needs.
+
+Let me know if you want a cheat sheet or comparison table for quick review!
