@@ -1,0 +1,48 @@
+📏 What Are Log-Based Metrics?
+Log-based metrics are metrics derived from Application Insights logs (stored events). They're built by executing Kusto queries on collected telemetry data (like requests, exceptions, or custom events).
+
+🔄 Two Types of Metrics in Application Insights
+Metric Type	                                      How It's Built	                                                                  Best For	                                    Performance
+Log-Based Metrics	                                Built from querying raw telemetry logs using KQL	                                Deep analysis, ad-hoc diagnostics	            Slower (processed at query time)
+Standard (Preaggregated) Metrics	                Pre-aggregated during collection; stored as time series	                          Dashboards, near real-time alerts	            Faster (better for dashboards & alerts)
+
+🧠 Why Use Log-Based Metrics?
+- Richer dimensions and filters
+- Full control with Kusto Query Language (KQL)
+- Great for custom diagnostics, troubleshooting specific sessions, or filtering by custom properties
+- Useful when you need exact details (like unique user counts, specific dependency traces)
+
+✅ Example: Want to find how many users triggered a specific API and which ones caused failures? Log-based metrics are your go-to.
+
+⚙️ How Log-Based Metrics Work
+- Data comes from:
+  - SDK-based custom events (TrackEvent, TrackException, TrackDependency)
+  - Auto-instrumented telemetry (e.g., requests, dependencies, exceptions)
+- Events are stored as logs.
+- Metrics are created from Kusto queries over these logs.
+- You can visualize them or create alerts based on their output.
+
+⚡ Standard (Preaggregated) Metrics Highlights
+- Preprocessed before storage → lightweight & fast at runtime
+- Immune to sampling → more accurate even with telemetry reduction
+- Supported by newer SDKs (e.g., .NET SDK v2.7+) and GetMetric(...) API
+- Best for:
+  - Real-time alerting
+  - Dashboards that update quickly
+  - Scenarios needing low-latency
+
+🔁 Coexistence
+- Both metric types are available in Application Insights.
+- In Metrics Explorer:
+  - Use the namespace selector to switch between:
+    - Log-based metrics
+    - Standard metrics (preview)
+
+🧩 Sampling & Accuracy Notes
+- Sampling and filtering reduce stored logs → affects log-based metric accuracy
+- Preaggregated metrics are built before sampling → remain accurate
+
+💡 Pro Tips
+- Use log-based metrics for detailed diagnostics or when you need to slice and dice with custom dimensions.
+- Use standard metrics for realtime alerting, dashboards, and performance-critical monitoring.
+
