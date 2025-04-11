@@ -1,0 +1,34 @@
+📦 Service Bus Messaging Entities Overview:
+✅ Queues
+- FIFO delivery to a single consumer at a time.
+- Messages are stored durably → producers and consumers don’t need to be online at the same time.
+- Supports load leveling and loose coupling between services.
+- Can be created using Portal, CLI, PowerShell, ARM templates.
+
+🔁 Receive Modes:
+Mode	                        Description	                                            Use Case
+Receive and Delete	          Message is removed as soon as received	                Use when occasional message loss is acceptable
+Peek Lock	                    Two-step receive: lock then complete or abandon	        Use when you must not lose messages
+
+📣 Topics & Subscriptions (Pub/Sub)
+- Use topics to support 1-to-many communication.
+- Each subscription gets a copy of each message sent to the topic.
+- Consumers receive messages from subscriptions, not directly from topics.
+- Supports:
+  - Load balancing
+  - Temporal decoupling
+  - Competing consumers
+  - Load leveling (like queues)
+
+🎯 Rules and Actions
+- Let you filter and modify messages at the subscription level.
+- Use filters (e.g., SQL filters) to control which messages a subscription receives.
+- Use actions to modify message properties (like tags/labels).
+- Supports both system properties (like Label) and custom properties (like StoreName).
+
+🧠 Exam Tips:
+- Queues = point-to-point, single consumer per message.
+- Topics = pub/sub, multiple subscribers per message.
+- Know how to use Peek Lock for reliable processing.
+- Understand filters/actions to route or transform messages intelligently.
+- Subscriptions behave like virtual queues.
