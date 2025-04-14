@@ -7,8 +7,8 @@
 
 🔁 Receive Modes:
 Mode	                        Description	                                            Use Case
-Receive and Delete	          Message is removed as soon as received	                Use when occasional message loss is acceptable
-Peek Lock	                    Two-step receive: lock then complete or abandon	        Use when you must not lose messages
+ReceiveAndDelete	          Message is removed as soon as received	                Use when occasional message loss is acceptable
+PeekLock	                    Two-step receive: lock then complete or abandon	        Use when you must not lose messages
 
 📣 Topics & Subscriptions (Pub/Sub)
 - Use topics to support 1-to-many communication.
