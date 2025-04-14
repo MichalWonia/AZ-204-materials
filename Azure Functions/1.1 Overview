@@ -74,5 +74,14 @@ You prefer GUI-based workflow building	                                    Logic
 - Both can scale automatically.
 - Both are great for automation, integrations, and workflows.
 
+Azure Durable Functions:
+The primary use case for Durable Functions is simplifying complex, stateful coordination requirements in serverless applications. 
+The following sections describe typical application patterns that can benefit from Durable Functions:
 
+Function chaining
+Fan-out/fan-in
+Async HTTP APIs
+Monitoring
+Human interaction
+Aggregator (stateful entities)
 
