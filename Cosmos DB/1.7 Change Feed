@@ -32,10 +32,18 @@ There are two models for working with the change feed:
 Works with .NET SDK V3+ and Java SDK V4+. Involves four components:
 
 Component	                  Description
-Monitored container	        Source of the change feed
-Lease container	            Tracks state of each processor's progress
-Compute instance	          Host where processor runs
-Delegate	                  Code that processes changes
+- The monitored container: The monitored container has the data from which the change feed is generated. 
+Any inserts and updates to the monitored container are reflected in the change feed of the container.
+
+- The lease container: The lease container acts as state storage and coordinates the processing of the change feed across multiple workers.
+The lease container can be stored in the same account as the monitored container or in a separate account.
+
+- The compute instance: A compute instance hosts the change feed processor to listen for changes. 
+Depending on the platform, it might be represented by a virtual machine (VM), a Kubernetes pod, 
+an Azure App Service instance, or an actual physical machine. The compute instance has a unique 
+identifier that's called the instance name throughout this article.
+
+- The delegate: The delegate is the code that defines what you, the developer, want to do with each batch of changes that the change feed processor reads.
 
 📌 Sample Setup Code (C#):
 ChangeFeedProcessor changeFeedProcessor = cosmosClient
