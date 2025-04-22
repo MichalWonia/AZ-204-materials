@@ -1,6 +1,7 @@
 🔐 Acquire an Access Token with Managed Identity
 ✅ Use DefaultAzureCredential (Recommended)
-DefaultAzureCredential from the Azure Identity SDK tries multiple authentication methods in order, and automatically works in both local development and production environments.
+DefaultAzureCredential from the Azure Identity SDK tries multiple authentication methods in order, and 
+automatically works in both local development and production environments.
 
 🔄 Authentication Order (tries in sequence):
 - Environment variables
@@ -46,5 +47,6 @@ var eventHubClient = new EventHubProducerClient(
     credential);
     
 🧠 Key Takeaway:
-Use DefaultAzureCredential to simplify token acquisition without changing code across environments. Use ChainedTokenCredential if you need more control or custom fallback logic.
+Use DefaultAzureCredential to simplify token acquisition without changing code across environments. 
+Use ChainedTokenCredential if you need more control or custom fallback logic.
 
