@@ -24,16 +24,19 @@ These roles define what actions users can perform on Event Grid resources.
 
 Permissions for Event Subscriptions
 Event Grid event subscriptions require specific permissions depending on the type of event handler you're using. 
-The Event Grid Subscription Contributor role is required to manage event subscriptions, but other roles may be needed for the underlying event handler resource.
+The Event Grid Subscription Contributor role is required to manage event subscriptions, 
+but other roles may be needed for the underlying event handler resource.
 
 Required Permissions:
-- For event handlers that are not webhooks (such as Event Hubs, Azure Storage Queues, or Service Bus), you need write access to those resources to allow events to be sent.
+- For event handlers that are not webhooks (such as Event Hubs, Azure Storage Queues, or Service Bus),
+you need write access to those resources to allow events to be sent.
 - Specifically, you need the Microsoft.EventGrid/EventSubscriptions/Write permission on the resource that is the event source. 
 This permission is required to create new event subscriptions at the resource scope.
 
 Types of Event Grid Topics and Permissions
 1. System Topics
-- Description: These topics are predefined and provided by Azure services, such as Azure Storage, Azure Event Hubs, etc. They are automatically created when you create a specific resource.
+- Description: These topics are predefined and provided by Azure services, such as Azure Storage, Azure Event Hubs, etc. 
+They are automatically created when you create a specific resource.
 - Permissions Required: You need to have permission to write a new event subscription at the scope of the resource publishing the event.
   - Format: /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}
 
