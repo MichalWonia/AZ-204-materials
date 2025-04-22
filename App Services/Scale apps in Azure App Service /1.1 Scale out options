@@ -31,7 +31,7 @@ Azure App Service Automatic Scaling:
 - Automatic Scaling Setup: You enable automatic scaling by configuring an App Service Plan with a range of instances for each web app. 
 App Service monitors the traffic load and adjusts the number of instances as needed.
 
-- Scenarios for Automatic Scaling:
+Scenarios for Automatic Scaling:
 - no Autoscale Rules Based on Metrics: When you don’t want to create custom scaling rules.
 - independent Scaling for Web Apps: When you want web apps in the same App Service Plan to scale differently from each other.
 - backend Limitations: If your web app is connected to a slower backend (like a database or legacy system), 
