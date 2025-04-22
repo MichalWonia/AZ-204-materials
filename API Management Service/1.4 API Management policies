@@ -103,13 +103,9 @@ This example removes certain properties (minutely, hourly, daily, flags) from th
 
 Key Takeaways:
 1. Policies control the behavior of your API during requests and responses.
-
 2. Policies are defined in an XML format and can be used to manipulate requests, responses, and handle errors.
-
 3. Policy expressions use C# code to dynamically modify requests or responses based on context.
-
 4. Policies can be applied globally, at the API level, or the operation level. The scope dictates their execution order.
-
 5. Error handling and response filtering can be easily customized using policies.
 
 These tools allow you to enforce security, manage traffic, and transform data dynamically, making API Management a powerful tool for managing APIs.
