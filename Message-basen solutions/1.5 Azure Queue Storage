@@ -1,5 +1,6 @@
 📦 What is Azure Queue Storage?
-Azure Queue Storage provides a simple message queuing system for large-scale, asynchronous communication between application components. It’s great for building backlogs of work to be processed in the background.
+Azure Queue Storage provides a simple message queuing system for large-scale, asynchronous communication between application components. 
+It’s great for building backlogs of work to be processed in the background.
 
 🧱 Key Components:
 Component	                          Description
