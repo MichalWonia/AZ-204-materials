@@ -1,5 +1,7 @@
 TLS Client Authentication Overview
-TLS (Transport Layer Security) mutual authentication enables secure communication between the client and the API gateway. The API Management gateway can be configured to validate client certificates by checking various properties to ensure that requests are authentic and come from trusted clients.
+TLS (Transport Layer Security) mutual authentication enables secure communication between the client and the API gateway. 
+The API Management gateway can be configured to validate client certificates by checking various properties to ensure that 
+requests are authentic and come from trusted clients.
 
 Certificate Properties for Validation
 The API Management gateway can inspect several properties of the client certificate:
@@ -8,7 +10,8 @@ The API Management gateway can inspect several properties of the client certific
   - You can configure the gateway to accept only certificates signed by a specific Certificate Authority (CA).
 
 2. Thumbprint:
-  - The thumbprint of the certificate is a hash calculated from the certificate's content. You can specify that only certificates with a particular thumbprint are allowed.
+  - The thumbprint of the certificate is a hash calculated from the certificate's content. 
+You can specify that only certificates with a particular thumbprint are allowed.
 
 3. Subject:
   - The subject name can be checked to ensure that only certificates with a specified subject are allowed.
@@ -25,10 +28,12 @@ When a partner sends you a certificate, it’s important to verify the authentic
   - Ensure that the certificate was issued by a trusted CA. The trusted CAs can be configured in Azure API Management to automate the verification process.
 
 2. Verify Self-Signed Certificates:
-  - If the certificate is self-signed (e.g., issued by a partner), verify that the certificate was delivered securely by the partner to ensure its authenticity.
+  - If the certificate is self-signed (e.g., issued by a partner), verify that the certificate was delivered 
+securely by the partner to ensure its authenticity.
 
 How to Enable Client Certificates in Consumption Tier
-The Consumption tier in Azure API Management is designed for serverless scenarios (e.g., Azure Functions) and requires explicit configuration to allow client certificates.
+The Consumption tier in Azure API Management is designed for serverless scenarios (e.g., Azure Functions) and requires 
+explicit configuration to allow client certificates.
 - On the Custom Domains page of the Azure portal, enable the use of client certificates.
 - This step is required only for the Consumption tier. Other tiers (e.g., Standard or Premium) allow client certificates by default.
 
@@ -39,7 +44,8 @@ These policies can be set up in the inbound policy file to enforce security rule
 Here are some examples of common certificate validation policies:
 
 1. Checking the Thumbprint of a Client Certificate
-Each client certificate has a unique thumbprint, which is a hash of the certificate's contents. You can check this thumbprint to ensure that the correct certificate is used in the request.
+Each client certificate has a unique thumbprint, which is a hash of the certificate's contents. 
+You can check this thumbprint to ensure that the correct certificate is used in the request.
 
 Example policy to check the thumbprint:
 
@@ -58,7 +64,9 @@ To support multiple partners or clients, you can upload their certificates to th
 Example policy to check the thumbprint against uploaded certificates:
 
 <choose>
-    <when condition="@(context.Request.Certificate == null || !context.Request.Certificate.Verify()  || !context.Deployment.Certificates.Any(c => c.Value.Thumbprint == context.Request.Certificate.Thumbprint))" >
+    <when condition="@(context.Request.Certificate == null 
+|| !context.Request.Certificate.Verify()  
+|| !context.Deployment.Certificates.Any(c => c.Value.Thumbprint == context.Request.Certificate.Thumbprint))" >
         <return-response>
             <set-status code="403" reason="Invalid client certificate" />
         </return-response>
@@ -72,7 +80,9 @@ You can also validate the issuer and subject of the certificate to ensure it was
 Example policy to check the issuer and subject:
 
 <choose>
-    <when condition="@(context.Request.Certificate == null || context.Request.Certificate.Issuer != "trusted-issuer" || context.Request.Certificate.SubjectName.Name != "expected-subject-name")" >
+    <when condition="@(context.Request.Certificate == null 
+|| context.Request.Certificate.Issuer != "trusted-issuer" 
+|| context.Request.Certificate.SubjectName.Name != "expected-subject-name")" >
         <return-response>
             <set-status code="403" reason="Invalid client certificate" />
         </return-response>
