@@ -9,6 +9,9 @@ Benefits of Staging Slots:
 
 Important Considerations:
 - Auto Swap: You can automate the deployment process by configuring auto swap when pre-swap validation is not necessary.
-- Slot Limits: Different App Service tiers support different numbers of deployment slots. Ensure that your target tier supports the number of slots you need (e.g., Standard tier supports 5 slots).
-- Empty Slots: New deployment slots start with no content, even if you clone settings from another slot. You can deploy to these slots from different repository branches.
-- Slot URLs: The URL for a slot follows the format http://sitename-slotname.azurewebsites.net. Ensure the combined site name and slot name are under 59 characters.
+- Slot Limits: Different App Service tiers support different numbers of deployment slots. 
+Ensure that your target tier supports the number of slots you need (e.g., Standard tier supports 5 slots).
+- Empty Slots: New deployment slots start with no content, even if you clone settings from another slot. 
+You can deploy to these slots from different repository branches.
+- Slot URLs: The URL for a slot follows the format http://sitename-slotname.azurewebsites.net. 
+Ensure the combined site name and slot name are under 59 characters.
