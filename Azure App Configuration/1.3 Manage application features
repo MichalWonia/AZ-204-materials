@@ -1,5 +1,6 @@
 🎯 What is Feature Management?
-Feature management lets you control feature availability dynamically without deploying new code. You do this using feature flags (also called toggles or switches).
+Feature management lets you control feature availability dynamically without deploying new code. 
+You do this using feature flags (also called toggles or switches).
 
 🔧 Key Concepts
 Term	                                Description
