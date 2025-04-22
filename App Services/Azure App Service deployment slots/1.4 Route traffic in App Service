@@ -1,5 +1,6 @@
 Route Production Traffic Automatically
-- Purpose: This feature allows you to route a portion of the traffic to a nonproduction slot (like staging), which is useful for gathering user feedback on new updates without fully deploying them to production.
+- Purpose: This feature allows you to route a portion of the traffic to a nonproduction slot (like staging), which is useful for gathering user 
+feedback on new updates without fully deploying them to production.
 
 Steps to Automatically Route Traffic:
 - Go to the app's resource page and select Deployment slots.
@@ -21,10 +22,14 @@ Steps to Route Traffic Manually:
         <a href="<webappname>.azurewebsites.net/?x-ms-routing-name=self">Go back to production app</a>
     - For users to opt in to a beta app (go to staging), use:
         <a href="<webappname>.azurewebsites.net/?x-ms-routing-name=staging">Try the beta app</a>
+
 Behavior:
 - By default, new slots have a 0% routing rule, meaning no traffic is routed to them unless explicitly set.
-- If you set the routing rule to 0%, users can still manually access the slot using the x-ms-routing-name query parameter, but they won't be automatically routed there.
+- If you set the routing rule to 0%, users can still manually access the slot using the x-ms-routing-name query parameter,
+but they won't be automatically routed there.
 
 Advanced Routing Scenarios
-- Hide Staging Slot: You can set a staging slot's routing to 0% to "hide" it from the public but still allow internal teams or testers to access it manually via the x-ms-routing-name=staging query parameter.
-This feature is particularly useful for gradual rollouts, beta testing, and staged deployments while ensuring users don't experience downtime or inconsistent behavior.
+- Hide Staging Slot: You can set a staging slot's routing to 0% to "hide" it from the public but still allow internal teams or testers 
+to access it manually via the x-ms-routing-name=staging query parameter.
+This feature is particularly useful for gradual rollouts, beta testing, and staged deployments 
+while ensuring users don't experience downtime or inconsistent behavior.
