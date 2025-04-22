@@ -25,7 +25,8 @@ Limitations of App Service on Linux:
 - the Azure portal shows only features that currently work for Linux apps. As features are enabled, they're activated on the portal.
 - when deployed to built-in images, your code and content are allocated a storage volume for web content, backed by Azure Storage.
 The disk latency of this volume is higher and more variable than the latency of the container filesystem.
-Apps that require heavy read-only access to content files might benefit from the custom container option, which places files in the container filesystem instead of on the content volume.
+Apps that require heavy read-only access to content files might benefit from the custom container option, which places files in the container 
+filesystem instead of on the content volume.
 
 
 App Service Environment
