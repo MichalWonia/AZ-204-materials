@@ -1,11 +1,13 @@
 Overview of Conditional Access
-Conditional Access in Microsoft Entra ID helps enterprises protect applications and services by enforcing policies that control access based on specific conditions. These conditions can include factors such as:
+Conditional Access in Microsoft Entra ID helps enterprises protect applications and services by enforcing policies that control access based on specific conditions. 
+These conditions can include factors such as:
 - Multifactor Authentication (MFA): Requiring multiple forms of verification to ensure a user’s identity.
 - Device Compliance: Restricting access to services only from devices that are enrolled in Intune (mobile device management).
 - Location and IP Restrictions: Allowing access only from specific geographic locations or IP address ranges.
 
 Impact on Applications
-In most cases, Conditional Access doesn’t change the behavior of an app or require code modifications. However, certain scenarios will need code changes to properly handle the challenges introduced by Conditional Access policies.
+In most cases, Conditional Access doesn’t change the behavior of an app or require code modifications. 
+However, certain scenarios will need code changes to properly handle the challenges introduced by Conditional Access policies.
 
 When code changes are needed:
 - On-behalf-of flow: Apps requesting access to a downstream service on behalf of a user might encounter a Conditional Access challenge and will need to handle it.
@@ -34,7 +36,8 @@ Handling Conditional Access Challenges
 
 Key Takeaways for the AZ-204 Exam:
 - Conditional Access allows fine-grained control over application access, including multifactor authentication, device compliance, and location/IP restrictions.
-- Most applications don’t require code changes for Conditional Access policies, but apps using the on-behalf-of flow, accessing multiple resources, or using technologies like MSAL.js may need to handle challenges.
+- Most applications don’t require code changes for Conditional Access policies, but apps using the on-behalf-of flow, accessing multiple resources,
+or using technologies like MSAL.js may need to handle challenges.
 - Implementing challenge handling ensures that apps continue to function even when new Conditional Access policies are applied.
 
 This concept is crucial for building secure applications that need to integrate with enterprise environments that have Conditional Access policies.
