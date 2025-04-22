@@ -1,5 +1,6 @@
 1. Control Flow
-The control flow policy allows you to conditionally apply policies based on the evaluation of boolean expressions. It works similarly to a switch or if-else structure in programming.
+The control flow policy allows you to conditionally apply policies based on the evaluation of boolean expressions. 
+It works similarly to a switch or if-else structure in programming.
 
 Example:
 
@@ -29,7 +30,8 @@ Example:
 - follow-redirects: Specifies whether the request should follow any redirects from the backend.
 
 3. Limit Concurrency
-The limit-concurrency policy limits the number of concurrent requests that can execute at the same time. If more requests are received, they will be immediately rejected with a 429 Too Many Requests status.
+The limit-concurrency policy limits the number of concurrent requests that can execute at the same time. 
+If more requests are received, they will be immediately rejected with a 429 Too Many Requests status.
 
 Example:
 
@@ -45,7 +47,8 @@ The log-to-eventhub policy sends logs in the specified format to an Event Hub de
 
 Example:
 
-<log-to-eventhub logger-id="id of the logger entity" partition-id="index of the partition where messages are sent" partition-key="value used for partition assignment">
+<log-to-eventhub logger-id="id of the logger entity" partition-id="index of the partition where messages 
+are sent" partition-key="value used for partition assignment">
   Expression returning a string to be logged
 </log-to-eventhub>
 
@@ -54,7 +57,8 @@ Example:
 - partition-key: Value for partition assignment.
 
 5. Mock Response
-The mock-response policy is used to return a mocked response directly to the caller. This policy is useful for simulating API behavior when actual backend services aren’t available.
+The mock-response policy is used to return a mocked response directly to the caller. 
+This policy is useful for simulating API behavior when actual backend services aren’t available.
 
 Example:
 
@@ -85,7 +89,8 @@ Example:
 - first-fast-retry: A boolean expression that decides if the first retry should be fast.
 
 7. Return Response
-The return-response policy immediately aborts pipeline execution and returns a custom response to the caller. You can either return a default response or a response based on a context variable or policy statement.
+The return-response policy immediately aborts pipeline execution and returns a custom response to the caller. 
+You can either return a default response or a response based on a context variable or policy statement.
 
 Example:
 
@@ -107,7 +112,8 @@ Key Takeaways:
 - Retry: Retries policy execution if certain conditions aren't met.
 - Return response: Immediately returns a custom response, aborting the pipeline.
 
-These policies help you manage your API’s behavior under different scenarios, allowing you to ensure better control, testing, and error handling in your API ecosystem. 
+These policies help you manage your API’s behavior under different scenarios, 
+allowing you to ensure better control, testing, and error handling in your API ecosystem. 
 
 
 
