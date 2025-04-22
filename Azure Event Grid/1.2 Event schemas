@@ -29,7 +29,8 @@ which allows subscribers to filter events by container or file type.
 
 CloudEvents Schema
 Azure Event Grid also supports the CloudEvents v1.0 specification, which standardizes the format for cloud event data. 
-CloudEvents simplifies interoperability across different systems by providing a consistent structure for event data, enabling easier integration across multiple platforms.
+CloudEvents simplifies interoperability across different systems by providing a consistent structure for event data, enabling easier 
+integration across multiple platforms.
 
 CloudEvents Event Example (Azure Blob Storage Event):
 Here’s an example of an event in CloudEvents format, describing a Blob Created event in Azure Storage:
@@ -74,12 +75,14 @@ CloudEvents vs Event Grid Schema:
   - Event Grid: "content-type": "application/json; charset=utf-8"
 
 - Use Case:
-  - CloudEvents is often used for system events (e.g., Blob Storage events, IoT Hub events) and custom events that need a common format for broader integration.
+  - CloudEvents is often used for system events (e.g., Blob Storage events, IoT Hub events) and custom events that need a common format for 
+broader integration.
   - Event Grid's schema is typically used for native Azure events and custom events, especially within the Azure ecosystem.
 
 Event Size and Charging
 - Event Size Limit: Events are limited to 1 MB in size. If an event exceeds this limit, a 413 Payload Too Large error is returned.
-- Charging: Events larger than 64 KB incur charges as if they were multiple smaller events. For example, an event of 130 KB would be billed as 3 separate events (64 KB + 64 KB + 2 KB).
+- Charging: Events larger than 64 KB incur charges as if they were multiple smaller events. For example, an event of 130 KB would be 
+billed as 3 separate events (64 KB + 64 KB + 2 KB).
 
 Conclusion
 Both Event Grid event schema and CloudEvents schema provide structured formats for events, but the CloudEvents format simplifies interoperability across 
