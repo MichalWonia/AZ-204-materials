@@ -34,6 +34,7 @@ var credential = new DefaultAzureCredential(
 var blobClient = new BlobClient(
     new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
     credential);
+
 🧩 Advanced: Custom Auth Flow with ChainedTokenCredential
 Use if you want fallback logic (e.g., try managed identity, then Azure CLI):
 
