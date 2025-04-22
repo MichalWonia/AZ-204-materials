@@ -1,5 +1,7 @@
 API Management Overview
-Azure API Management provides all the core functionalities for managing, securing, and monitoring APIs. It allows you to engage developers, gain business insights, and ensure the safety and scalability of your APIs. Here's a breakdown of its key components and features:
+Azure API Management provides all the core functionalities for managing, securing, and monitoring APIs. 
+It allows you to engage developers, gain business insights, and ensure the safety and scalability of your APIs.
+Here's a breakdown of its key components and features:
 
 API Management Components
 1. API Gateway:
