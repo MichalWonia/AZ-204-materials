@@ -9,7 +9,7 @@ Developers often struggle with:
 
 ✅ The Solution: Managed Identities
 Managed identities are identities in Microsoft Entra ID (Azure AD) automatically managed by Azure. 
-They allow your app to authenticate to Azure services securely—no credentials needed.
+They allow your app to authenticate to Azure services securely — no credentials needed.
 
 🔄 Two Types of Managed Identities
 Feature	                        System-Assigned	                                        User-Assigned
