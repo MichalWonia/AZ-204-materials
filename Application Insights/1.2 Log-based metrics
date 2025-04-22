@@ -1,5 +1,6 @@
 📏 What Are Log-Based Metrics?
-Log-based metrics are metrics derived from Application Insights logs (stored events). They're built by executing Kusto queries on collected telemetry data (like requests, exceptions, or custom events).
+Log-based metrics are metrics derived from Application Insights logs (stored events). 
+They're built by executing Kusto queries on collected telemetry data (like requests, exceptions, or custom events).
 
 🔄 Two Types of Metrics in Application Insights
 Metric Type	                                      How It's Built	                                                                  Best For	                                    Performance
