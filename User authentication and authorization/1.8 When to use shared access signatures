@@ -4,7 +4,8 @@ The use of SAS enables scenarios where users or services can access storage reso
 
 Typical Design Patterns for Using SAS
 1. Client Access via Front-End Proxy Service
-In this design, a front-end proxy service authenticates the client and generates a SAS token for the client to use in accessing the storage account resources. This design has several advantages and some limitations:
+In this design, a front-end proxy service authenticates the client and generates a SAS token for the client to use in accessing the storage account resources. 
+This design has several advantages and some limitations:
   - Advantages:
     - Centralized authentication: The front-end service can handle authentication and validation of business rules.
     - Granular access control: SAS tokens can be generated with specific permissions (read, write, delete, etc.) and expiration times.
@@ -26,11 +27,14 @@ Advantages:
 - Reduced service load: No need to route data through a proxy service for access, which improves performance and reduces costs.
 
 Disadvantages:
-- Business logic validation: If you need to validate certain conditions or business rules (e.g., checking if a user is authorized to upload data), this would need to be handled before generating the SAS token, either via another layer or client-side checks.
+- Business logic validation: If you need to validate certain conditions or business rules (e.g., checking if a user is authorized to upload data), this would need to be 
+handled before generating the SAS token, either via another layer or client-side checks.
 
 Hybrid Approach
-In many real-world applications, a hybrid approach is often used, where certain data operations are handled by the front-end proxy service (for validation, auditing, etc.), while other operations (like saving or retrieving large files) are performed directly via SAS tokens.
-- Example: A user uploads a file, and the service validates the metadata or content type, while the actual file upload and download are done directly using a SAS token. This hybrid model balances performance and security.
+In many real-world applications, a hybrid approach is often used, where certain data operations are handled by the front-end proxy service (for validation, auditing, etc.), while 
+other operations (like saving or retrieving large files) are performed directly via SAS tokens.
+- Example: A user uploads a file, and the service validates the metadata or content type, while the actual file upload and download are done directly using a SAS token. 
+This hybrid model balances performance and security.
 
 Copy Operations Involving SAS
 SAS tokens are also required in copy operations between storage accounts or between different types of storage resources. 
