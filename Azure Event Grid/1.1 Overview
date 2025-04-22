@@ -1,16 +1,19 @@
 Exploring Azure Event Grid
 Azure Event Grid is a fully managed Pub/Sub messaging service designed to distribute events from publishers to subscribers in real-time. 
-It supports multiple communication protocols like HTTP and MQTT and enables event-driven architectures for applications, particularly in IoT and serverless solutions.
+It supports multiple communication protocols like HTTP and MQTT and enables event-driven architectures for applications, 
+particularly in IoT and serverless solutions.
 Event Grid also supports the CloudEvents 1.0 specification, enhancing interoperability across systems.
 
 Key Concepts in Azure Event Grid
 Publishers
-- Publisher: The application or service that sends events to Event Grid. Examples include Azure services that emit events to notify about system state changes.
+- Publisher: The application or service that sends events to Event Grid. Examples include Azure services that emit events to notify 
+about system state changes.
 - Partner Publishers: External systems that publish events to Event Grid, making them available to Azure customers. 
 These events are sent to Event Grid via the Partner Events feature, allowing external systems to integrate with Azure.
 
 Events and CloudEvents
-- Event: The smallest unit of data representing something that happened in a system. Events contain metadata like the event type, source, time, and a unique identifier, along with specific data for the event.
+- Event: The smallest unit of data representing something that happened in a system. Events contain metadata 
+like the event type, source, time, and a unique identifier, along with specific data for the event.
 
 Example (JSON):
 
@@ -27,20 +30,24 @@ Example (JSON):
     }
 }
 
-- CloudEvents: Azure Event Grid uses the CloudEvents 1.0 specification to standardize event formats, making it easier to exchange event data across different systems.
+- CloudEvents: Azure Event Grid uses the CloudEvents 1.0 specification to standardize event formats, making it easier to exchange 
+event data across different systems.
 - Event Size: The maximum allowed size for an event is 1 MB, with events over 64 KB charged in 64 KB increments.
 
 Event Sources
-- Event Source: The system or service where the event originates. For example, Azure Storage for blob creation events or IoT Hub for device creation events. Your own application can also act as an event source by publishing custom events.
+- Event Source: The system or service where the event originates. For example, Azure Storage for blob creation events or IoT Hub 
+for device creation events. Your own application can also act as an event source by publishing custom events.
 
 Topics
-- Topic: A logical channel that holds a collection of related events. Subscribers (applications or Azure services) can subscribe to topics to listen to specific events.
+- Topic: A logical channel that holds a collection of related events. Subscribers (applications or Azure services) can subscribe to 
+topics to listen to specific events.
   - System Topics: Automatically provided by Azure services. These are used to notify about changes in Azure resources.
   - Custom Topics: These are user-defined topics that can be created for custom events or third-party events.
   - Partner Topics: Used to subscribe to events from partner systems via the Partner Events feature.
 
 Event Subscriptions
-- Subscription: An Event Grid subscription defines the events you are interested in and the endpoint where those events should be sent. It also allows you to filter events based on type or pattern.
+- Subscription: An Event Grid subscription defines the events you are interested in and the endpoint where those events should be sent. 
+It also allows you to filter events based on type or pattern.
   - Filters: You can specify which events should be delivered based on event type or subject pattern.
   - Expiration: You can set an expiration on subscriptions that are needed for a limited time, helping manage cleanup.
 
@@ -48,25 +55,31 @@ Event Handlers
 - Event Handler: The destination that processes the events. Azure Event Grid supports various handler types, including:
   - Azure Services: Services like Azure Functions, Azure Logic Apps, or Event Hubs.
   - Webhooks: Your own HTTP-based service that processes the events.
-- Event Delivery Guarantee: Event Grid ensures that events are delivered successfully. For webhook handlers, retries occur until the handler returns a 200 OK status. 
+- Event Delivery Guarantee: Event Grid ensures that events are delivered successfully. For webhook handlers, retries occur 
+until the handler returns a 200 OK status. 
 For Azure Storage Queues, events are retried until successfully processed.
 
 Security
-- Permissions: Event Grid ensures that only authorized subscribers can subscribe to topics and publish events to topics. Permissions are managed using Azure RBAC (Role-Based Access Control).
+- Permissions: Event Grid ensures that only authorized subscribers can subscribe to topics and publish events to topics. 
+Permissions are managed using Azure RBAC (Role-Based Access Control).
 - Managed Identity: When an event handler is an Azure service, the handler uses Managed Identity for authentication.
 The identity must have the appropriate RBAC roles for the target service, such as the Event Hubs Data Sender role for sending events to Event Hubs.
 
 Event Grid Use Cases
 - IoT Event Distribution: Use MQTT to handle IoT device data and integrate sensors or devices with backend applications in real-time.
-- Serverless Architectures: Implement event-driven architectures with services like Azure Functions and Logic Apps to automatically trigger workflows based on incoming events.
+- Serverless Architectures: Implement event-driven architectures with services 
+like Azure Functions and Logic Apps to automatically trigger workflows based on incoming events.
 - System Monitoring: Azure services publish events to Event Grid about resource changes (e.g., a new VM is created, or a storage blob is modified), 
 and you can subscribe to these events to monitor and automate responses.
-- Partner Integrations: Partners can use Event Grid to publish events from their systems, allowing seamless integration into Azure environments with the Partner Events feature.
+- Partner Integrations: Partners can use Event Grid to publish events from their systems, allowing seamless integration 
+into Azure environments with the Partner Events feature.
 
 Advantages of Azure Event Grid
-- Scalability: Event Grid is designed to handle massive event traffic at scale, ensuring that your applications remain responsive even as event volume grows.
+- Scalability: Event Grid is designed to handle massive event traffic at scale, ensuring that your applications 
+remain responsive even as event volume grows.
 - Real-Time Delivery: Events are pushed to subscribers in real time, making it ideal for scenarios where instant event processing is necessary.
-- Interoperability: With CloudEvents support, Event Grid ensures compatibility with various event-driven architectures across different cloud providers and on-premises systems.
+- Interoperability: With CloudEvents support, Event Grid ensures compatibility with various event-driven architectures 
+across different cloud providers and on-premises systems.
 - Simplified Architecture: By decoupling event producers and consumers, Event Grid enables more flexible and loosely coupled event-driven systems.
 
 Summary
