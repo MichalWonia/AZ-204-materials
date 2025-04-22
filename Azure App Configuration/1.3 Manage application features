@@ -3,10 +3,10 @@ Feature management lets you control feature availability dynamically without dep
 You do this using feature flags (also called toggles or switches).
 
 🔧 Key Concepts
-Term	                                Description
-Feature Flag	                        A Boolean variable (on/off) that controls whether a feature's code runs.
-Feature Manager	                      Manages feature flags (loading, caching, evaluating).
-Filter	                              A rule that decides whether a flag is on. (e.g., based on % of users, geolocation, user role, etc.)
+Term
+Feature Flag - A Boolean variable (on/off) that controls whether a feature's code runs.
+Feature Manager - Manages feature flags (loading, caching, evaluating).
+Filter - A rule that decides whether a flag is on. (e.g., based on % of users, geolocation, user role, etc.)
 
 🧪 Feature Flag in Code (C# Example)
 🔹 Basic usage:
