@@ -1,5 +1,5 @@
 🔐 Managed Identities in Azure
-Managed identities help securely access Azure resources like Key Vault, Storage Accounts, and databases—without hardcoding secrets or 
+Managed identities help securely access Azure resources like Key Vault, Storage Accounts, and databases without hardcoding secrets or 
 credentials in your application.
 
 🚫 The Problem:
