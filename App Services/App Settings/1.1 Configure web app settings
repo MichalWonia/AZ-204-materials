@@ -47,7 +47,8 @@ true → setting is slot-specific (e.g., different value in staging vs. producti
 
 🧪 For non-.NET apps:
 - use App Settings instead when possible.
-❗Exception: If you want your Azure database to be backed up with the app, define it as a connection string instead of app settings in App Service even for non-.NET apps.
+❗Exception: If you want your Azure database to be backed up with the app, define it as a connection string instead of app settings in 
+App Service even for non-.NET apps.
 
 📄 Bulk Format (JSON):
 [
