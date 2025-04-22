@@ -1,11 +1,13 @@
 🔑 Securing App Configuration Data
 1. Customer-Managed Keys
-By default, Azure App Configuration uses Microsoft-managed encryption keys to encrypt sensitive data (key-value pairs) at rest using AES 256-bit encryption. But if you want more control over the encryption process, you can use customer-managed keys (CMK).
+By default, Azure App Configuration uses Microsoft-managed encryption keys to encrypt sensitive data (key-value pairs) at rest using AES 256-bit 
+encryption. But if you want more control over the encryption process, you can use customer-managed keys (CMK).
 
 🛠 How It Works:
 - Enable CMK to have Azure App Configuration use your Azure Key Vault for encryption.
 - Managed Identity: The App Configuration instance uses a managed identity to authenticate with Microsoft Entra ID.
-- Key Vault Integration: The managed identity accesses the Key Vault to wrap the encryption key. The wrapped key is stored in App Configuration, and the unwrapped version is cached for one hour.
+- Key Vault Integration: The managed identity accesses the Key Vault to wrap the encryption key. The wrapped key is stored in App Configuration, 
+and the unwrapped version is cached for one hour.
 
 🌟 Required Setup:
 1. App Configuration Standard Tier
