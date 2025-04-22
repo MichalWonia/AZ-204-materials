@@ -1,8 +1,10 @@
 What is an API Gateway?
-An API gateway sits between clients and backend services, acting as a reverse proxy that routes client requests to the appropriate services. It is responsible for handling several essential tasks:
+An API gateway sits between clients and backend services, acting as a reverse proxy that routes client requests to the appropriate services. 
+It is responsible for handling several essential tasks:
 - Routing requests: Directs client requests to the correct backend service.
 - Cross-cutting tasks: Handles common concerns such as authentication, SSL termination, rate limiting, and logging.
-- Decoupling services: Clients don’t need to know the specifics of each service or handle failures related to backend services. The gateway abstracts this complexity.
+- Decoupling services: Clients don’t need to know the specifics of each service or handle failures related to backend services.
+The gateway abstracts this complexity.
 
 Benefits of an API Gateway
 Without an API gateway, clients would need to interact directly with backend services, leading to several potential issues:
@@ -31,5 +33,6 @@ Why Use an API Gateway?
 - Simplifies client code: Clients don’t need to manage multiple endpoints or service-specific concerns.
 - Scalability and flexibility: You can scale backend services independently without impacting clients.
 
-By using an API gateway, you can manage the complexity of multiple services, handle security, and ensure that clients are abstracted from backend service changes. 
+By using an API gateway, you can manage the complexity of multiple services, handle security, and ensure that clients are 
+abstracted from backend service changes. 
 This is a crucial part of modern microservices architectures. 
