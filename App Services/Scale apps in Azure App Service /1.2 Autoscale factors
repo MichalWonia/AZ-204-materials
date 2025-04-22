@@ -12,7 +12,8 @@ Autoscaling and the App Service Plan:
 Autoscale Conditions:
 - mmetric-based Autoscaling: Scales based on resource metrics (e.g., CPU, disk queue).
 - schedule-based Autoscaling: Scales to a set instance count at specific times (e.g., daily, weekly).
-- combined Autoscale Conditions: You can combine metric-based and schedule-based autoscaling for more precise scaling rules. The default condition applies when no other rules are set.
+- combined Autoscale Conditions: You can combine metric-based and schedule-based autoscaling for more precise scaling rules. 
+The default condition applies when no other rules are set.
 
 Metrics for Autoscale Rules:
 Key Metrics: 
@@ -28,13 +29,15 @@ This helps assess if trends are significant enough for scaling.
 Example: If CPU usage exceeds a threshold for a specific period, the system will trigger scaling.
 
 Autoscale Actions:
-- Scaling Actions: Autoscale actions include scaling out (adding instances) or scaling in (removing instances). Actions depend on metric thresholds and comparison operators (e.g., "greater than" for scaling out).
+- Scaling Actions: Autoscale actions include scaling out (adding instances) or scaling in (removing instances). 
+Actions depend on metric thresholds and comparison operators (e.g., "greater than" for scaling out).
 - Cooldown Period: A cooldown period of at least 5 minutes ensures system stability and prevents frequent scaling actions.
 
 Pairing Autoscale Rules:
 - Scaling-in Planning: When workload decreases, plan for scaling-in by setting up paired rules (e.g., scale out when CPU > 70%, scale in when CPU < 50%).
 
 Combining Autoscale Rules:
-- Multiple Rules in One Condition: You can combine multiple scale-out and scale-in rules within a single condition. The system scales out if any scale-out rule is met, but scales in only when all scale-in conditions are met.
+- Multiple Rules in One Condition: You can combine multiple scale-out and scale-in rules within a single condition. 
+The system scales out if any scale-out rule is met, but scales in only when all scale-in conditions are met.
 
 Example: Scale out if HTTP queue length > 10 or CPU > 70%. Scale in if both HTTP queue length = 0 and CPU < 50%.
