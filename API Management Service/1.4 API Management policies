@@ -1,5 +1,7 @@
 What Are API Management Policies?
-In Azure API Management, policies allow you to control and modify the behavior of an API. These policies are applied sequentially on the request and response of an API. You can use policies to enforce security, modify request or response data, handle errors, and perform many other tasks.
+In Azure API Management, policies allow you to control and modify the behavior of an API. 
+These policies are applied sequentially on the request and response of an API. 
+You can use policies to enforce security, modify request or response data, handle errors, and perform many other tasks.
 
 The policies are configured in an XML format that is divided into four key sections:
 1. Inbound: Modifications to the incoming request.
@@ -25,10 +27,13 @@ Here's how a policy configuration looks:
   </on-error>
 </policies>
 
-Execution order: The policies in the inbound, backend, and outbound sections are executed in sequence. If an error occurs, the flow moves to the on-error section.
+Execution order: The policies in the inbound, backend, and outbound sections are executed in sequence. 
+If an error occurs, the flow moves to the on-error section.
 
 Policy Expressions
-Policy expressions allow you to dynamically modify the API request and response. You can use expressions in attributes or values inside policies. These expressions use C# code and can reference the context of the request or response.
+Policy expressions allow you to dynamically modify the API request and response. 
+You can use expressions in attributes or values inside policies. 
+These expressions use C# code and can reference the context of the request or response.
 
 Here’s an example of how policy expressions can be used to add user data to the request header:
 
@@ -64,7 +69,8 @@ For example:
 Here, the cross-domain policy runs first, and the find-and-replace policy runs last in the inbound section.
 
 Filtering Response Content
-You can also filter the response content based on conditions. For example, you can filter the response payload to remove specific data elements for a certain product:
+You can also filter the response content based on conditions. 
+For example, you can filter the response payload to remove specific data elements for a certain product:
 
 <policies>
   <inbound>
