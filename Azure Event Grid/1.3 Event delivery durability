@@ -5,13 +5,15 @@ If a subscriber's endpoint fails to acknowledge receipt or an error occurs, Even
 Key Concepts in Event Delivery Durability
 Event Delivery Process:
 - Event Delivery: Event Grid delivers each event individually to a subscriber’s endpoint. By default, it sends a single event per request.
-- Error Handling: If the subscriber's endpoint doesn't acknowledge the event or there's a failure, Event Grid retries the delivery according to a fixed retry schedule and policy.
+- Error Handling: If the subscriber's endpoint doesn't acknowledge the event or there's a failure, 
+Event Grid retries the delivery according to a fixed retry schedule and policy.
 
 Event Grid Retry Strategy:
 - Retry Logic: Event Grid uses exponential backoff for retrying event delivery. If an event fails,
 Event Grid retries delivery after increasing intervals. It also adds randomization to avoid patterns in retry attempts.
 - Maximum Retry Attempts: The maximum number of retry attempts can be configured between 1 and 30. The default is 30.
-- Time-to-Live (TTL): The maximum period an event will be retained for retry attempts can be configured between 1 and 1440 minutes (1 day). The default TTL is 1440 minutes.
+- Time-to-Live (TTL): The maximum period an event will be retained for retry attempts can be configured between 1 and 1440 minutes (1 day). 
+The default TTL is 1440 minutes.
 
 Example command for configuring the retry policy:
 
@@ -23,9 +25,11 @@ az eventgrid event-subscription create \
   --max-delivery-attempts 18
 
 Delivery Failures & Dead-lettering:
-- If Event Grid is unable to deliver an event within the TTL or after the maximum retry attempts, it can dead-letter the event to a specified storage account.
+- If Event Grid is unable to deliver an event within the TTL or after the maximum retry attempts, 
+it can dead-letter the event to a specified storage account.
 
-- Dead-lettering: Events that cannot be delivered are stored in a dead-letter storage account. You can configure dead-lettering by specifying a storage account when creating the event subscription.
+- Dead-lettering: Events that cannot be delivered are stored in a dead-letter storage account.
+You can configure dead-lettering by specifying a storage account when creating the event subscription.
   - Conditions for Dead-lettering:
     1. Event delivery exceeds the configured retry attempts or TTL.
     2. If Event Grid receives certain error responses like 400 (Bad Request) or 413 (Request Entity Too Large), the event is immediately dead-lettered.
@@ -45,13 +49,15 @@ In high-throughput scenarios, Event Grid can batch multiple events together for 
 Batching is turned off by default, but you can configure it for better efficiency. There are two settings for batching:
   - Max Events Per Batch: The maximum number of events that can be delivered in one batch (1 to 5,000). Event Grid will not exceed this number, 
     but it may send fewer events if not enough events are available at the time.
-  - Preferred Batch Size: This sets the target size for the batch in kilobytes. For example, if set to 4 KB, but a 10-KB event is published, that 10-KB event will be sent in its own batch.
+  - Preferred Batch Size: This sets the target size for the batch in kilobytes. 
+For example, if set to 4 KB, but a 10-KB event is published, that 10-KB event will be sent in its own batch.
 
 Delayed Delivery:
  - If an endpoint experiences delivery failures, Event Grid will begin delaying further deliveries and retries to prevent overwhelming the endpoint.
  - This delay can last up to several hours, depending on the severity and frequency of failures.
 
-The delayed delivery feature helps to protect both the Event Grid system and unhealthy endpoints, preventing them from being overwhelmed by excessive retries or events.
+The delayed delivery feature helps to protect both the Event Grid system and unhealthy endpoints, 
+preventing them from being overwhelmed by excessive retries or events.
 
 Custom Delivery Properties:
 You can also set custom HTTP headers for events delivered to specific destinations like:
@@ -60,13 +66,16 @@ You can also set custom HTTP headers for events delivered to specific destinatio
   - Azure Event Hubs
   - Relay Hybrid Connections
 
-You can include up to 10 custom headers, each with a value up to 4,096 bytes. These headers can be used to pass additional context or authentication tokens to the destination.
+You can include up to 10 custom headers, each with a value up to 4,096 bytes. 
+These headers can be used to pass additional context or authentication tokens to the destination.
 
 Summary of Key Features
 - Retry Policy: Event Grid retries delivery based on a backoff strategy with exponential intervals and can be customized.
-- Dead-lettering: Events can be dead-lettered if not delivered within the specified retry attempts or TTL. Dead-lettering is configurable using a storage account.
+- Dead-lettering: Events can be dead-lettered if not delivered within the specified retry attempts or TTL. 
+Dead-lettering is configurable using a storage account.
 - Error Handling: Event Grid will not retry on certain error responses (e.g., 400, 413, 401) and will drop or dead-letter the event.
 - Batching: For performance, Event Grid supports batching of events for delivery with configurable batch sizes.
 - Delayed Delivery: If an endpoint is continuously failing, Event Grid will delay event delivery to protect both the system and the endpoint.
 
-By providing these features, Event Grid ensures reliable and durable delivery of events, while also offering flexibility for customized retry policies and handling of undelivered events.
+By providing these features, Event Grid ensures reliable and durable delivery of events, while also offering 
+flexibility for customized retry policies and handling of undelivered events.
