@@ -25,7 +25,7 @@ consumer left off or slightly before that, preventing data loss.
 
 Event Processor or Consumer Client
 Azure Event Hubs SDKs provide built-in functionality to handle scaling, load balancing, and fault tolerance 
-through Event Processor Client or EventHubConsumerClient.
+through EventProcessorClient or EventHubConsumerClient.
 - EventProcessorClient (for .NET and Java): This is the recommended approach for managing multiple consumers in a production environment. 
 It works within the context of a consumer group and automatically manages the distribution of work.
 - EventHubConsumerClient (for Python and JavaScript): This client provides similar functionality and can 
