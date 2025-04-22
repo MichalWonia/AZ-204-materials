@@ -1,5 +1,6 @@
 Autoscale Concepts:
-- Horizontal Scaling: Autoscaling adjusts instances by adding (scale-out) or removing (scale-in) them, with defined minimum, maximum, and default instance counts.
+- Horizontal Scaling: Autoscaling adjusts instances by adding (scale-out) or removing (scale-in) them, with defined minimum, maximum, 
+and default instance counts.
 - Thresholds at Instance Level: Autoscale evaluates thresholds based on metrics (e.g., CPU usage, thread count) at the instance level.
 - Activity Log: All autoscale successes and failures are logged, with the ability to set up alerts via email, SMS, or webhooks.
 
@@ -30,4 +31,5 @@ Best Practices for Autoscale:
   - Set a safe default instance count for cases when metrics are unavailable, ensuring that autoscaling doesn’t affect workload performance negatively.
 
 - Configure Autoscale Notifications:
-  - Use Activity Log alerts to monitor scaling actions and ensure you’re notified of successes, failures, or missing metrics. You can also set up email or webhook notifications for scaling events.
+  - Use Activity Log alerts to monitor scaling actions and ensure you’re notified of successes, failures, or missing metrics. 
+You can also set up email or webhook notifications for scaling events.
