@@ -11,7 +11,8 @@ For acquiring access tokens, Microsoft Authentication Library (MSAL) is recommen
 
 2. Consent and Authorization
 Best practices for managing consent and authorization in your app include:
-- Least Privilege: Always request the minimum permissions necessary for the app to function. For example, if you're creating a user, request only the permissions needed for that task and avoid asking for unnecessary permissions.
+- Least Privilege: Always request the minimum permissions necessary for the app to function. 
+For example, if you're creating a user, request only the permissions needed for that task and avoid asking for unnecessary permissions.
 - Correct permission Type:
   - Delegated Permissions: For apps where a signed-in user is present, use delegated permissions. This ensures that your app only has access to resources that the user has consented to.
   - Application Permissions: For apps that run without a signed-in user (e.g., background services or daemons), use application permissions.
@@ -33,7 +34,8 @@ When interacting with Microsoft Graph, your application needs to handle various 
 4. Storing Data Locally
 While Microsoft Graph is meant to provide real-time access to data, there are scenarios where local data storage or caching may be beneficial. However, when storing data locally, you should:
 - Cache Data When Necessary: Store data locally only when it’s required for your app’s functionality and within the limits of your terms of service and privacy policies.
-- Retention and Deletion Policies: Ensure your application implements clear data retention and deletion policies. This includes handling user data responsibly and adhering to Microsoft’s APIs Terms of Use.
+- Retention and Deletion Policies: Ensure your application implements clear data retention and deletion policies. 
+This includes handling user data responsibly and adhering to Microsoft’s APIs Terms of Use.
 
 5. Additional Recommendations
 - Error Handling: Ensure your application can gracefully handle various error responses from Microsoft Graph (e.g., 401 Unauthorized, 403 Forbidden, 429 Too Many Requests). 
