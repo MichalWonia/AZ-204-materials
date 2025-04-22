@@ -1,5 +1,6 @@
 🔐 Authenticating to Azure Key Vault
-Azure Key Vault authentication is handled by Microsoft Entra ID (formerly Azure Active Directory), which verifies the identity of the security principal (user, app, or service).
+Azure Key Vault authentication is handled by Microsoft Entra ID (formerly Azure Active Directory), 
+which verifies the identity of the security principal (user, app, or service).
 
 ✅ Preferred Authentication Method: Managed Identity
 ✔ System-Assigned Managed Identity (Recommended):
