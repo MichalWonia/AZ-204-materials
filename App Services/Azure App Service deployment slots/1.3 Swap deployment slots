@@ -21,7 +21,8 @@ Auto Swap
 Note: Auto swap is not supported on Web Apps for Linux or Web App for Containers.
 
 Custom Warm-Up
-- Customization: Some applications may require custom actions during the warm-up phase before the swap. This can be specified using the applicationInitialization configuration in the web.config file.
+- Customization: Some applications may require custom actions during the warm-up phase before the swap. 
+This can be specified using the applicationInitialization configuration in the web.config file.
 
 Example:
 <system.webServer>
@@ -42,4 +43,5 @@ Roll Back and Monitor a Swap
   - Use the Activity Log to track swap operations. Go to Activity log on the app's resource page in the portal.
   - Search for Swap Web App Slots to see detailed information or errors during the swap process.
 
-This process ensures smooth deployments and easy rollback strategies while minimizing downtime and ensuring proper validation of changes before they impact the production environment.
+This process ensures smooth deployments and easy rollback strategies while minimizing 
+downtime and ensuring proper validation of changes before they impact the production environment.
