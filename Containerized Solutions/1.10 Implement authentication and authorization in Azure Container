@@ -1,5 +1,6 @@
 Azure Container Apps offers built-in authentication and authorization features to secure your application easily.
-These features integrate directly with federated identity providers, allowing you to authenticate users without needing to write custom code or manage security infrastructure.
+These features integrate directly with federated identity providers, allowing you to authenticate users without 
+needing to write custom code or manage security infrastructure.
 
 Key Features of Authentication in Azure Container Apps:
 - No code needed: Azure Container Apps handles authentication and authorization for you, saving time.
@@ -43,7 +44,8 @@ Authentication Flow Options:
 
 Example Authentication Flow without SDK (Server-Directed Flow):
 1. User visits your app: The user accesses the web app via the HTTPS endpoint.
-2. Redirect to Identity Provider: If the app is configured to require authentication, the user is redirected to the chosen identity provider’s login page (e.g., Microsoft, Google).
+2. Redirect to Identity Provider: If the app is configured to require authentication, the user is redirected to the chosen identity 
+provider’s login page (e.g., Microsoft, Google).
 3. Authentication: The user logs in via the provider’s login page.
 4. Return to App: The identity provider redirects the user back to your app with an authentication token.
 5. Validation: The Container Apps middleware validates the token and injects the identity information into the request headers.
