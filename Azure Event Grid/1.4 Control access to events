@@ -53,6 +53,8 @@ Summary of Event Grid Access Control
 - Event Grid Data Sender: Permission to send events to Event Grid topics.
 
 2. Permissions for Event Subscriptions:
-- You need write permissions to create event subscriptions, either at the resource level (for system topics) or at the Event Grid topic level (for custom topics).
+- You need write permissions to create event subscriptions, either at the resource level (for system topics) 
+or at the Event Grid topic level (for custom topics).
 
-By using these roles and permissions, Azure Event Grid allows you to precisely control who can perform various tasks related to events, ensuring secure and appropriate access for different users.
+By using these roles and permissions, Azure Event Grid allows you to precisely control who can perform various tasks related to events, 
+ensuring secure and appropriate access for different users.
