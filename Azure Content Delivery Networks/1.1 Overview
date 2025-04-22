@@ -1,5 +1,7 @@
 Azure Content Delivery Network (CDN) Overview
-Azure Content Delivery Network (CDN) is a global solution that helps deliver high-bandwidth content efficiently. It works by caching content at strategically placed nodes across the world, allowing users to access it more quickly. It also accelerates dynamic content through network optimizations such as route optimization, bypassing Border Gateway Protocol (BGP) limitations.
+Azure Content Delivery Network (CDN) is a global solution that helps deliver high-bandwidth content efficiently. 
+It works by caching content at strategically placed nodes across the world, allowing users to access it more quickly. 
+It also accelerates dynamic content through network optimizations such as route optimization, bypassing Border Gateway Protocol (BGP) limitations.
 
 Key Benefits of Using Azure CDN:
 - Improved Performance and User Experience:
@@ -7,7 +9,8 @@ Key Benefits of Using Azure CDN:
   - Reduced round trips: For applications requiring multiple round trips to load content, Azure CDN can drastically reduce this, speeding up the process.
 
 - Scalability:
-  - Instantaneous Load Handling: Azure CDN can handle sudden high traffic loads, like those encountered during a product launch, without putting pressure on the origin server.
+  - Instantaneous Load Handling: Azure CDN can handle sudden high traffic loads, like those encountered during a product launch, 
+without putting pressure on the origin server.
   - Edge Servers: Content is distributed from the edge servers located closest to users, helping alleviate traffic from the origin server.
 
 How Azure Content Delivery Network Works:
@@ -23,18 +26,21 @@ Edge Server Cache Check:
 
 Caching and Serving the File:
 - Once the origin server responds, the file is cached on the edge server.
-- The file is then delivered to the original user (Alice), and it remains cached on the edge server until the Time-to-Live (TTL) specified in the file's HTTP headers expires.
+- The file is then delivered to the original user (Alice), and it remains cached on the edge server until the Time-to-Live (TTL) 
+specified in the file's HTTP headers expires.
 - If no TTL is specified, a default TTL of seven days is applied.
 
 Subsequent Requests:
-- Other users who request the same file will be routed to the same POP. If the TTL hasn't expired, the content will be served directly from the cache, resulting in faster performance.
+- Other users who request the same file will be routed to the same POP. If the TTL hasn't expired, the content will be served directly from the cache, 
+resulting in faster performance.
 
 Requirements for Using Azure CDN:
 Azure Subscription:
 - You need at least one Azure subscription to use the CDN service.
 
 Content Delivery Network Profile:
-- A CDN profile is a collection of CDN endpoints. Each endpoint is a specific configuration of content delivery behavior that can be customized for different use cases (e.g., by internet domain or web application).
+- A CDN profile is a collection of CDN endpoints. Each endpoint is a specific configuration of content delivery behavior 
+that can be customized for different use cases (e.g., by internet domain or web application).
 - You can create multiple profiles if you need to use different pricing tiers or configurations for different types of content or services.
 
 Pricing:
