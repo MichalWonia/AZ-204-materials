@@ -10,7 +10,8 @@
 - If you're using a custom HTTP endpoint (e.g., an HTTP-triggered Azure Function), you must manually validate the subscription.
 - Two types of validation are supported:
   - Synchronous Handshake: Event Grid sends a validation event, and your endpoint responds with a validation code to confirm ownership.
-  - Asynchronous Handshake: If the endpoint can't respond synchronously (e.g., when using third-party services like Zapier), a manual validation URL is provided in the event. You must visit this URL within 5 minutes to complete the validation.
+  - Asynchronous Handshake: If the endpoint can't respond synchronously (e.g., when using third-party services like Zapier), 
+a manual validation URL is provided in the event. You must visit this URL within 5 minutes to complete the validation.
 
 4. Event Grid Validation Process:
 - Synchronous: Return the validation code in the response to confirm the subscription.
