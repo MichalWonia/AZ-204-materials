@@ -1,9 +1,12 @@
 Controlling Cache Behavior on Azure Content Delivery Networks (CDN)
-When using Azure Content Delivery Network (CDN), controlling when content is refreshed or updated is crucial for ensuring that users receive the most up-to-date content. 
-Stale or out-of-date content can affect the user experience. To address this, Azure CDN offers features such as a Standard rules engine, Cache-Control settings, and the ability to purge content.
+When using Azure Content Delivery Network (CDN), controlling when content is refreshed or updated is crucial for ensuring that users 
+receive the most up-to-date content. 
+Stale or out-of-date content can affect the user experience. 
+To address this, Azure CDN offers features such as a Standard rules engine, Cache-Control settings, and the ability to purge content.
 
 Standard Rules Engine
-Azure CDN’s Standard Rules Engine allows you to define caching behaviors and actions based on various match conditions. You can create rules to customize cache policies, handle redirects, and modify HTTP headers.
+Azure CDN’s Standard Rules Engine allows you to define caching behaviors and actions based on various match conditions. 
+You can create rules to customize cache policies, handle redirects, and modify HTTP headers.
 
 Match Conditions:
 Match conditions identify specific request types to which defined actions will apply. For instance, you can trigger rules based on:
@@ -13,23 +16,28 @@ Match conditions identify specific request types to which defined actions will a
 - Post Arguments: Match requests based on arguments in a POST request.
 - Query Strings: Identify requests containing specific query parameters that match certain values.
 
-You can use one or more of these match conditions within a rule, and when multiple conditions are used, they operate together using AND logic. This helps to apply more granular control over caching behavior.
+You can use one or more of these match conditions within a rule, and when multiple conditions are used, they operate together using AND logic. 
+This helps to apply more granular control over caching behavior.
 
 Caching and Time-to-Live (TTL)
-TTL defines how long cached content stays on Azure CDN edge nodes before it is considered stale. Once the TTL expires, the content is refreshed from the origin server. The TTL can be set using the Cache-Control header in the HTTP response from the origin server. If not specified, Azure CDN uses a default TTL, which can be customized using caching rules.
+TTL defines how long cached content stays on Azure CDN edge nodes before it is considered stale. Once the TTL expires, the content 
+is refreshed from the origin server. The TTL can be set using the Cache-Control header in the HTTP response from the origin server. 
+If not specified, Azure CDN uses a default TTL, which can be customized using caching rules.
 
 Default TTL Values:
 - Generalized Web Delivery: 7 days
 - Large Files: 1 day
 - Media Streaming: 1 year
 
-You can configure the Cache-Control header either programmatically or by using configuration files in services like Azure Web Apps, Azure Cloud Services, ASP.NET applications, and IIS.
+You can configure the Cache-Control header either programmatically or by using configuration files in services like Azure Web Apps, 
+Azure Cloud Services, ASP.NET applications, and IIS.
 
 Content Updating
 Refreshing Cached Content:
 - Once the TTL for a cached item expires, the edge node retrieves the latest version of the content from the origin server.
 - To ensure users always get the latest content, version your assets and publish them with new URLs whenever updates occur.
-- Alternatively, you can purge cached content to force the CDN to retrieve fresh content. This can be done on an endpoint-by-endpoint basis or for all assets simultaneously.
+- Alternatively, you can purge cached content to force the CDN to retrieve fresh content. This can be done on an endpoint-by-endpoint
+basis or for all assets simultaneously.
 
 Purge Methods:
 - Single File Purge: Remove specific files by providing the file paths or using wildcards (e.g., /img/*).
@@ -45,7 +53,8 @@ az cdn endpoint purge \
     --resource-group ExampleGroup
     
 Preloading Assets:
-If you know your application will generate a large number of assets in advance, you can preload them into the cache to improve user experience. This can be done using the Azure CLI as well:
+If you know your application will generate a large number of assets in advance, you can preload them into the cache to improve user experience.
+This can be done using the Azure CLI as well:
 
 az cdn endpoint load \
     --content-paths '/img/*' '/js/module.js' \
@@ -59,11 +68,15 @@ specific countries or regions based on their country/region codes. However, note
 geo-filtering is applied to the entire site, and you cannot selectively allow or block specific pages or assets.
 
 Best Practices for Cache Control in Azure CDN
-- Version Assets: Always version your assets, such as CSS or JavaScript files, and use new URLs for updated versions to force edge nodes to fetch the new content.
-- Set Appropriate TTL: Configure TTLs that are appropriate for your content's nature. For example, assets like images can have longer TTLs, while frequently changing content (e.g., news articles or stock prices) should have shorter TTLs.
+- Version Assets: Always version your assets, such as CSS or JavaScript files, and use new URLs for updated versions to force edge nodes 
+to fetch the new content.
+- Set Appropriate TTL: Configure TTLs that are appropriate for your content's nature. For example, assets like images can have longer TTLs, 
+while frequently changing content (e.g., news articles or stock prices) should have shorter TTLs.
 - Purge Cached Content: If you need to immediately update the content across all users, use purge methods to refresh the cache.
 - Preload Assets: If you know that certain assets will be requested, preload them into the cache to ensure faster delivery.
-- Use Geo-filtering: Restrict or allow content to be served based on specific regions or countries, ensuring content is delivered appropriately across different locations.
+- Use Geo-filtering: Restrict or allow content to be served based on specific regions or countries, ensuring content is delivered 
+appropriately across different locations.
 
 
-These tools and strategies provide powerful ways to manage caching in Azure CDN, ensuring that your users receive the best possible performance and the latest content while minimizing the load on your origin servers.
+These tools and strategies provide powerful ways to manage caching in Azure CDN, ensuring that your users receive the best possible 
+performance and the latest content while minimizing the load on your origin servers.
