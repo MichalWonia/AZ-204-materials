@@ -50,11 +50,13 @@ Use Cases for Microsoft Graph and its Components
   - Enterprise applications that rely on organizational data (user roles, groups, permissions).
 
 2. Extending Search Capabilities:
-  - Microsoft Graph Connectors allow external data to be integrated into Microsoft Search, which can help make data from systems like Salesforce, Jira, or other services easily searchable within the Microsoft 365 ecosystem.
+  - Microsoft Graph Connectors allow external data to be integrated into Microsoft Search, which can help make data from systems 
+like Salesforce, Jira, or other services easily searchable within the Microsoft 365 ecosystem.
   - Businesses can enhance internal search capabilities by including not just Office 365 data, but also external data repositories.
 
 3. Data Analytics:
-  - Microsoft Graph Data Connect provides a secure, scalable way to bring data into Azure for deep analytics. Organizations can use tools like Power BI to visualize this data or build custom machine learning models in Azure Machine Learning to derive insights.
+  - Microsoft Graph Data Connect provides a secure, scalable way to bring data into Azure for deep analytics. 
+Organizations can use tools like Power BI to visualize this data or build custom machine learning models in Azure Machine Learning to derive insights.
 
 4. Enterprise Automation:
 - Use Microsoft Graph to automate tasks such as:
