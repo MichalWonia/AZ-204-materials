@@ -14,10 +14,17 @@ Azure App Service autoscaling
 
 When to Consider Autoscaling:
 - elasticity: Autoscaling adjusts resources based on demand, useful for scenarios like holiday spikes in traffic.
-- improved Availability & Fault Tolerance: Helps prevent service unavailability by automatically adding or removing instances to handle fluctuating traffic and reduce downtime.
-- not Suitable for Resource-Intensive Requests: If your web app requires heavy processing (e.g., large dataset computations), autoscaling may not be effective. Manual scaling may be needed instead.
-- not Ideal for Long-Term Growth: Autoscaling is better for short-term spikes rather than sustained growth. For predictable, long-term increases in traffic, manual scaling can be more cost-effective.
-- fewer Instances & Autoscaling Limitations: Running few instances can lead to downtime, as autoscaling may not quickly provide enough resources to handle increasing load.
+- improved Availability & Fault Tolerance: Helps prevent service unavailability by automatically
+adding or removing instances to handle fluctuating traffic and reduce downtime.
+
+- not Suitable for Resource-Intensive Requests: If your web app requires heavy processing (e.g., large dataset computations), 
+autoscaling may not be effective. Manual scaling may be needed instead.
+
+- not Ideal for Long-Term Growth: Autoscaling is better for short-term spikes rather than sustained growth. For predictable, 
+long-term increases in traffic, manual scaling can be more cost-effective.
+
+- fewer Instances & Autoscaling Limitations: Running few instances can lead to downtime, as autoscaling may not quickly provide 
+enough resources to handle increasing load.
 
 
 Azure App Service Automatic Scaling:
@@ -27,4 +34,5 @@ App Service monitors the traffic load and adjusts the number of instances as nee
 - Scenarios for Automatic Scaling:
 - no Autoscale Rules Based on Metrics: When you don’t want to create custom scaling rules.
 - independent Scaling for Web Apps: When you want web apps in the same App Service Plan to scale differently from each other.
-- backend Limitations: If your web app is connected to a slower backend (like a database or legacy system), automatic scaling prevents overloading the backend by limiting the number of instances.
+- backend Limitations: If your web app is connected to a slower backend (like a database or legacy system), 
+automatic scaling prevents overloading the backend by limiting the number of instances.
