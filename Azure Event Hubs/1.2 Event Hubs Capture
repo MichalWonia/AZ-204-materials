@@ -1,10 +1,13 @@
 Azure Event Hubs Capture Overview
-Azure Event Hubs Capture is a feature that allows you to automatically capture streaming data from Event Hubs and store it in Azure Blob Storage or Azure Data Lake Storage. 
-This feature provides a seamless way to store event data for long-term retention and batch processing, while also allowing real-time and batch pipelines to process the same stream.
+Azure Event Hubs Capture is a feature that allows you to automatically capture streaming data from Event Hubs and store it in 
+Azure Blob Storage or Azure Data Lake Storage. 
+This feature provides a seamless way to store event data for long-term retention and batch processing, 
+while also allowing real-time and batch pipelines to process the same stream.
 
 Key Features of Event Hubs Capture
 1. Automatic Data Capture:
-- Once enabled, Event Hubs Capture automatically captures all streaming data and stores it in your chosen storage account (Azure Blob Storage or Azure Data Lake).
+- Once enabled, Event Hubs Capture automatically captures all streaming data and stores
+it in your chosen storage account (Azure Blob Storage or Azure Data Lake).
 - The captured data is saved in Apache Avro format, which is efficient and widely used in the big data ecosystem.
 
 2. Capture Flexibility:
@@ -12,7 +15,8 @@ Key Features of Event Hubs Capture
 - Captured data is written as blocks in storage, with each file named based on the capture time, making it easy to track and process events by time.
 
 3. No Administrative Costs:
-- There are no additional administrative costs to run Event Hubs Capture. It scales automatically depending on the throughput units of the Event Hubs service.
+- There are no additional administrative costs to run Event Hubs Capture. It scales automatically depending on the 
+throughput units of the Event Hubs service.
 
 4. Scalability:
 - Event Hubs Capture scales automatically with the throughput units in the Standard tier or processing units in the Premium tier.
@@ -41,12 +45,14 @@ Example file path:
 https://mystorageaccount.blob.core.windows.net/mycontainer/mynamespace/myeventhub/0/2017/12/08/03/03/17.avro
 
 3. Data Format:
-- Data is captured in Apache Avro format, a binary format that supports rich data structures with inline schema. Avro is well-integrated with the Hadoop ecosystem, Stream Analytics, and Azure Data Factory.
+- Data is captured in Apache Avro format, a binary format that supports rich data structures with inline schema. 
+Avro is well-integrated with the Hadoop ecosystem, Stream Analytics, and Azure Data Factory.
 
 4. Integration with Downstream Processing:
 - The captured data is easily accessible for further processing, whether real-time processing or batch analytics. 
 Tools like Azure Stream Analytics, Apache Spark, or Azure Data Factory can directly process the captured data.
-- Event Hubs Capture writes empty files when no data is captured, providing a predictable cadence for downstream systems to know when to process or check for data.
+- Event Hubs Capture writes empty files when no data is captured, providing a predictable cadence for
+downstream systems to know when to process or check for data.
 
 Scaling and Throughput
 - Throughput Units:
@@ -58,10 +64,14 @@ Scaling and Throughput
   - Since the data capture occurs directly from the internal Event Hubs storage, it avoids egress costs and reduces load on your outgoing network traffic.
 
 Benefits of Event Hubs Capture
-- Real-Time and Batch Processing: Capture allows you to use both real-time and batch processing pipelines on the same stream, which is useful for scenarios that require both immediate insights and long-term batch processing.
-- Seamless Integration: You can easily integrate Event Hubs Capture with other Azure services like Azure Stream Analytics, Azure Functions, Azure Data Factory, and more.
-- Scalable and Cost-Effective: The automatic scaling and efficient storage options make Event Hubs Capture a cost-effective solution for managing high-throughput data streams.
-- Predictable Data Flow: The feature provides empty file markers when no data is present, making it easier for downstream applications to maintain a consistent workflow.
+- Real-Time and Batch Processing: Capture allows you to use both real-time and batch processing pipelines on the same stream,
+which is useful for scenarios that require both immediate insights and long-term batch processing.
+- Seamless Integration: You can easily integrate Event Hubs Capture with other Azure services like Azure Stream Analytics, 
+Azure Functions, Azure Data Factory, and more.
+- Scalable and Cost-Effective: The automatic scaling and efficient storage options make Event Hubs Capture a cost-effective 
+solution for managing high-throughput data streams.
+- Predictable Data Flow: The feature provides empty file markers when no data is present, making it easier for downstream 
+applications to maintain a consistent workflow.
 
 Use Cases for Event Hubs Capture
 - IoT Telemetry: Capturing and storing telemetry data from IoT devices for future analysis or machine learning.
